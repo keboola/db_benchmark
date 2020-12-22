@@ -1,0 +1,249 @@
+Query ID,Sample query,START_TIME,COMPILATION_TIME [ms],EXECUTION_TIME [ms],TOTAL_ELAPSED_TIME [ms],DWH
+1,"WITH customer_total_return 
+     AS (SELECT sr_cus",2020-12-22 01:57:31.855 -0800,114,1,115,LARGE
+2,"WITH wscs 
+     AS (SELECT sold_date_sk, 
+        ",2020-12-22 01:57:32.086 -0800,"1,130","3,500","4,630",LARGE
+3,"SELECT dt.d_year, 
+               item.i_brand_id ",2020-12-22 01:57:37.109 -0800,260,50,310,LARGE
+4,"WITH year_total 
+     AS (SELECT c_customer_id    ",2020-12-22 01:57:37.663 -0800,"2,387","4,538","6,925",LARGE
+5,"WITH ssr AS 
+( 
+         SELECT   s_store_id, 
+   ",2020-12-22 01:57:44.848 -0800,"1,109","3,382","4,491",LARGE
+6,"SELECT a.ca_state state, 
+               Count(*) ",2020-12-22 01:57:49.663 -0800,535,47,582,LARGE
+7,"SELECT i_item_id, 
+               Avg(ss_quantity)",2020-12-22 01:57:50.345 -0800,396,46,442,LARGE
+8,"WITH ca_zips AS (
+        SELECT Substr(ca_zip, 1,",2020-12-22 01:57:50.899 -0800,198,51,249,LARGE
+9,"SELECT CASE 
+         WHEN (SELECT Count(*) 
+     ",2020-12-22 01:57:51.467 -0800,"1,105",179,"1,284",LARGE
+10,"SELECT cd_gender, 
+               cd_marital_statu",2020-12-22 01:57:52.930 -0800,869,"1,505","2,374",LARGE
+11,"WITH year_total 
+     AS (SELECT c_customer_id    ",2020-12-22 01:57:55.591 -0800,894,"2,638","3,532",LARGE
+12,"SELECT
+         i_item_id , 
+         i_item_desc ",2020-12-22 01:57:59.272 -0800,735,"1,269","2,004",LARGE
+13,"SELECT Avg(ss_quantity), 
+       Avg(ss_ext_sales_",2020-12-22 01:58:01.558 -0800,401,35,436,LARGE
+14,"WITH item_ss AS (
+    SELECT DISTINCT 
+        iss",2020-12-22 01:58:02.150 -0800,783,"3,502","4,285",LARGE
+15,"SELECT ca_zip, 
+               Sum(cs_sales_price)",2020-12-22 01:58:06.696 -0800,287,"6,139","6,426",LARGE
+16,"SELECT
+         Count(DISTINCT cs_order_number) AS",2020-12-22 01:58:13.411 -0800,765,"1,325","2,090",LARGE
+17,"SELECT i_item_id, 
+               i_item_desc, 
+  ",2020-12-22 01:58:15.699 -0800,164,31,195,LARGE
+18,"SELECT i_item_id, 
+               ca_country, 
+   ",2020-12-22 01:58:16.552 -0800,560,"1,755","2,315",LARGE
+19,"SELECT i_brand_id              brand_id, 
+        ",2020-12-22 01:58:19.807 -0800,238,47,285,LARGE
+20,"SELECT 
+         i_item_id , 
+         i_item_desc",2020-12-22 01:58:23.239 -0800,462,821,"1,283",LARGE
+21,"SELECT
+         * 
+FROM    ( 
+                  SE",2020-12-22 01:58:25.563 -0800,555,"1,258","1,813",LARGE
+22,"SELECT i_product_name, 
+               i_brand, 
+ ",2020-12-22 01:58:28.959 -0800,487,"4,030","4,517",LARGE
+23,"WITH frequent_ss_items 
+     AS (SELECT Substr(i_i",2020-12-22 01:58:34.187 -0800,549,"1,519","2,068",LARGE
+24,"WITH ssales 
+     AS (SELECT c_last_name, 
+       ",2020-12-22 01:58:37.286 -0800,138,64,202,LARGE
+25,"SELECT i_item_id, 
+               i_item_desc, 
+  ",2020-12-22 01:58:38.249 -0800,150,39,189,LARGE
+26,"SELECT i_item_id, 
+               Avg(cs_quantity)",2020-12-22 01:58:39.716 -0800,460,"1,327","1,787",LARGE
+27,"SELECT i_item_id, 
+               s_state, 
+      ",2020-12-22 01:58:42.067 -0800,145,64,209,LARGE
+28,"SELECT * 
+FROM   (SELECT Avg(ss_list_price)       ",2020-12-22 01:58:43.082 -0800,116,408,524,LARGE
+29,"SELECT i_item_id, 
+               i_item_desc, 
+  ",2020-12-22 01:58:43.865 -0800,144,71,215,LARGE
+30,"WITH customer_total_return 
+     AS (SELECT wr_ret",2020-12-22 01:58:44.448 -0800,264,"1,212","1,476",LARGE
+31,"WITH ss 
+     AS (SELECT ca_county, 
+             ",2020-12-22 01:58:48.514 -0800,161,34,195,LARGE
+32,"SELECT 
+       Sum(cs_ext_discount_amt) AS excess_",2020-12-22 01:58:50.195 -0800,253,869,"1,122",LARGE
+33,"WITH ss 
+     AS (SELECT i_manufact_id, 
+         ",2020-12-22 01:58:52.375 -0800,456,"1,714","2,170",LARGE
+34,"SELECT c_last_name, 
+       c_first_name, 
+       ",2020-12-22 01:58:55.775 -0800,185,39,224,LARGE
+35,"SELECT ca_state, 
+               cd_gender, 
+     ",2020-12-22 01:58:58.971 -0800,414,"1,167","1,581",LARGE
+36,SELECT Sum(ss_net_profit) / Sum(ss_ext_sales_price,2020-12-22 01:59:02.514 -0800,96,44,140,LARGE
+37,"SELECT 
+         i_item_id , 
+         i_item_desc",2020-12-22 01:59:03.991 -0800,418,"1,544","1,962",LARGE
+38,"WITH g1 AS (
+        SELECT DISTINCT c_last_name, ",2020-12-22 01:59:08.679 -0800,140,37,177,LARGE
+39,"WITH inv 
+     AS (SELECT w_warehouse_name, 
+     ",2020-12-22 01:59:10.018 -0800,314,"3,540","3,854",LARGE
+40,"SELECT
+                w_state , 
+                ",2020-12-22 01:59:19.001 -0800,773,"1,094","1,867",LARGE
+41,"SELECT Distinct(i_product_name) 
+FROM   item i1 
+W",2020-12-22 01:59:22.605 -0800,243,412,655,LARGE
+42,"SELECT dt.d_year, 
+               item.i_category_",2020-12-22 01:59:25.669 -0800,253,61,314,LARGE
+43,"SELECT s_store_name, 
+               s_store_id, 
+",2020-12-22 01:59:28.536 -0800,221,61,282,LARGE
+44,"SELECT asceding.rnk, 
+               i1.i_product_",2020-12-22 01:59:28.953 -0800,118,45,163,LARGE
+45,"SELECT ca_zip, 
+               ca_state, 
+        ",2020-12-22 01:59:29.824 -0800,374,"1,508","1,882",LARGE
+46,"SELECT c_last_name, 
+               c_first_name, ",2020-12-22 01:59:32.360 -0800,154,46,200,LARGE
+47,"WITH v1 
+     AS (SELECT i_category, 
+            ",2020-12-22 01:59:34.672 -0800,247,73,320,LARGE
+48,"SELECT Sum (ss_quantity) 
+FROM   store_sales, 
+   ",2020-12-22 01:59:38.447 -0800,132,40,172,LARGE
+49,"SELECT 'web' AS channel, 
+               web.item,",2020-12-22 01:59:39.754 -0800,567,"3,319","3,886",LARGE
+50,"SELECT s_store_name, 
+               s_company_id,",2020-12-22 01:59:45.937 -0800,285,92,377,LARGE
+51,"WITH web_v1 AS 
+( 
+         SELECT   ws_item_sk it",2020-12-22 01:59:49.008 -0800,210,"1,763","1,973",LARGE
+52,"SELECT dt.d_year, 
+               item.i_brand_id ",2020-12-22 01:59:53.096 -0800,121,46,167,LARGE
+53,"SELECT * 
+FROM   (SELECT i_manufact_id, 
+         ",2020-12-22 01:59:55.153 -0800,134,48,182,LARGE
+54,"WITH my_customers 
+     AS (SELECT DISTINCT c_cust",2020-12-22 01:59:58.943 -0800,222,49,271,LARGE
+55,"SELECT i_brand_id              brand_id, 
+        ",2020-12-22 02:00:00.617 -0800,90,44,134,LARGE
+56,"WITH ss 
+     AS (SELECT i_item_id, 
+             ",2020-12-22 02:00:02.231 -0800,662,"1,832","2,494",LARGE
+57,"WITH v1 
+     AS (SELECT i_category, 
+            ",2020-12-22 02:00:05.495 -0800,528,"1,898","2,426",LARGE
+58,"WITH ss_items 
+     AS (SELECT i_item_id          ",2020-12-22 02:00:09.928 -0800,723,201,924,LARGE
+59,"WITH wss 
+     AS (SELECT d_week_seq, 
+           ",2020-12-22 02:00:11.959 -0800,103,30,133,LARGE
+60,"WITH ss 
+     AS (SELECT i_item_id, 
+             ",2020-12-22 02:00:12.706 -0800,"1,257","1,565","2,822",LARGE
+61,"SELECT promotions, 
+               total, 
+       ",2020-12-22 02:00:16.737 -0800,174,160,334,LARGE
+62,"SELECT Substr(w_warehouse_name, 1, 20), 
+         ",2020-12-22 02:00:17.806 -0800,"2,316","1,504","3,820",LARGE
+63,"SELECT * 
+FROM   (SELECT i_manager_id, 
+          ",2020-12-22 02:00:22.424 -0800,236,172,408,LARGE
+64,"WITH cs_ui 
+     AS (SELECT cs_item_sk, 
+         ",2020-12-22 02:00:23.419 -0800,299,48,347,LARGE
+65,"SELECT s_store_name, 
+               i_item_desc, ",2020-12-22 02:00:24.007 -0800,113,41,154,LARGE
+66,"SELECT w_warehouse_name, 
+               w_warehou",2020-12-22 02:00:24.568 -0800,"1,767","2,614","4,381",LARGE
+67,"with dw1 as (
+      select i_category
+            ",2020-12-22 02:00:29.820 -0800,160,43,203,LARGE
+68,"SELECT c_last_name, 
+               c_first_name, ",2020-12-22 02:00:32.601 -0800,129,37,166,LARGE
+69,"SELECT cd_gender, 
+               cd_marital_statu",2020-12-22 02:00:33.837 -0800,603,"1,357","1,960",LARGE
+70,SELECT Sum(ss_net_profit)                     AS t,2020-12-22 02:00:36.783 -0800,690,106,796,LARGE
+71,"SELECT i_brand_id     brand_id, 
+       i_brand   ",2020-12-22 02:00:38.091 -0800,771,"1,319","2,090",LARGE
+72,"WITH top_items AS (
+  SELECT cs_item_sk, 
+        ",2020-12-22 02:00:40.745 -0800,"2,335","3,947","6,282",LARGE
+73,"SELECT c_last_name, 
+       c_first_name, 
+       ",2020-12-22 02:00:49.012 -0800,849,173,"1,022",LARGE
+74,"WITH year_total 
+     AS (SELECT c_customer_id    ",2020-12-22 02:00:53.911 -0800,312,"1,669","1,981",LARGE
+75,"WITH all_sales 
+     AS (SELECT d_year, 
+         ",2020-12-22 02:00:59.178 -0800,872,"9,013","9,885",LARGE
+76,"SELECT channel, 
+               col_name, 
+       ",2020-12-22 02:01:10.303 -0800,"2,187","2,014","4,201",LARGE
+77,"WITH ss AS 
+( 
+         SELECT   s_store_sk, 
+    ",2020-12-22 02:01:19.559 -0800,752,"6,409","7,161",LARGE
+78,"WITH ws 
+     AS (SELECT d_year                 AS",2020-12-22 02:01:27.186 -0800,"1,128","1,624","2,752",LARGE
+79,"SELECT c_last_name, 
+               c_first_name, ",2020-12-22 02:01:30.316 -0800,157,51,208,LARGE
+80,"WITH ssr AS 
+( 
+                SELECT          s_",2020-12-22 02:01:31.823 -0800,"2,763","4,540","7,303",LARGE
+81,"WITH customer_total_return 
+     AS (SELECT cr_ret",2020-12-22 02:01:39.819 -0800,470,"1,790","2,260",LARGE
+82,"SELECT
+         i_item_id , 
+         i_item_desc ",2020-12-22 02:01:44.390 -0800,133,36,169,LARGE
+83,"WITH sr_items 
+     AS (SELECT i_item_id          ",2020-12-22 02:01:45.134 -0800,"1,149","1,899","3,048",LARGE
+84,"SELECT c_customer_id   AS customer_id, 
+       Con",2020-12-22 02:01:49.122 -0800,"2,526","1,110","3,636",LARGE
+85,"SELECT Substr(r_reason_desc, 1, 20), 
+            ",2020-12-22 02:01:53.995 -0800,"2,421","2,177","4,598",LARGE
+86,SELECT Sum(ws_net_paid)                         AS,2020-12-22 02:01:59.421 -0800,165,781,946,LARGE
+87,"with store_customers as (
+  select distinct c_last",2020-12-22 02:02:01.021 -0800,162,38,200,LARGE
+88,"select  *
+from
+ (select count(*) h8_30_to_9
+ from ",2020-12-22 02:02:01.693 -0800,219,65,284,LARGE
+89,"SELECT  * 
+FROM  (SELECT i_category, 
+            ",2020-12-22 02:02:03.445 -0800,562,150,712,LARGE
+90,"SELECT amc / pmc AS am_pm_ratio 
+FROM   (SELECT Co",2020-12-22 02:02:04.749 -0800,"1,121","1,187","2,308",LARGE
+91,"SELECT cc_call_center_id Call_Center, 
+       cc_n",2020-12-22 02:02:08.327 -0800,"2,954","1,695","4,649",LARGE
+92,"SELECT 
+         Sum(ws_ext_discount_amt) AS exces",2020-12-22 02:02:13.949 -0800,216,"1,150","1,366",LARGE
+93,"SELECT ss_customer_sk, 
+               Sum(act_sal",2020-12-22 02:02:16.532 -0800,187,812,999,LARGE
+94,"SELECT 
+         Count(DISTINCT ws_order_number) A",2020-12-22 02:02:18.125 -0800,581,"1,552","2,133",LARGE
+95,"WITH ws_wh AS 
+( 
+       SELECT ws1.ws_order_numbe",2020-12-22 02:02:20.890 -0800,524,"3,584","4,108",LARGE
+96,"SELECT Count(*) 
+FROM   store_sales, 
+       house",2020-12-22 02:02:26.077 -0800,113,42,155,LARGE
+97,"WITH ssci 
+     AS (SELECT ss_customer_sk customer",2020-12-22 02:02:26.496 -0800,204,"1,167","1,371",LARGE
+98,"SELECT i_item_id, 
+       i_item_desc, 
+       i_c",2020-12-22 02:02:28.421 -0800,162,311,473,LARGE
+99,"SELECT Substr(w_warehouse_name, 1, 20), 
+         ",2020-12-22 02:02:29.614 -0800,479,"1,393","1,872",LARGE
+-,TOTAL [s],,59,122,181,

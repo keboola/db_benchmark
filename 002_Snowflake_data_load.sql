@@ -1,0 +1,25 @@
+copy into call_center from 'gcs://fivetran-benchmark/tpcds_100_dat/call_center/' file_format = (type = csv field_delimiter='|' error_on_column_count_mismatch=false VALIDATE_UTF8=false );
+copy into catalog_page from 'gcs://fivetran-benchmark/tpcds_100_dat/catalog_page/' file_format = (type = csv field_delimiter='|' error_on_column_count_mismatch=false VALIDATE_UTF8=false );
+copy into catalog_returns from 'gcs://fivetran-benchmark/tpcds_100_dat/catalog_returns/' file_format = (type = csv field_delimiter='|' error_on_column_count_mismatch=false VALIDATE_UTF8=false );
+copy into catalog_sales from 'gcs://fivetran-benchmark/tpcds_100_dat/catalog_sales/' file_format = (type = csv field_delimiter='|' error_on_column_count_mismatch=false VALIDATE_UTF8=false );
+copy into customer from 'gcs://fivetran-benchmark/tpcds_100_dat/customer/' file_format = (type = csv field_delimiter='|' error_on_column_count_mismatch=false VALIDATE_UTF8=false );
+copy into customer_address from 'gcs://fivetran-benchmark/tpcds_100_dat/customer_address/' file_format = (type = csv field_delimiter='|' error_on_column_count_mismatch=false VALIDATE_UTF8=false );
+copy into customer_demographics from 'gcs://fivetran-benchmark/tpcds_100_dat/customer_demographics/' file_format = (type = csv field_delimiter='|' error_on_column_count_mismatch=false VALIDATE_UTF8=false );
+copy into date_dim from 'gcs://fivetran-benchmark/tpcds_100_dat/date_dim/' file_format = (type = csv field_delimiter='|' error_on_column_count_mismatch=false VALIDATE_UTF8=false );
+copy into household_demographics from 'gcs://fivetran-benchmark/tpcds_100_dat/household_demographics/' file_format = (type = csv field_delimiter='|' error_on_column_count_mismatch=false VALIDATE_UTF8=false );
+copy into income_band from 'gcs://fivetran-benchmark/tpcds_100_dat/income_band/' file_format = (type = csv field_delimiter='|' error_on_column_count_mismatch=false VALIDATE_UTF8=false );
+copy into inventory from 'gcs://fivetran-benchmark/tpcds_100_dat/inventory/' file_format = (type = csv field_delimiter='|' error_on_column_count_mismatch=false VALIDATE_UTF8=false );
+copy into item from 'gcs://fivetran-benchmark/tpcds_100_dat/item/' file_format = (type = csv field_delimiter='|' error_on_column_count_mismatch=false VALIDATE_UTF8=false );
+copy into promotion from 'gcs://fivetran-benchmark/tpcds_100_dat/promotion/' file_format = (type = csv field_delimiter='|' error_on_column_count_mismatch=false VALIDATE_UTF8=false );
+copy into reason from 'gcs://fivetran-benchmark/tpcds_100_dat/reason/' file_format = (type = csv field_delimiter='|' error_on_column_count_mismatch=false VALIDATE_UTF8=false );
+copy into ship_mode from 'gcs://fivetran-benchmark/tpcds_100_dat/ship_mode/' file_format = (type = csv field_delimiter='|' error_on_column_count_mismatch=false VALIDATE_UTF8=false );
+copy into store from 'gcs://fivetran-benchmark/tpcds_100_dat/store/' file_format = (type = csv field_delimiter='|' error_on_column_count_mismatch=false VALIDATE_UTF8=false );
+copy into store_returns from 'gcs://fivetran-benchmark/tpcds_100_dat/store_returns/' file_format = (type = csv field_delimiter='|' error_on_column_count_mismatch=false VALIDATE_UTF8=false );
+copy into store_sales from 'gcs://fivetran-benchmark/tpcds_100_dat/store_sales/' file_format = (type = csv field_delimiter='|' error_on_column_count_mismatch=false VALIDATE_UTF8=false );
+copy into time_dim from 'gcs://fivetran-benchmark/tpcds_100_dat/time_dim/' file_format = (type = csv field_delimiter='|' error_on_column_count_mismatch=false VALIDATE_UTF8=false );
+copy into warehouse from 'gcs://fivetran-benchmark/tpcds_100_dat/warehouse/' file_format = (type = csv field_delimiter='|' error_on_column_count_mismatch=false VALIDATE_UTF8=false );
+copy into web_page from 'gcs://fivetran-benchmark/tpcds_100_dat/web_page/' file_format = (type = csv field_delimiter='|' error_on_column_count_mismatch=false VALIDATE_UTF8=false );
+copy into web_returns from 'gcs://fivetran-benchmark/tpcds_100_dat/web_returns/' file_format = (type = csv field_delimiter='|' error_on_column_count_mismatch=false VALIDATE_UTF8=false );
+copy into web_sales from 'gcs://fivetran-benchmark/tpcds_100_dat/web_sales/' file_format = (type = csv field_delimiter='|' error_on_column_count_mismatch=false VALIDATE_UTF8=false );
+copy into web_site from 'gcs://fivetran-benchmark/tpcds_100_dat/web_site/' file_format = (type = csv field_delimiter='|' error_on_column_count_mismatch=false VALIDATE_UTF8=false );
+
