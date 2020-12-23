@@ -1,5 +1,5 @@
 -- query1
-create table query1 as 
+create table query01 as 
 WITH customer_total_return 
      AS (SELECT sr_customer_sk     AS ctr_customer_sk, 
                 sr_store_sk        AS ctr_store_sk, 
@@ -29,7 +29,7 @@ ORDER  BY c_customer_id
 ;
 
 -- query2
-create table query2 as 
+create table query02 as 
 WITH wscs 
      AS (SELECT sold_date_sk, 
                 sales_price 
@@ -110,7 +110,7 @@ WHERE  d_week_seq1 = d_week_seq2 - 53
 ORDER  BY d_week_seq1;
 
 -- query3
-create table query3 as 
+create table query03 as 
 SELECT dt.d_year, 
                item.i_brand_id          brand_id, 
                item.i_brand             brand, 
@@ -131,7 +131,7 @@ ORDER  BY dt.d_year,
 ;
 
 -- query4
-create table query4 as 
+create table query04 as 
 WITH year_total 
      AS (SELECT c_customer_id                       customer_id, 
                 d_year                              dyear, 
@@ -236,7 +236,7 @@ ORDER  BY t_s_secyear.customer_id
 ; 
 
 -- query5
-create table query5 as 
+create table query05 as 
 WITH ssr AS 
 ( 
          SELECT   s_store_id, 
@@ -363,7 +363,7 @@ ORDER BY channel ,
 
 
 -- query6
-create table query6 as 
+create table query06 as 
 SELECT a.ca_state state, 
                Count(*)   cnt 
 FROM   customer_address a, 
@@ -388,7 +388,7 @@ ORDER  BY cnt
 ; 
 
 -- query7
-create table query7 as 
+create table query07 as 
 SELECT i_item_id, 
                Avg(ss_quantity)    agg1, 
                Avg(ss_list_price)  agg2, 
@@ -414,7 +414,7 @@ ORDER  BY i_item_id
 ; 
 
 -- query8
-create table query8 as 
+create table query08 as 
 WITH ca_zips AS (
         SELECT Substr(ca_zip, 1, 5) AS ca_zip 
                 FROM   customer_address 
@@ -650,7 +650,7 @@ ORDER  BY s_store_name
 ; 
 
 -- query9
-create table query9 as 
+create table query09 as 
 SELECT CASE 
          WHEN (SELECT Count(*) 
                FROM   store_sales 
@@ -2271,7 +2271,7 @@ create table query42 as
 SELECT dt.d_year, 
        item.i_category_id, 
        item.i_category, 
-       Sum(ss_ext_sales_price) as ss_ext_sales_price
+       Sum(ss_ext_sales_price) as ss_ext_sales_price_
 FROM   date_dim dt, 
        store_sales, 
        item 

@@ -1,0 +1,286 @@
+Query ID,Sample query,START_TIME,COMPILATION_TIME [ms],EXECUTION_TIME [ms],TOTAL_ELAPSED_TIME [ms],DWH
+1,"create table query1 as 
+WITH customer_total_return",2020-12-23 04:17:56.480 -0800,603,2202,2805,LARGE
+2,"create table query2 as 
+WITH wscs 
+     AS (SELECT",2020-12-23 04:23:01.109 -0800,399,3034,3433,LARGE
+3,"create table query3 as 
+SELECT dt.d_year, 
+       ",2020-12-23 04:18:49.038 -0800,1174,568,1742,LARGE
+4,"create table query4 as 
+WITH year_total 
+     AS (",2020-12-23 04:18:57.611 -0800,4102,10220,14322,LARGE
+5,"create table query5 as 
+WITH ssr AS 
+( 
+         S",2020-12-23 04:19:21.530 -0800,1577,4521,6098,LARGE
+6,"create table query6 as 
+SELECT a.ca_state state, 
+",2020-12-23 04:19:27.714 -0800,508,554,1062,LARGE
+7,"create table query7 as 
+SELECT i_item_id, 
+       ",2020-12-23 04:19:28.985 -0800,445,451,896,LARGE
+8,"create table query8 as 
+WITH ca_zips AS (
+        ",2020-12-23 04:22:00.408 -0800,528,511,1039,LARGE
+9,"create table query9 as 
+SELECT CASE 
+         WHEN",2020-12-23 04:44:32.264 -0800,1635,786,2628,LARGE
+10,"create table query10 as 
+SELECT cd_gender, 
+      ",2020-12-23 04:44:44.919 -0800,1164,1879,3043,LARGE
+11,"create table query11 as 
+WITH year_total 
+     AS ",2020-12-23 04:44:48.066 -0800,988,4070,5058,LARGE
+12,"create table query12 as 
+SELECT
+         i_item_id",2020-12-23 04:44:53.345 -0800,841,2268,3109,LARGE
+13,"create table query13 as 
+SELECT Avg(ss_quantity) a",2020-12-23 04:44:56.648 -0800,318,523,841,LARGE
+14,"create table query14 as 
+WITH item_ss AS (
+    SEL",2020-12-23 04:44:57.739 -0800,785,3793,4578,LARGE
+15,"create table query15 as 
+SELECT ca_zip, 
+       Su",2020-12-23 04:45:02.553 -0800,365,1666,2031,LARGE
+16,"create table query16 as 
+SELECT
+         Count(DIS",2020-12-23 04:45:04.672 -0800,594,1542,2136,LARGE
+17,"create table query17 as 
+SELECT i_item_id, 
+      ",2020-12-23 04:45:06.968 -0800,1527,996,2523,LARGE
+18,"create table query18 as 
+SELECT i_item_id, 
+      ",2020-12-23 04:45:09.727 -0800,1762,3320,5082,LARGE
+19,"create table query19 as 
+SELECT i_brand_id        ",2020-12-23 04:45:14.971 -0800,233,473,706,LARGE
+20,"create table query20 as 
+SELECT 
+         i_item_i",2020-12-23 04:45:15.903 -0800,318,1774,2092,LARGE
+21,"create table query21 as 
+SELECT
+         * 
+FROM  ",2020-12-23 04:45:18.078 -0800,1714,2360,4074,LARGE
+22,"create table query22 as 
+SELECT i_product_name, 
+ ",2020-12-23 04:45:22.241 -0800,560,4717,5277,LARGE
+23,"create table query23 as 
+WITH frequent_ss_items 
+ ",2020-12-23 04:45:27.734 -0800,500,2071,2571,LARGE
+24,"create table query24 as 
+WITH ssales 
+     AS (SEL",2020-12-23 04:45:30.766 -0800,264,703,967,LARGE
+25,"create table query25 as 
+SELECT i_item_id, 
+      ",2020-12-23 04:45:31.952 -0800,590,579,1169,LARGE
+26,"create table query26 as 
+SELECT i_item_id, 
+      ",2020-12-23 04:45:33.368 -0800,770,3216,3986,LARGE
+27,"create table query27 as 
+SELECT i_item_id, 
+      ",2020-12-23 04:45:37.455 -0800,518,857,1375,LARGE
+28,"create table query28 as 
+SELECT * 
+FROM   (SELECT ",2020-12-23 04:45:39.031 -0800,520,1104,1624,LARGE
+29,"create table query29 as 
+SELECT i_item_id, 
+      ",2020-12-23 04:45:40.762 -0800,544,703,1247,LARGE
+30,"create table query30 as 
+WITH customer_total_retur",2020-12-23 04:45:42.099 -0800,889,2630,3519,LARGE
+31,"create table query31 as 
+WITH ss 
+     AS (SELECT ",2020-12-23 04:45:45.892 -0800,512,701,1213,LARGE
+32,"create table query32 as 
+SELECT 
+       Sum(cs_ext",2020-12-23 04:45:47.195 -0800,797,1556,2353,LARGE
+33,"create table query33 as 
+WITH ss 
+     AS (SELECT ",2020-12-23 04:45:49.651 -0800,1033,2739,3772,LARGE
+34,"create table query34 as 
+SELECT c_last_name, 
+    ",2020-12-23 04:45:53.673 -0800,563,1085,1648,LARGE
+35,"create table query35 as 
+SELECT ca_state, 
+       ",2020-12-23 04:45:55.518 -0800,420,1406,1826,LARGE
+36,"create table query36 as 
+SELECT Sum(ss_net_profit)",2020-12-23 04:45:57.433 -0800,206,545,751,LARGE
+37,"create table query37 as 
+SELECT 
+         i_item_i",2020-12-23 04:45:58.456 -0800,572,2859,3431,LARGE
+38,"create table query38 as 
+WITH g1 AS (
+        SELE",2020-12-23 04:46:02.142 -0800,309,574,883,LARGE
+39,"create table query39 as 
+WITH inv 
+     AS (SELECT",2020-12-23 04:46:03.121 -0800,627,3929,4556,LARGE
+40,"create table query40 as 
+SELECT
+                w_",2020-12-23 04:46:07.885 -0800,460,1925,2385,LARGE
+41,"create table query41 as 
+SELECT Distinct(i_product",2020-12-23 04:46:10.539 -0800,274,786,1060,LARGE
+42,"create table query42 as 
+SELECT dt.d_year, 
+      ",2020-12-23 04:48:42.425 -0800,223,475,698,LARGE
+43,"create table query43 as 
+SELECT s_store_name, 
+   ",2020-12-23 04:49:08.473 -0800,247,556,803,LARGE
+44,"create table query44 as 
+SELECT asceding.rnk, 
+   ",2020-12-23 04:49:09.540 -0800,241,693,934,LARGE
+45,"create table query45 as 
+SELECT ca_zip, 
+         ",2020-12-23 04:49:10.616 -0800,652,2619,3271,LARGE
+46,"create table query46 as 
+SELECT c_last_name, 
+    ",2020-12-23 04:49:14.148 -0800,277,515,792,LARGE
+47,"create table query47 as 
+WITH v1 
+     AS (SELECT ",2020-12-23 04:49:15.181 -0800,412,1035,1447,LARGE
+48,"create table query48 as 
+SELECT Sum (ss_quantity) ",2020-12-23 04:49:16.718 -0800,218,606,824,LARGE
+49,"create table query49 as 
+SELECT 'web' AS channel, ",2020-12-23 04:49:17.641 -0800,537,4638,5175,LARGE
+50,"create table query50 as 
+SELECT s_store_name, 
+   ",2020-12-23 04:49:23.061 -0800,456,568,1024,LARGE
+51,"create table query51 as 
+WITH web_v1 AS 
+( 
+      ",2020-12-23 04:49:24.243 -0800,473,2242,2715,LARGE
+52,"create table query52 as 
+SELECT dt.d_year, 
+      ",2020-12-23 04:49:27.061 -0800,212,564,776,LARGE
+53,"create table query53 as 
+SELECT * 
+FROM   (SELECT ",2020-12-23 04:49:27.916 -0800,300,447,747,LARGE
+54,"create table query54 as 
+WITH my_customers 
+     A",2020-12-23 04:49:28.747 -0800,410,486,896,LARGE
+55,"create table query55 as 
+SELECT i_brand_id        ",2020-12-23 04:49:29.824 -0800,203,413,616,LARGE
+56,"create table query56 as 
+WITH ss 
+     AS (SELECT ",2020-12-23 04:49:30.545 -0800,578,2150,2728,LARGE
+57,"create table query57 as 
+WITH v1 
+     AS (SELECT ",2020-12-23 04:49:33.524 -0800,664,2507,3171,LARGE
+58,"create table query58 as 
+WITH ss_items 
+     AS (S",2020-12-23 04:49:36.802 -0800,500,688,1188,LARGE
+59,"create table query59 as 
+WITH wss 
+     AS (SELECT",2020-12-23 04:49:38.257 -0800,203,466,669,LARGE
+60,"create table query60 as 
+WITH ss 
+     AS (SELECT ",2020-12-23 04:49:39.131 -0800,612,2227,2839,LARGE
+61,"create table query61 as 
+SELECT promotions, 
+     ",2020-12-23 04:49:42.222 -0800,453,575,1028,LARGE
+62,"create table query62 as 
+SELECT Substr(w_warehouse",2020-12-23 04:49:43.542 -0800,609,1277,1886,LARGE
+63,"create table query63 as 
+SELECT * 
+FROM   (SELECT ",2020-12-23 04:49:45.516 -0800,249,536,785,LARGE
+64,"create table query64 as 
+WITH cs_ui 
+     AS (SELE",2020-12-23 04:49:46.503 -0800,762,645,1407,LARGE
+65,"create table query65 as 
+SELECT s_store_name, 
+   ",2020-12-23 04:49:48.199 -0800,268,507,775,LARGE
+66,"create table query66 as 
+SELECT w_warehouse_name, ",2020-12-23 04:49:49.162 -0800,989,3597,4586,LARGE
+67,"create table query67 as 
+with dw1 as (
+      selec",2020-12-23 04:49:53.980 -0800,295,503,798,LARGE
+68,"create table query68 as 
+SELECT c_last_name, 
+    ",2020-12-23 04:49:54.889 -0800,323,467,790,LARGE
+69,"create table query69 as 
+SELECT cd_gender, 
+      ",2020-12-23 04:49:55.781 -0800,521,1741,2262,LARGE
+70,"create table query70 as 
+SELECT Sum(ss_net_profit)",2020-12-23 04:49:58.129 -0800,231,447,678,LARGE
+71,"create table query71 as 
+SELECT i_brand_id     bra",2020-12-23 04:49:59.031 -0800,1206,1843,3049,LARGE
+72,"create table query72 as 
+WITH top_items AS (
+  SEL",2020-12-23 04:50:02.379 -0800,854,4472,5326,LARGE
+73,"create table query73 as 
+SELECT c_last_name, 
+    ",2020-12-23 04:50:07.903 -0800,271,540,811,LARGE
+74,"create table query74 as 
+WITH year_total 
+     AS ",2020-12-23 04:50:08.797 -0800,562,1961,2523,LARGE
+75,"create table query75 as 
+WITH all_sales 
+     AS (",2020-12-23 04:50:11.589 -0800,677,4111,4788,LARGE
+76,"create table query76 as 
+SELECT channel, 
+        ",2020-12-23 04:50:16.618 -0800,368,2413,2781,LARGE
+77,"create table query77 as 
+WITH ss AS 
+( 
+         S",2020-12-23 04:50:19.686 -0800,610,2916,3526,LARGE
+78,"create table query78 as 
+WITH ws 
+     AS (SELECT ",2020-12-23 04:50:23.487 -0800,1093,2193,3286,LARGE
+79,"create table query79 as 
+SELECT c_last_name, 
+    ",2020-12-23 04:50:26.974 -0800,872,803,1675,LARGE
+80,"create table query80 as 
+WITH ssr AS 
+( 
+         ",2020-12-23 04:50:28.755 -0800,1637,10099,11736,LARGE
+81,"create table query81 as 
+WITH customer_total_retur",2020-12-23 04:50:40.781 -0800,358,2322,2680,LARGE
+82,"create table query82 as 
+SELECT
+         i_item_id",2020-12-23 04:50:43.552 -0800,302,552,854,LARGE
+83,"create table query83 as 
+WITH sr_items 
+     AS (S",2020-12-23 04:50:44.586 -0800,413,2799,3212,LARGE
+84,"create table query84 as 
+SELECT c_customer_id   AS",2020-12-23 04:50:48.049 -0800,572,1992,2564,LARGE
+85,"create table query85 as 
+SELECT Substr(r_reason_de",2020-12-23 04:50:50.701 -0800,2588,2409,4997,LARGE
+86,"create table query86 as 
+SELECT Sum(ws_net_paid)  ",2020-12-23 04:50:55.883 -0800,244,1294,1538,LARGE
+87,"create table query87 as 
+with store_customers as (",2020-12-23 04:50:57.672 -0800,292,581,873,LARGE
+88,"create table query88 as 
+select  *
+from
+ (select 
+",2020-12-23 04:50:58.690 -0800,324,535,859,LARGE
+89,"create table query89 as 
+SELECT  * 
+FROM  (SELECT ",2020-12-23 04:50:59.650 -0800,232,462,694,LARGE
+90,"create table query90 as 
+SELECT amc / pmc AS am_pm",2020-12-23 04:51:00.438 -0800,480,1766,2246,LARGE
+91,"create table query91 as 
+SELECT cc_call_center_id ",2020-12-23 04:51:02.768 -0800,921,2031,2952,LARGE
+92,"create table query92 as 
+SELECT 
+         Sum(ws_e",2020-12-23 04:51:05.870 -0800,324,1553,1877,LARGE
+93,"create table query93 as 
+SELECT ss_customer_sk, 
+ ",2020-12-23 04:51:08.014 -0800,384,879,1263,LARGE
+94,"create table query94 as 
+SELECT 
+         Count(DI",2020-12-23 04:51:09.564 -0800,440,1552,1992,LARGE
+95,"create table query95 as 
+WITH ws_wh AS 
+( 
+       ",2020-12-23 04:51:11.646 -0800,947,3948,4895,LARGE
+96,"create table query96 as 
+SELECT Count(*) as cnt1
+F",2020-12-23 04:51:16.648 -0800,299,576,875,LARGE
+97,"create table query97 as 
+WITH ssci 
+     AS (SELEC",2020-12-23 04:51:17.609 -0800,253,1716,1969,LARGE
+98,"create table query98 as 
+SELECT i_item_id, 
+      ",2020-12-23 04:51:19.793 -0800,241,773,1014,LARGE
+99,"create table query99 as 
+SELECT Substr(w_warehouse",2020-12-23 04:51:20.899 -0800,1319,2116,3435,LARGE
+-,TOTAL [ms],,63709,177593,241509,
