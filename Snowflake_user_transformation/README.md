@@ -18,5 +18,5 @@
 
 | TYPE / DWH  | LARGE | XSMALL |
 | --- | ---: | ---: | 
-| SELECT w/ LIMIT | 181 |  |
-| CREATE TABLE | 241 |  |
+| SELECT w/ LIMIT | 181s | n/a |
+| CREATE TABLE | 241s | 217s |
