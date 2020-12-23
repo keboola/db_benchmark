@@ -13,7 +13,7 @@
 
 ### Synapse
 
-| SIZE / DWH  | DW1500 | DW100 |
+| TYPE / DWH  | DW1500 | DW100 |
 | --- | ---: | ---: |
 | Full 6M rows | 39s | 79s |
 | Full 60M rows | 61s | 416s |
