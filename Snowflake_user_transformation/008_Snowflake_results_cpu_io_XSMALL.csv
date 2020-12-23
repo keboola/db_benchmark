@@ -1,0 +1,285 @@
+Query ID,Sample query,START_TIME,COMPILATION_TIME [ms],EXECUTION_TIME [ms],TOTAL_ELAPSED_TIME [ms],DWH
+1,"create table query01 as 
+WITH customer_total_retur",2020-12-23 05:37:28.558 -0800,914,1783,2697,XSMALL
+2,"create table query02 as 
+WITH wscs 
+     AS (SELEC",2020-12-23 05:37:31.391 -0800,679,7767,8446,XSMALL
+3,"create table query03 as 
+SELECT dt.d_year, 
+      ",2020-12-23 05:37:39.957 -0800,512,541,1053,XSMALL
+4,"create table query04 as 
+WITH year_total 
+     AS ",2020-12-23 05:37:41.163 -0800,1767,8409,10176,XSMALL
+5,"create table query05 as 
+WITH ssr AS 
+( 
+         ",2020-12-23 05:37:52.750 -0800,1110,1799,2909,XSMALL
+6,"create table query06 as 
+SELECT a.ca_state state, ",2020-12-23 05:37:56.954 -0800,518,574,1092,XSMALL
+7,"create table query07 as 
+SELECT i_item_id, 
+      ",2020-12-23 05:37:59.005 -0800,505,466,971,XSMALL
+8,"create table query08 as 
+WITH ca_zips AS (
+       ",2020-12-23 05:38:01.871 -0800,352,463,815,XSMALL
+9,"create table query09 as 
+SELECT CASE 
+         WHE",2020-12-23 05:38:03.578 -0800,706,720,1426,XSMALL
+10,"create table query10 as 
+SELECT cd_gender, 
+      ",2020-12-23 05:38:06.880 -0800,517,1616,2133,XSMALL
+11,"create table query11 as 
+WITH year_total 
+     AS ",2020-12-23 05:38:09.390 -0800,737,4596,5333,XSMALL
+12,"create table query12 as 
+SELECT
+         i_item_id",2020-12-23 05:38:16.960 -0800,379,1526,1905,XSMALL
+13,"create table query13 as 
+SELECT Avg(ss_quantity) a",2020-12-23 05:38:20.692 -0800,521,663,1184,XSMALL
+14,"create table query14 as 
+WITH item_ss AS (
+    SEL",2020-12-23 05:38:22.623 -0800,1139,2060,3199,XSMALL
+15,"create table query15 as 
+SELECT ca_zip, 
+       Su",2020-12-23 05:38:25.917 -0800,502,1068,1570,XSMALL
+16,"create table query16 as 
+SELECT
+         Count(DIS",2020-12-23 05:38:27.706 -0800,916,1566,2482,XSMALL
+17,"create table query17 as 
+SELECT i_item_id, 
+      ",2020-12-23 05:38:30.285 -0800,282,479,761,XSMALL
+18,"create table query18 as 
+SELECT i_item_id, 
+      ",2020-12-23 05:38:31.198 -0800,828,2182,3010,XSMALL
+19,"create table query19 as 
+SELECT i_brand_id        ",2020-12-23 05:38:34.313 -0800,383,480,863,XSMALL
+20,"create table query20 as 
+SELECT 
+         i_item_i",2020-12-23 05:38:35.272 -0800,297,1103,1400,XSMALL
+21,"create table query21 as 
+SELECT
+         * 
+FROM  ",2020-12-23 05:38:36.762 -0800,578,1011,1589,XSMALL
+22,"create table query22 as 
+SELECT i_product_name, 
+ ",2020-12-23 05:38:38.456 -0800,731,7108,7839,XSMALL
+23,"create table query23 as 
+WITH frequent_ss_items 
+ ",2020-12-23 05:38:46.565 -0800,1010,999,2009,XSMALL
+24,"create table query24 as 
+WITH ssales 
+     AS (SEL",2020-12-23 05:38:51.743 -0800,428,581,1009,XSMALL
+25,"create table query25 as 
+SELECT i_item_id, 
+      ",2020-12-23 05:38:53.568 -0800,222,437,659,XSMALL
+26,"create table query26 as 
+SELECT i_item_id, 
+      ",2020-12-23 05:38:56.986 -0800,699,1719,2418,XSMALL
+27,"create table query27 as 
+SELECT i_item_id, 
+      ",2020-12-23 05:39:01.580 -0800,257,519,776,XSMALL
+28,"create table query28 as 
+SELECT * 
+FROM   (SELECT ",2020-12-23 05:39:03.077 -0800,254,921,1175,XSMALL
+29,"create table query29 as 
+SELECT i_item_id, 
+      ",2020-12-23 05:39:05.863 -0800,249,411,660,XSMALL
+30,"create table query30 as 
+WITH customer_total_retur",2020-12-23 05:39:07.102 -0800,667,1581,2248,XSMALL
+31,"create table query31 as 
+WITH ss 
+     AS (SELECT ",2020-12-23 05:39:10.472 -0800,271,431,702,XSMALL
+32,"create table query32 as 
+SELECT 
+       Sum(cs_ext",2020-12-23 05:39:11.773 -0800,406,840,1246,XSMALL
+33,"create table query33 as 
+WITH ss 
+     AS (SELECT ",2020-12-23 05:39:13.576 -0800,803,1351,2154,XSMALL
+34,"create table query34 as 
+SELECT c_last_name, 
+    ",2020-12-23 05:39:16.248 -0800,291,461,752,XSMALL
+35,"create table query35 as 
+SELECT ca_state, 
+       ",2020-12-23 05:39:17.374 -0800,736,1154,1890,XSMALL
+36,"create table query36 as 
+SELECT Sum(ss_net_profit)",2020-12-23 05:39:22.166 -0800,216,562,778,XSMALL
+37,"create table query37 as 
+SELECT 
+         i_item_i",2020-12-23 05:39:23.430 -0800,352,1092,1444,XSMALL
+38,"create table query38 as 
+WITH g1 AS (
+        SELE",2020-12-23 05:39:26.953 -0800,321,652,973,XSMALL
+39,"create table query39 as 
+WITH inv 
+     AS (SELECT",2020-12-23 05:39:28.523 -0800,783,2719,3502,XSMALL
+40,"create table query40 as 
+SELECT
+                w_",2020-12-23 05:39:32.433 -0800,790,1367,2157,XSMALL
+41,"create table query41 as 
+SELECT Distinct(i_product",2020-12-23 05:39:35.510 -0800,294,841,1135,XSMALL
+42,"create table query42 as 
+SELECT dt.d_year, 
+      ",2020-12-23 05:39:38.770 -0800,285,502,787,XSMALL
+43,"create table query43 as 
+SELECT s_store_name, 
+   ",2020-12-23 05:39:42.425 -0800,206,431,637,XSMALL
+44,"create table query44 as 
+SELECT asceding.rnk, 
+   ",2020-12-23 05:39:46.059 -0800,204,448,652,XSMALL
+45,"create table query45 as 
+SELECT ca_zip, 
+         ",2020-12-23 05:39:52.826 -0800,655,1589,2244,XSMALL
+46,"create table query46 as 
+SELECT c_last_name, 
+    ",2020-12-23 05:39:58.272 -0800,603,497,1100,XSMALL
+47,"create table query47 as 
+WITH v1 
+     AS (SELECT ",2020-12-23 05:40:02.608 -0800,536,920,1456,XSMALL
+48,"create table query48 as 
+SELECT Sum (ss_quantity) ",2020-12-23 05:40:06.528 -0800,403,783,1186,XSMALL
+49,"create table query49 as 
+SELECT 'web' AS channel, ",2020-12-23 05:40:12.659 -0800,764,2681,3445,XSMALL
+50,"create table query50 as 
+SELECT s_store_name, 
+   ",2020-12-23 05:40:20.067 -0800,227,493,720,XSMALL
+51,"create table query51 as 
+WITH web_v1 AS 
+( 
+      ",2020-12-23 05:40:23.138 -0800,439,4207,4646,XSMALL
+52,"create table query52 as 
+SELECT dt.d_year, 
+      ",2020-12-23 05:40:29.458 -0800,260,547,807,XSMALL
+53,"create table query53 as 
+SELECT * 
+FROM   (SELECT ",2020-12-23 05:40:33.781 -0800,601,930,1531,XSMALL
+54,"create table query54 as 
+WITH my_customers 
+     A",2020-12-23 05:40:40.908 -0800,388,457,845,XSMALL
+55,"create table query55 as 
+SELECT i_brand_id        ",2020-12-23 05:40:44.187 -0800,251,456,707,XSMALL
+56,"create table query56 as 
+WITH ss 
+     AS (SELECT ",2020-12-23 05:40:46.910 -0800,713,2256,2969,XSMALL
+57,"create table query57 as 
+WITH v1 
+     AS (SELECT ",2020-12-23 05:40:50.263 -0800,578,3673,4251,XSMALL
+58,"create table query58 as 
+WITH ss_items 
+     AS (S",2020-12-23 05:40:54.640 -0800,384,547,931,XSMALL
+59,"create table query59 as 
+WITH wss 
+     AS (SELECT",2020-12-23 05:40:55.664 -0800,254,497,751,XSMALL
+60,"create table query60 as 
+WITH ss 
+     AS (SELECT ",2020-12-23 05:40:56.668 -0800,554,1548,2102,XSMALL
+61,"create table query61 as 
+SELECT promotions, 
+     ",2020-12-23 05:40:59.116 -0800,257,831,1088,XSMALL
+62,"create table query62 as 
+SELECT Substr(w_warehouse",2020-12-23 05:41:00.290 -0800,817,2477,3294,XSMALL
+63,"create table query63 as 
+SELECT * 
+FROM   (SELECT ",2020-12-23 05:41:03.888 -0800,217,701,918,XSMALL
+64,"create table query64 as 
+WITH cs_ui 
+     AS (SELE",2020-12-23 05:41:05.099 -0800,537,931,1468,XSMALL
+65,"create table query65 as 
+SELECT s_store_name, 
+   ",2020-12-23 05:41:06.692 -0800,273,523,796,XSMALL
+66,"create table query66 as 
+SELECT w_warehouse_name, ",2020-12-23 05:41:07.765 -0800,1515,2456,3971,XSMALL
+67,"create table query67 as 
+with dw1 as (
+      selec",2020-12-23 05:41:11.998 -0800,610,690,1300,XSMALL
+68,"create table query68 as 
+SELECT c_last_name, 
+    ",2020-12-23 05:41:13.495 -0800,298,509,807,XSMALL
+69,"create table query69 as 
+SELECT cd_gender, 
+      ",2020-12-23 05:41:14.387 -0800,447,600,1047,XSMALL
+70,"create table query70 as 
+SELECT Sum(ss_net_profit)",2020-12-23 05:41:15.524 -0800,335,514,849,XSMALL
+71,"create table query71 as 
+SELECT i_brand_id     bra",2020-12-23 05:41:16.464 -0800,460,1268,1728,XSMALL
+72,"create table query72 as 
+WITH top_items AS (
+  SEL",2020-12-23 05:41:18.408 -0800,1080,2883,3963,XSMALL
+73,"create table query73 as 
+SELECT c_last_name, 
+    ",2020-12-23 05:41:22.470 -0800,291,490,781,XSMALL
+74,"create table query74 as 
+WITH year_total 
+     AS ",2020-12-23 05:41:23.436 -0800,526,3067,3593,XSMALL
+75,"create table query75 as 
+WITH all_sales 
+     AS (",2020-12-23 05:41:27.278 -0800,616,4405,5021,XSMALL
+76,"create table query76 as 
+SELECT channel, 
+        ",2020-12-23 05:41:33.577 -0800,340,2176,2516,XSMALL
+77,"create table query77 as 
+WITH ss AS 
+( 
+         S",2020-12-23 05:41:37.003 -0800,514,1569,2083,XSMALL
+78,"create table query78 as 
+WITH ws 
+     AS (SELECT ",2020-12-23 05:41:41.228 -0800,769,718,1487,XSMALL
+79,"create table query79 as 
+SELECT c_last_name, 
+    ",2020-12-23 05:41:43.409 -0800,264,472,736,XSMALL
+80,"create table query80 as 
+WITH ssr AS 
+( 
+         ",2020-12-23 05:41:44.424 -0800,1373,3235,4608,XSMALL
+81,"create table query81 as 
+WITH customer_total_retur",2020-12-23 05:41:49.563 -0800,447,1884,2331,XSMALL
+82,"create table query82 as 
+SELECT
+         i_item_id",2020-12-23 05:41:53.154 -0800,265,510,775,XSMALL
+83,"create table query83 as 
+WITH sr_items 
+     AS (S",2020-12-23 05:41:56.233 -0800,469,1161,1630,XSMALL
+84,"create table query84 as 
+SELECT c_customer_id   AS",2020-12-23 05:42:04.857 -0800,584,1354,1938,XSMALL
+85,"create table query85 as 
+SELECT Substr(r_reason_de",2020-12-23 05:42:09.553 -0800,1674,2532,4206,XSMALL
+86,"create table query86 as 
+SELECT Sum(ws_net_paid)  ",2020-12-23 05:42:18.644 -0800,282,2141,2423,XSMALL
+87,"create table query87 as 
+with store_customers as (",2020-12-23 05:42:23.545 -0800,258,645,903,XSMALL
+88,"create table query88 as 
+select  *
+from
+ (select 
+",2020-12-23 05:42:27.170 -0800,368,538,906,XSMALL
+89,"create table query89 as 
+SELECT  * 
+FROM  (SELECT ",2020-12-23 05:42:30.423 -0800,248,759,1007,XSMALL
+90,"create table query90 as 
+SELECT amc / pmc AS am_pm",2020-12-23 05:42:40.904 -0800,748,1998,2746,XSMALL
+91,"create table query91 as 
+SELECT cc_call_center_id ",2020-12-23 05:42:47.422 -0800,799,1402,2201,XSMALL
+92,"create table query92 as 
+SELECT 
+         Sum(ws_e",2020-12-23 05:42:50.894 -0800,362,1513,1875,XSMALL
+93,"create table query93 as 
+SELECT ss_customer_sk, 
+ ",2020-12-23 05:42:56.954 -0800,371,557,928,XSMALL
+94,"create table query94 as 
+SELECT 
+         Count(DI",2020-12-23 05:42:58.341 -0800,474,1979,2453,XSMALL
+95,"create table query95 as 
+WITH ws_wh AS 
+( 
+       ",2020-12-23 05:43:02.524 -0800,586,17829,18415,XSMALL
+96,"create table query96 as 
+SELECT Count(*) as cnt1
+F",2020-12-23 05:43:22.985 -0800,270,512,782,XSMALL
+97,"create table query97 as 
+WITH ssci 
+     AS (SELEC",2020-12-23 05:43:27.384 -0800,298,2061,2359,XSMALL
+98,"create table query98 as 
+SELECT i_item_id, 
+      ",2020-12-23 05:43:31.084 -0800,321,733,1054,XSMALL
+99,"create table query99 as 
+SELECT Substr(w_warehouse",2020-12-23 05:43:36.024 -0800,714,3186,3900,XSMALL
+-,TOTAL [ms],,53304,163889,217193,
