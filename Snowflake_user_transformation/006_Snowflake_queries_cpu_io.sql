@@ -75,13 +75,13 @@ WITH wscs
          WHERE  d_date_sk = sold_date_sk 
          GROUP  BY d_week_seq) 
 SELECT d_week_seq1, 
-       Round(sun_sales1 / sun_sales2, 2), 
-       Round(mon_sales1 / mon_sales2, 2), 
-       Round(tue_sales1 / tue_sales2, 2), 
-       Round(wed_sales1 / wed_sales2, 2), 
-       Round(thu_sales1 / thu_sales2, 2), 
-       Round(fri_sales1 / fri_sales2, 2), 
-       Round(sat_sales1 / sat_sales2, 2) 
+       Round(sun_sales1 / sun_sales2, 2) as metrics1, 
+       Round(mon_sales1 / mon_sales2, 2) as metrics2, 
+       Round(tue_sales1 / tue_sales2, 2) as metrics3, 
+       Round(wed_sales1 / wed_sales2, 2) as metrics4, 
+       Round(thu_sales1 / thu_sales2, 2) as metrics5, 
+       Round(fri_sales1 / fri_sales2, 2) as metrics6, 
+       Round(sat_sales1 / sat_sales2, 2) as metrics7
 FROM   (SELECT wswscs.d_week_seq d_week_seq1, 
                sun_sales         sun_sales1, 
                mon_sales         mon_sales1, 
@@ -635,7 +635,7 @@ chosen_zips AS (
         WHERE ca_zip IN (SELECT ca_zip FROM common_zips)
 )
 SELECT s_store_name, 
-       Sum(ss_net_profit) 
+       Sum(ss_net_profit) as ss_net_profit
 FROM   store_sales, 
        date_dim, 
        store, 
@@ -912,10 +912,10 @@ ORDER BY i_category ,
 
 -- query13
 create table query13 as 
-SELECT Avg(ss_quantity), 
-       Avg(ss_ext_sales_price), 
-       Avg(ss_ext_wholesale_cost), 
-       Sum(ss_ext_wholesale_cost) 
+SELECT Avg(ss_quantity) as ss_quantity, 
+       Avg(ss_ext_sales_price) as ss_ext_sales_price, 
+       Avg(ss_ext_wholesale_cost) as ss_ext_wholesale_cost_avg, 
+       Sum(ss_ext_wholesale_cost) as ss_ext_wholesale_cost_sum
 FROM   store_sales, 
        store, 
        customer_demographics, 
@@ -1036,8 +1036,8 @@ SELECT channel,
                i_brand_id, 
                i_class_id, 
                i_category_id, 
-               Sum(sales), 
-               Sum(number_sales) 
+               Sum(sales) as sales, 
+               Sum(number_sales) as number_sales
 FROM  (SELECT 'store'                          channel, 
               i_brand_id, 
               i_class_id, 
@@ -1110,7 +1110,7 @@ ORDER  BY channel,
 -- query15
 create table query15 as 
 SELECT ca_zip, 
-               Sum(cs_sales_price) 
+       Sum(cs_sales_price) as cs_sales_price
 FROM   catalog_sales, 
        customer, 
        customer_address, 
@@ -1169,30 +1169,18 @@ create table query17 as
 SELECT i_item_id, 
                i_item_desc, 
                s_state, 
-               Count(ss_quantity)                                        AS 
-               store_sales_quantitycount, 
-               Avg(ss_quantity)                                          AS 
-               store_sales_quantityave, 
-               Stddev_samp(ss_quantity)                                  AS 
-               store_sales_quantitystdev, 
-               Stddev_samp(ss_quantity) / Avg(ss_quantity)               AS 
-               store_sales_quantitycov, 
-               Count(sr_return_quantity)                                 AS 
-               store_returns_quantitycount, 
-               Avg(sr_return_quantity)                                   AS 
-               store_returns_quantityave, 
-               Stddev_samp(sr_return_quantity)                           AS 
-               store_returns_quantitystdev, 
-               Stddev_samp(sr_return_quantity) / Avg(sr_return_quantity) AS 
-               store_returns_quantitycov, 
-               Count(cs_quantity)                                        AS 
-               catalog_sales_quantitycount, 
-               Avg(cs_quantity)                                          AS 
-               catalog_sales_quantityave, 
-               Stddev_samp(cs_quantity) / Avg(cs_quantity)               AS 
-               catalog_sales_quantitystdev, 
-               Stddev_samp(cs_quantity) / Avg(cs_quantity)               AS 
-               catalog_sales_quantitycov 
+               Count(ss_quantity)                                        AS store_sales_quantitycount, 
+               Avg(ss_quantity)                                          AS store_sales_quantityave, 
+               Stddev_samp(ss_quantity)                                  AS store_sales_quantitystdev, 
+               Stddev_samp(ss_quantity) / Avg(ss_quantity)               AS store_sales_quantitycov, 
+               Count(sr_return_quantity)                                 AS store_returns_quantitycount, 
+               Avg(sr_return_quantity)                                   AS store_returns_quantityave, 
+               Stddev_samp(sr_return_quantity)                           AS store_returns_quantitystdev, 
+               Stddev_samp(sr_return_quantity) / Avg(sr_return_quantity) AS  store_returns_quantitycov, 
+               Count(cs_quantity)                                        AS  catalog_sales_quantitycount, 
+               Avg(cs_quantity)                                          AS  catalog_sales_quantityave, 
+               Stddev_samp(cs_quantity) / Avg(cs_quantity)               AS  catalog_sales_quantitystdev, 
+               Stddev_samp(cs_quantity) / Avg(cs_quantity)               AS  catalog_sales_quantitycov 
 FROM   store_sales, 
        store_returns, 
        catalog_sales, 
@@ -1228,13 +1216,13 @@ SELECT i_item_id,
                ca_country, 
                ca_state, 
                ca_county, 
-               Avg(cs_quantity)      agg1, 
-               Avg(cs_list_price)    agg2, 
-               Avg(cs_coupon_amt)    agg3, 
-               Avg(cs_sales_price)   agg4, 
-               Avg(cs_net_profit)    agg5, 
-               Avg(c_birth_year)     agg6, 
-               Avg(cd1.cd_dep_count) agg7 
+               Avg(cs_quantity)      AS agg1, 
+               Avg(cs_list_price)    AS agg2, 
+               Avg(cs_coupon_amt)    AS agg3, 
+               Avg(cs_sales_price)   AS agg4, 
+               Avg(cs_net_profit)    AS agg5, 
+               Avg(c_birth_year)     AS agg6, 
+               Avg(cd1.cd_dep_count) AS agg7 
 FROM   catalog_sales, 
        customer_demographics cd1, 
        customer_demographics cd2, 
@@ -1264,11 +1252,11 @@ ORDER  BY ca_country,
 
 -- query19
 create table query19 as 
-SELECT i_brand_id              brand_id, 
-               i_brand                 brand, 
+SELECT i_brand_id             as  brand_id, 
+               i_brand           as      brand, 
                i_manufact_id, 
                i_manufact, 
-               Sum(ss_ext_sales_price) ext_price 
+               Sum(ss_ext_sales_price) as ext_price 
 FROM   date_dim, 
        store_sales, 
        item, 
@@ -1375,7 +1363,7 @@ SELECT i_product_name,
                i_brand, 
                i_class, 
                i_category, 
-               Avg(inv_quantity_on_hand) qoh 
+               Avg(inv_quantity_on_hand) as qoh 
 FROM   inventory, 
        date_dim, 
        item, 
@@ -1430,7 +1418,7 @@ WITH frequent_ss_items
          HAVING Sum(ss_quantity * ss_sales_price) > 
                 ( 95 / 100.0 ) * (SELECT * 
                                   FROM   max_store_sales)) 
-SELECT Sum(sales) 
+SELECT Sum(sales) as sales
 FROM   (SELECT cs_quantity * cs_list_price sales 
         FROM   catalog_sales, 
                date_dim 
@@ -1496,7 +1484,7 @@ WITH ssales
 SELECT c_last_name, 
        c_first_name, 
        s_store_name, 
-       Sum(netpaid) paid 
+       Sum(netpaid) as paid 
 FROM   ssales 
 WHERE  i_color = 'papaya' 
 GROUP  BY c_last_name, 
@@ -1779,10 +1767,10 @@ WITH ss
                    d_year) 
 SELECT ss1.ca_county, 
        ss1.d_year, 
-       ws2.web_sales / ws1.web_sales     web_q1_q2_increase, 
-       ss2.store_sales / ss1.store_sales store_q1_q2_increase, 
-       ws3.web_sales / ws2.web_sales     web_q2_q3_increase, 
-       ss3.store_sales / ss2.store_sales store_q2_q3_increase 
+       ws2.web_sales / ws1.web_sales     as web_q1_q2_increase, 
+       ss2.store_sales / ss1.store_sales as store_q1_q2_increase, 
+       ws3.web_sales / ws2.web_sales     as web_q2_q3_increase, 
+       ss3.store_sales / ss2.store_sales as store_q2_q3_increase 
 FROM   ss ss1, 
        ss ss2, 
        ss ss3, 
@@ -1902,7 +1890,7 @@ WITH ss
                 AND ca_gmt_offset = -5 
          GROUP  BY i_manufact_id) 
 SELECT i_manufact_id, 
-               Sum(total_sales) total_sales 
+               Sum(total_sales) as total_sales 
 FROM   (SELECT * 
         FROM   ss 
         UNION ALL 
@@ -1970,20 +1958,20 @@ SELECT ca_state,
                cd_gender, 
                cd_marital_status, 
                cd_dep_count, 
-               Count(*) cnt1, 
-               Stddev_samp(cd_dep_count), 
-               Avg(cd_dep_count), 
-               Max(cd_dep_count), 
+               Count(*)                           as cnt1, 
+               Stddev_samp(cd_dep_count)          as agg1, 
+               Avg(cd_dep_count)                  as agg2, 
+               Max(cd_dep_count)                  as agg3, 
                cd_dep_employed_count, 
-               Count(*) cnt2, 
-               Stddev_samp(cd_dep_employed_count), 
-               Avg(cd_dep_employed_count), 
-               Max(cd_dep_employed_count), 
+               Count(*)                           as cnt2, 
+               Stddev_samp(cd_dep_employed_count) as agg4, 
+               Avg(cd_dep_employed_count)         as agg5, 
+               Max(cd_dep_employed_count)         as agg6, 
                cd_dep_college_count, 
-               Count(*) cnt3, 
-               Stddev_samp(cd_dep_college_count), 
-               Avg(cd_dep_college_count), 
-               Max(cd_dep_college_count) 
+               Count(*)                           as cnt3, 
+               Stddev_samp(cd_dep_college_count)  as agg7, 
+               Avg(cd_dep_college_count)          as agg8, 
+               Max(cd_dep_college_count)          as agg9 
 FROM   customer c, 
        customer_address ca, 
        customer_demographics 
@@ -2026,15 +2014,13 @@ ORDER  BY ca_state,
 
 -- query36
 create table query36 as 
-SELECT Sum(ss_net_profit) / Sum(ss_ext_sales_price)                 AS 
-               gross_margin, 
+SELECT Sum(ss_net_profit) / Sum(ss_ext_sales_price)                         AS gross_margin, 
                i_category, 
                i_class, 
                Rank() 
                  OVER ( 
                    PARTITION BY i_category, i_class 
-                   ORDER BY Sum(ss_net_profit)/Sum(ss_ext_sales_price) ASC) AS 
-               rank_within_parent 
+                   ORDER BY Sum(ss_net_profit)/Sum(ss_ext_sales_price) ASC) AS  rank_within_parent 
 FROM   store_sales, 
        date_dim d1, 
        item, 
@@ -2107,7 +2093,7 @@ WITH g1 AS (
                AND web_sales.ws_bill_customer_sk = customer.c_customer_sk 
                AND d_month_seq BETWEEN 1188 AND 1188 + 11
 )
-SELECT Count(*) 
+SELECT Count(*) as cnt1
 FROM   g1 
 JOIN g2 ON g1.c_last_name = g2.c_last_name AND g1.c_first_name = g2.c_first_name AND g1.d_date = g2.d_date
 JOIN g3 ON g1.c_last_name = g3.c_last_name AND g1.c_first_name = g3.c_first_name AND g1.d_date = g3.d_date
@@ -2283,9 +2269,9 @@ ORDER  BY i_product_name
 -- query42
 create table query42 as 
 SELECT dt.d_year, 
-               item.i_category_id, 
-               item.i_category, 
-               Sum(ss_ext_sales_price) 
+       item.i_category_id, 
+       item.i_category, 
+       Sum(ss_ext_sales_price) as ss_ext_sales_price
 FROM   date_dim dt, 
        store_sales, 
        item 
@@ -2412,7 +2398,7 @@ ORDER  BY asceding.rnk
 create table query45 as 
 SELECT ca_zip, 
                ca_state, 
-               Sum(ws_sales_price) 
+               Sum(ws_sales_price) as ws_sales_price
 FROM   web_sales, 
        customer, 
        customer_address, 
@@ -2560,7 +2546,7 @@ ORDER  BY sum_sales - avg_monthly_sales,
 
 -- query48
 create table query48 as 
-SELECT Sum (ss_quantity) 
+SELECT Sum (ss_quantity) as ss_quantity
 FROM   store_sales, 
        store, 
        customer_demographics, 
@@ -3180,16 +3166,12 @@ WITH ss_items
          GROUP  BY i_item_id) 
 SELECT ss_items.item_id, 
                ss_item_rev, 
-               ss_item_rev / ( ss_item_rev + cs_item_rev + ws_item_rev ) / 3 * 
-               100 ss_dev, 
+               ss_item_rev / ( ss_item_rev + cs_item_rev + ws_item_rev ) / 3 * 100  as ss_dev, 
                cs_item_rev, 
-               cs_item_rev / ( ss_item_rev + cs_item_rev + ws_item_rev ) / 3 * 
-               100 cs_dev, 
+               cs_item_rev / ( ss_item_rev + cs_item_rev + ws_item_rev ) / 3 * 100  as cs_dev, 
                ws_item_rev, 
-               ws_item_rev / ( ss_item_rev + cs_item_rev + ws_item_rev ) / 3 * 
-               100 ws_dev, 
-               ( ss_item_rev + cs_item_rev + ws_item_rev ) / 3 
-               average 
+               ws_item_rev / ( ss_item_rev + cs_item_rev + ws_item_rev ) / 3 * 100  as ws_dev, 
+               ( ss_item_rev + cs_item_rev + ws_item_rev ) / 3                      as average 
 FROM   ss_items, 
        cs_items, 
        ws_items 
@@ -3246,13 +3228,13 @@ WITH wss
 SELECT s_store_name1, 
                s_store_id1, 
                d_week_seq1, 
-               sun_sales1 / sun_sales2, 
-               mon_sales1 / mon_sales2, 
-               tue_sales1 / tue_sales2, 
-               wed_sales1 / wed_sales2, 
-               thu_sales1 / thu_sales2, 
-               fri_sales1 / fri_sales2, 
-               sat_sales1 / sat_sales2 
+               sun_sales1 / sun_sales2 as metric1, 
+               mon_sales1 / mon_sales2 as metric2, 
+               tue_sales1 / tue_sales2 as metric3, 
+               wed_sales1 / wed_sales2 as metric4, 
+               thu_sales1 / thu_sales2 as metric5, 
+               fri_sales1 / fri_sales2 as metric6, 
+               sat_sales1 / sat_sales2 as metric7
 FROM   (SELECT s_store_name   s_store_name1, 
                wss.d_week_seq d_week_seq1, 
                s_store_id     s_store_id1, 
@@ -3364,8 +3346,7 @@ ORDER  BY i_item_id,
 create table query61 as 
 SELECT promotions, 
                total, 
-               promotions / 
-               total * 100 
+               promotions / total * 100 as metric1
 FROM   (SELECT Sum(ss_ext_sales_price) promotions 
         FROM   store_sales, 
                store, 
@@ -3411,7 +3392,7 @@ ORDER  BY promotions,
 
 -- query62
 create table query62 as 
-SELECT Substr(w_warehouse_name, 1, 20), 
+SELECT Substr(w_warehouse_name, 1, 20) as col1, 
                sm_type, 
                web_name, 
                Sum(CASE 
@@ -4698,18 +4679,15 @@ WITH ws
                    ss_item_sk, 
                    ss_customer_sk) 
 SELECT ss_item_sk, 
-               Round(ss_qty / ( COALESCE(ws_qty + cs_qty, 1) ), 2) ratio, 
-               ss_qty                                              store_qty, 
+               Round(ss_qty / ( COALESCE(ws_qty + cs_qty, 1) ), 2)    as ratio, 
+               ss_qty                                                 as store_qty, 
                ss_wc 
                store_wholesale_cost, 
                ss_sp 
                store_sales_price, 
-               COALESCE(ws_qty, 0) + COALESCE(cs_qty, 0) 
-               other_chan_qty, 
-               COALESCE(ws_wc, 0) + COALESCE(cs_wc, 0) 
-               other_chan_wholesale_cost, 
-               COALESCE(ws_sp, 0) + COALESCE(cs_sp, 0) 
-               other_chan_sales_price 
+               COALESCE(ws_qty, 0) + COALESCE(cs_qty, 0)              as other_chan_qty, 
+               COALESCE(ws_wc, 0) + COALESCE(cs_wc, 0)                as other_chan_wholesale_cost, 
+               COALESCE(ws_sp, 0) + COALESCE(cs_sp, 0)                as other_chan_sales_price 
 FROM   ss 
        LEFT JOIN ws 
               ON ( ws_sold_year = ss_sold_year 
@@ -4736,7 +4714,7 @@ ORDER  BY ss_item_sk,
 create table query79 as 
 SELECT c_last_name, 
                c_first_name, 
-               Substr(s_city, 1, 30), 
+               Substr(s_city, 1, 30) as col1, 
                ss_ticket_number, 
                amt, 
                profit 
@@ -5020,16 +4998,12 @@ WITH sr_items
          GROUP  BY i_item_id) 
 SELECT sr_items.item_id, 
                sr_item_qty, 
-               sr_item_qty / ( sr_item_qty + cr_item_qty + wr_item_qty ) / 3.0 * 
-               100 sr_dev, 
+               sr_item_qty / ( sr_item_qty + cr_item_qty + wr_item_qty ) / 3.0 * 100 as sr_dev, 
                cr_item_qty, 
-               cr_item_qty / ( sr_item_qty + cr_item_qty + wr_item_qty ) / 3.0 * 
-               100 cr_dev, 
+               cr_item_qty / ( sr_item_qty + cr_item_qty + wr_item_qty ) / 3.0 * 100 as cr_dev, 
                wr_item_qty, 
-               wr_item_qty / ( sr_item_qty + cr_item_qty + wr_item_qty ) / 3.0 * 
-               100 wr_dev, 
-               ( sr_item_qty + cr_item_qty + wr_item_qty ) / 3.0 
-               average 
+               wr_item_qty / ( sr_item_qty + cr_item_qty + wr_item_qty ) / 3.0 * 100 as wr_dev, 
+               ( sr_item_qty + cr_item_qty + wr_item_qty ) / 3.0                     as average 
 FROM   sr_items, 
        cr_items, 
        wr_items 
@@ -5062,10 +5036,10 @@ ORDER  BY c_customer_id
 
 -- query85
 create table query85 as 
-SELECT Substr(r_reason_desc, 1, 20), 
-               Avg(ws_quantity), 
-               Avg(wr_refunded_cash), 
-               Avg(wr_fee) 
+SELECT Substr(r_reason_desc, 1, 20)       as col1, 
+               Avg(ws_quantity)           as agg1, 
+               Avg(wr_refunded_cash)      as agg2, 
+               Avg(wr_fee)                as agg3
 FROM   web_sales, 
        web_returns, 
        web_page, 
@@ -5157,7 +5131,7 @@ web_customers as (
     and web_sales.ws_bill_customer_sk = customer.c_customer_sk
     and d_month_seq between 1188 and 1188+11
 )
-select count(1) 
+select count(1) as agg1
 from store_customers 
 where not exists (
   select 1 from catalog_customers 
@@ -5174,7 +5148,8 @@ and not exists (
 create table query88 as 
 select  *
 from
- (select count(*) h8_30_to_9
+ (select 
+       count(*) as h8_30_to_9
  from store_sales, household_demographics , time_dim, store
  where ss_sold_time_sk = time_dim.t_time_sk   
      and ss_hdemo_sk = household_demographics.hd_demo_sk 
@@ -5338,10 +5313,10 @@ ORDER  BY am_pm_ratio
 
 -- query91
 create table query91 as 
-SELECT cc_call_center_id Call_Center, 
-       cc_name           Call_Center_Name, 
-       cc_manager        Manager, 
-       Sum(cr_net_loss)  Returns_Loss 
+SELECT cc_call_center_id as Call_Center, 
+       cc_name           as Call_Center_Name, 
+       cc_manager        as Manager, 
+       Sum(cr_net_loss)  as Returns_Loss 
 FROM   call_center, 
        catalog_returns, 
        date_dim, 
@@ -5399,7 +5374,7 @@ ORDER BY sum(ws_ext_discount_amt)
 -- query93
 create table query93 as 
 SELECT ss_customer_sk, 
-               Sum(act_sales) sumsales 
+               Sum(act_sales) as sumsales 
 FROM   (SELECT ss_item_sk, 
                ss_ticket_number, 
                ss_customer_sk, 
@@ -5494,7 +5469,7 @@ ORDER BY count(DISTINCT ws_order_number)
 
 -- query96
 create table query96 as 
-SELECT Count(*) 
+SELECT Count(*) as cnt1
 FROM   store_sales, 
        household_demographics, 
        time_dim, 
@@ -5586,7 +5561,7 @@ ORDER  BY i_category,
 
 -- query99
 create table query99 as 
-SELECT Substr(w_warehouse_name, 1, 22), 
+SELECT Substr(w_warehouse_name, 1, 22) as col1, 
                sm_type, 
                cc_name, 
                Sum(CASE 
@@ -5626,3 +5601,4 @@ WHERE  d_month_seq BETWEEN 1200 AND 1200 + 11
 GROUP  BY 1, 2, 3
 ORDER  BY 1, 2, 3
 ; 
+
