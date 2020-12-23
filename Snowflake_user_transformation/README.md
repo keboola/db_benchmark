@@ -12,3 +12,10 @@
 - `005_Snowflake_results_cpu.csv` - Results (cpu)
 - `006_Snowflake_queries_cpu_io.sql` - Queries writing full resultsets to disk
 - `007_Snowflake_results_cpu_io.csv` - Results (cpu+I/O)
+
+## Quick Results
+
+| TYPE / DWH  | LARGE | XSMALL |
+| ------------- | ------------- |------------- | 
+| SELECT w/ LIMIT  | 181  |  |
+| CREATE TABLE  | 241  |  |
