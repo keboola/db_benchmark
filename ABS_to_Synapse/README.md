@@ -1,7 +1,7 @@
 # Full load from ABS to Synapse
 
 - DWH: DW100 & DW1500
-- DATA: LINEITEM table from (Snowflake)[https://docs.snowflake.com/en/user-guide/sample-data-tpch.html]
+- DATA: LINEITEM table from [Snowflake](https://docs.snowflake.com/en/user-guide/sample-data-tpch.html)
 
 
 ## Files
