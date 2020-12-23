@@ -16,6 +16,6 @@
 ## Quick Results
 
 | TYPE / DWH  | LARGE | XSMALL |
-| ------------- | ------------- |------------- | 
-| SELECT w/ LIMIT  | 181  |  |
-| CREATE TABLE  | 241  |  |
+| --- | ---: | ---: | 
+| SELECT w/ LIMIT | 181 |  |
+| CREATE TABLE | 241 |  |
