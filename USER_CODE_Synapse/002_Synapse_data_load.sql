@@ -9,7 +9,7 @@ with (
         ENCODING = 'UTF8',
         ROWTERMINATOR ='0x0A',
         IDENTITY_INSERT = 'OFF' ,
-        FIRSTROW =2
+        FIRSTROW =1
     )
 ;
 
