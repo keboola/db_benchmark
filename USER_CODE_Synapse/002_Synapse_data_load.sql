@@ -1,7 +1,17 @@
-
+-- load from ABS
 copy into call_center
-from 'https://fivetranbenchmark.blob.core.windows.net/tpcds/tpcds_100_dat/call_center/'
-with (file_type = 'CSV', fieldterminator = '|');
+from 'https://keboolabenchmark.blob.core.windows.net/padak/USER_TRANSF/CSV/FILE_100M/TPCDS_100/CALL_CENTER/*.csv.gz'
+with (
+        FILE_TYPE='CSV',
+        CREDENTIAL =(IDENTITY ='Shared Access Signature', SECRET = '?sv=2019-12-12&ss=bfqt&srt=sco&sp=rwdlacx&se=2020-12-17T06:38:09Z&st=2020-11-16T22:38:09Z&spr=https&sig=xxx'),
+        FIELDQUOTE='"',
+        FIELDTERMINATOR =',',
+        ENCODING = 'UTF8',
+        ROWTERMINATOR ='0x0A',
+        IDENTITY_INSERT = 'OFF' ,
+        FIRSTROW =2
+    )
+;
 
 copy into catalog_page
 from 'https://fivetranbenchmark.blob.core.windows.net/tpcds/tpcds_100_dat/catalog_page/'
