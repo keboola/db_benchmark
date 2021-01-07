@@ -253,7 +253,7 @@ WITH "ssr" AS
                                  "ss_net_profit"      AS "profit",
                                  0                    AS "return_amt",
                                  0                    AS "net_loss"
-                              FROM "store_sales"
+                              FROM "STORE_SALES"
                           UNION ALL
                           SELECT "sr_store_sk"         AS "store_sk",
                                  "sr_returned_date_sk" AS "date_sk",
@@ -261,9 +261,9 @@ WITH "ssr" AS
                                  0                     AS "profit",
                                  "sr_return_amt"       AS "return_amt",
                                  "sr_net_loss"         AS "net_loss"
-                              FROM "store_returns") "salesreturns",
-                      "date_dim",
-                      "store"
+                              FROM "STORE_RETURNS") "SALESRETURNS",
+                      "DATE_DIM",
+                      "STORE"
                  WHERE "date_sk" = "d_date_sk" AND
                        Cast("d_date" AS DATE) BETWEEN Cast('2002-08-22' AS DATE) AND (
                            Cast('2002-09-05' AS DATE)) AND "store_sk" = "s_store_sk"
@@ -282,7 +282,7 @@ WITH "ssr" AS
                                  "cs_net_profit"      AS "profit",
                                  0                    AS "return_amt",
                                  0                    AS "net_loss"
-                              FROM "catalog_sales"
+                              FROM "CATALOG_SALES"
                           UNION ALL
                           SELECT "cr_catalog_page_sk"  AS "page_sk",
                                  "cr_returned_date_sk" AS "date_sk",
@@ -290,9 +290,9 @@ WITH "ssr" AS
                                  0                     AS "profit",
                                  "cr_return_amount"    AS "return_amt",
                                  "cr_net_loss"         AS "net_loss"
-                              FROM "catalog_returns") "salesreturns",
-                      "date_dim",
-                      "catalog_page"
+                              FROM "CATALOG_RETURNS") "SALESRETURNS",
+                      "DATE_DIM",
+                      "CATALOG_PAGE"
                  WHERE "date_sk" = "d_date_sk" AND
                        Cast("d_date" AS DATE) BETWEEN cast('2002-08-22' AS date) AND (
                            Cast('2002-09-05' AS DATE)) AND "page_sk" = "cp_catalog_page_sk"
@@ -311,7 +311,7 @@ WITH "ssr" AS
                                  "ws_net_profit"      AS "profit",
                                  0                    AS "return_amt",
                                  0                    AS "net_loss"
-                              FROM "web_sales"
+                              FROM "WEB_SALES"
                           UNION ALL
                           SELECT "ws_web_site_sk"      AS "wsr_web_site_sk",
                                  "wr_returned_date_sk" AS "date_sk",
@@ -319,20 +319,19 @@ WITH "ssr" AS
                                  0                     AS "profit",
                                  "wr_return_amt"       AS "return_amt",
                                  "wr_net_loss"         AS "net_loss"
-                              FROM "web_returns"
-                                       LEFT OUTER JOIN "web_sales"
+                              FROM "WEB_RETURNS"
+                                       LEFT OUTER JOIN "WEB_SALES"
                                                        ON (
                                                                "wr_item_sk" = "ws_item_sk"
                                                                AND
-                                                               "wr_order_number" = "ws_order_number")) "salesreturns",
-                      "date_dim",
-                      "web_site"
+                                                               "wr_order_number" = "ws_order_number")) "SALESRETURNS",
+                      "DATE_DIM",
+                      "WEB_SITE"
                  WHERE "date_sk" = "d_date_sk" AND
                        Cast("d_date" AS DATE) BETWEEN cast('2002-08-22' AS date) AND (
                            Cast('2002-09-05' AS DATE)) AND "wsr_web_site_sk" = "web_site_sk"
                  GROUP BY "web_site_id")
-SELECT "TOP" 100
-         "channel" ,
+SELECT "channel" ,
        "id",
        sum("sales")    AS "sales",
        sum("returns1") AS "returns1",
@@ -361,40 +360,46 @@ SELECT "TOP" 100
     GROUP BY "channel", "id"
     ORDER BY "channel",
              "id"
+LIMIT 100
+;             
+-- 6.13s
 
 -- query06.sql
 -- query6
-SELECT "TOP" 100 "a"."ca_state" "state", Count(*) AS "cnt"
-    FROM "customer_address" "a",
-         "customer" "c",
-         "store_sales" "s",
-         "date_dim" "d",
-         "item" "i"
+SELECT "a"."ca_state" "state", Count(*) AS "cnt"
+    FROM "CUSTOMER_ADDRESS" "a",
+         "CUSTOMER" "c",
+         "STORE_SALES" "s",
+         "DATE_DIM" "d",
+         "ITEM" "i"
     WHERE "a"."ca_address_sk" = "c"."c_current_addr_sk" AND "c"."c_customer_sk" = "s"."ss_customer_sk" AND
           "s"."ss_sold_date_sk" = "d"."d_date_sk" AND "s"."ss_item_sk" = "i"."i_item_sk" AND
           "d"."d_month_seq" = (SELECT DISTINCT
                                       ("d_month_seq")
-                                   FROM "date_dim"
+                                   FROM "DATE_DIM"
                                    WHERE "d_year" = 1998 AND "d_moy" = 7) AND
           "i"."i_current_price" > 1.2 * (SELECT Avg("j"."i_current_price")
-                                             FROM "item" "j"
+                                             FROM "ITEM" "j"
                                              WHERE "j"."i_category" = "i"."i_category")
     GROUP BY "a"."ca_state"
     HAVING Count(*) >= 10
     ORDER BY "cnt"
+LIMIT 100
+;
+-- 3.05s
 
 -- query07.sql
 -- query7
-SELECT "TOP" 100 "i_item_id",
+SELECT "i_item_id",
        Avg("ss_quantity")    AS "agg1",
        Avg("ss_list_price")  AS "agg2",
        Avg("ss_coupon_amt")  AS "agg3",
        Avg("ss_sales_price") AS "agg4"
-    FROM "store_sales",
-         "customer_demographics",
-         "date_dim",
-         "item",
-         "promotion"
+    FROM "STORE_SALES",
+         "CUSTOMER_DEMOGRAPHICS",
+         "DATE_DIM",
+         "ITEM",
+         "PROMOTION"
     WHERE "ss_sold_date_sk" = "d_date_sk" AND "ss_item_sk" = "i_item_sk" AND "ss_cdemo_sk" = "cd_demo_sk" AND
           "ss_promo_sk" = "p_promo_sk" AND "cd_gender" = 'F' AND "cd_marital_status" = 'W' AND
           "cd_education_status" = '2 yr Degree' AND
@@ -402,6 +407,9 @@ SELECT "TOP" 100 "i_item_id",
               OR "p_channel_event" = 'N') AND "d_year" = 1998
     GROUP BY "i_item_id"
     ORDER BY "i_item_id"
+LIMIT 100
+;    
+-- 0.6s
 
 -- query08.sql
 -- query8
