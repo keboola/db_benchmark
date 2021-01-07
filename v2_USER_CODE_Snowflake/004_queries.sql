@@ -6,8 +6,8 @@ WITH "customer_total_return"
          AS (SELECT "sr_customer_sk"     AS "ctr_customer_sk",
                     "sr_store_sk"        AS "ctr_store_sk",
                     Sum("sr_return_amt") AS "ctr_total_return"
-                 FROM "STORE_RETURNS",
-                      "DATE_DIM"
+                 FROM "store_returns",
+                      "date_dim"
                  WHERE "sr_returned_date_sk" = "d_date_sk" AND "d_year" = 2001
                  GROUP BY "sr_customer_sk",
                           "sr_store_sk"),
@@ -19,8 +19,8 @@ WITH "customer_total_return"
      )
 SELECT "c_customer_id"
     FROM "customer_total_return" "ctr1",
-         "STORE",
-         "CUSTOMER",
+         "store",
+         "customer",
          "high_return"
     WHERE "ctr1"."ctr_total_return" > "high_return"."return_limit" AND "s_store_sk" = "ctr1"."ctr_store_sk" AND
           "s_state" = 'TN' AND "ctr1"."ctr_customer_sk" = "c_customer_sk" AND
@@ -28,7 +28,6 @@ SELECT "c_customer_id"
     ORDER BY "c_customer_id"
     limit 10
 ;
--- 5.10s
 
 -- query02.sql
 -- query2
@@ -37,11 +36,11 @@ WITH "wscs"
                     "sales_price"
                  FROM (SELECT "ws_sold_date_sk"    AS "sold_date_sk",
                               "ws_ext_sales_price" AS "sales_price"
-                           FROM "WEB_SALES") "q"
+                           FROM "web_sales") "q"
              UNION ALL
              (SELECT "cs_sold_date_sk"    AS "sold_date_sk",
                      "cs_ext_sales_price" AS "sales_price"
-                  FROM "CATALOG_SALES")),
+                  FROM "catalog_sales")),
      "wswscs"
          AS (SELECT "d_week_seq",
                     Sum(CASE
@@ -80,7 +79,7 @@ WITH "wscs"
                         ELSE NULL
                         END) AS "sat_sales"
                  FROM "wscs",
-                      "DATE_DIM"
+                      "date_dim"
                  WHERE "d_date_sk" = "sold_date_sk"
                  GROUP BY "d_week_seq")
 SELECT "d_week_seq1",
@@ -100,8 +99,8 @@ SELECT "d_week_seq1",
                  "fri_sales"           AS "fri_sales1",
                  "sat_sales"           AS "sat_sales1"
               FROM "wswscs",
-                   "DATE_DIM"
-              WHERE "DATE_DIM"."d_week_seq" = "wswscs"."d_week_seq" AND "d_year" = 1998) "y",
+                   "date_dim"
+              WHERE "date_dim"."d_week_seq" = "wswscs"."d_week_seq" AND "d_year" = 1998) "y",
          (SELECT "wswscs"."d_week_seq" AS "d_week_seq2",
                  "sun_sales"           AS "sun_sales2",
                  "mon_sales"           AS "mon_sales2",
@@ -111,33 +110,31 @@ SELECT "d_week_seq1",
                  "fri_sales"           AS "fri_sales2",
                  "sat_sales"           AS "sat_sales2"
               FROM "wswscs",
-                   "DATE_DIM"
-              WHERE "DATE_DIM"."d_week_seq" = "wswscs"."d_week_seq" AND "d_year" = 1998 + 1) "z"
+                   "date_dim"
+              WHERE "date_dim"."d_week_seq" = "wswscs"."d_week_seq" AND "d_year" = 1998 + 1) "z"
     WHERE "d_week_seq1" = "d_week_seq2" - 53
     ORDER BY "d_week_seq1"
 ;
--- 4.04s
 
 -- query03.sql
 -- query3
 SELECT "dt"."d_year",
-       "ITEM"."i_brand_id"        AS "brand_id",
-       "ITEM"."i_brand"           AS "brand",
+       "item"."i_brand_id"        AS "brand_id",
+       "item"."i_brand"           AS "brand",
        Sum("ss_ext_discount_amt") AS "sum_agg"
-    FROM "DATE_DIM" "dt",
-         "STORE_SALES",
-         "ITEM"
-    WHERE "dt"."d_date_sk" = "STORE_SALES"."ss_sold_date_sk" AND "STORE_SALES"."ss_item_sk" = "ITEM"."i_item_sk" AND
-          "ITEM"."i_manufact_id" = 427 AND "dt"."d_moy" = 11
+    FROM "date_dim" "dt",
+         "store_sales",
+         "item"
+    WHERE "dt"."d_date_sk" = "store_sales"."ss_sold_date_sk" AND "store_sales"."ss_item_sk" = "item"."i_item_sk" AND
+          "item"."i_manufact_id" = 427 AND "dt"."d_moy" = 11
     GROUP BY "dt"."d_year",
-             "ITEM"."i_brand",
-             "ITEM"."i_brand_id"
+             "item"."i_brand",
+             "item"."i_brand_id"
     ORDER BY "dt"."d_year",
              "sum_agg" DESC,
              "brand_id"
 LIMIT 100
 ;
--- 2.95s
 
 -- query04.sql
 -- query4
@@ -150,9 +147,9 @@ WITH "year_total"
                         +
                          "ss_ext_sales_price") / 2) AS "year_total",
                     's'                             AS "sale_type"
-                 FROM "CUSTOMER",
-                      "STORE_SALES",
-                      "DATE_DIM"
+                 FROM "customer",
+                      "store_sales",
+                      "date_dim"
                  WHERE "c_customer_sk" = "ss_customer_sk" AND "ss_sold_date_sk" = "d_date_sk"
                  GROUP BY "c_customer_id",
                           "d_year"
@@ -165,9 +162,9 @@ WITH "year_total"
                               ) +
                           "cs_ext_sales_price") / 2)) AS "year_total",
                     'c'                               AS "sale_type"
-                 FROM "CUSTOMER",
-                      "CATALOG_SALES",
-                      "DATE_DIM"
+                 FROM "customer",
+                      "catalog_sales",
+                      "date_dim"
                  WHERE "c_customer_sk" = "cs_bill_customer_sk" AND "cs_sold_date_sk" = "d_date_sk"
                  GROUP BY "c_customer_id",
                           "d_year"
@@ -180,29 +177,29 @@ WITH "year_total"
                               ) +
                           "ws_ext_sales_price") / 2)) AS "year_total",
                     'w'                               AS "sale_type"
-                 FROM "CUSTOMER",
-                      "WEB_SALES",
-                      "DATE_DIM"
+                 FROM "customer",
+                      "web_sales",
+                      "date_dim"
                  WHERE "c_customer_sk" = "ws_bill_customer_sk" AND "ws_sold_date_sk" = "d_date_sk"
                  GROUP BY "c_customer_id",
                           "d_year")
 SELECT "t_s_secyear"."customer_id",
-       "CUSTOMER"."c_first_name",
-       "CUSTOMER"."c_last_name",
-       "CUSTOMER"."c_preferred_cust_flag"
+       "customer"."c_first_name",
+       "customer"."c_last_name",
+       "customer"."c_preferred_cust_flag"
     FROM "year_total" "t_s_firstyear",
          "year_total" "t_s_secyear",
          "year_total" "t_c_firstyear",
          "year_total" "t_c_secyear",
          "year_total" "t_w_firstyear",
          "year_total" "t_w_secyear",
-         "CUSTOMER"
+         "customer"
     WHERE "t_s_secyear"."customer_id" = "t_s_firstyear"."customer_id" AND
           "t_s_firstyear"."customer_id" = "t_c_secyear"."customer_id" AND
           "t_s_firstyear"."customer_id" = "t_c_firstyear"."customer_id" AND
           "t_s_firstyear"."customer_id" = "t_w_firstyear"."customer_id" AND
           "t_s_firstyear"."customer_id" = "t_w_secyear"."customer_id" AND
-          "t_s_secyear"."customer_id" = "CUSTOMER"."c_customer_id" AND "t_s_firstyear"."sale_type" = 's' AND
+          "t_s_secyear"."customer_id" = "customer"."c_customer_id" AND "t_s_firstyear"."sale_type" = 's' AND
           "t_c_firstyear"."sale_type" = 'c' AND "t_w_firstyear"."sale_type" = 'w' AND
           "t_s_secyear"."sale_type" = 's' AND "t_c_secyear"."sale_type" = 'c' AND "t_w_secyear"."sale_type" = 'w' AND
           "t_s_firstyear"."dyear" = 2001 AND "t_s_secyear"."dyear" = 2001 + 1 AND "t_c_firstyear"."dyear" = 2001 AND
@@ -235,7 +232,6 @@ SELECT "t_s_secyear"."customer_id",
     ORDER BY "t_s_secyear"."customer_id"
 LIMIT 100    
 ;
--- 9.22s
 
 -- query05.sql
 -- query5
@@ -253,7 +249,7 @@ WITH "ssr" AS
                                  "ss_net_profit"      AS "profit",
                                  0                    AS "return_amt",
                                  0                    AS "net_loss"
-                              FROM "STORE_SALES"
+                              FROM "store_sales"
                           UNION ALL
                           SELECT "sr_store_sk"         AS "store_sk",
                                  "sr_returned_date_sk" AS "date_sk",
@@ -261,9 +257,9 @@ WITH "ssr" AS
                                  0                     AS "profit",
                                  "sr_return_amt"       AS "return_amt",
                                  "sr_net_loss"         AS "net_loss"
-                              FROM "STORE_RETURNS") "SALESRETURNS",
-                      "DATE_DIM",
-                      "STORE"
+                              FROM "store_returns") "salesreturns",
+                      "date_dim",
+                      "store"
                  WHERE "date_sk" = "d_date_sk" AND
                        Cast("d_date" AS DATE) BETWEEN Cast('2002-08-22' AS DATE) AND (
                            Cast('2002-09-05' AS DATE)) AND "store_sk" = "s_store_sk"
@@ -282,7 +278,7 @@ WITH "ssr" AS
                                  "cs_net_profit"      AS "profit",
                                  0                    AS "return_amt",
                                  0                    AS "net_loss"
-                              FROM "CATALOG_SALES"
+                              FROM "catalog_sales"
                           UNION ALL
                           SELECT "cr_catalog_page_sk"  AS "page_sk",
                                  "cr_returned_date_sk" AS "date_sk",
@@ -290,9 +286,9 @@ WITH "ssr" AS
                                  0                     AS "profit",
                                  "cr_return_amount"    AS "return_amt",
                                  "cr_net_loss"         AS "net_loss"
-                              FROM "CATALOG_RETURNS") "SALESRETURNS",
-                      "DATE_DIM",
-                      "CATALOG_PAGE"
+                              FROM "catalog_returns") "salesreturns",
+                      "date_dim",
+                      "catalog_page"
                  WHERE "date_sk" = "d_date_sk" AND
                        Cast("d_date" AS DATE) BETWEEN cast('2002-08-22' AS date) AND (
                            Cast('2002-09-05' AS DATE)) AND "page_sk" = "cp_catalog_page_sk"
@@ -311,7 +307,7 @@ WITH "ssr" AS
                                  "ws_net_profit"      AS "profit",
                                  0                    AS "return_amt",
                                  0                    AS "net_loss"
-                              FROM "WEB_SALES"
+                              FROM "web_sales"
                           UNION ALL
                           SELECT "ws_web_site_sk"      AS "wsr_web_site_sk",
                                  "wr_returned_date_sk" AS "date_sk",
@@ -319,14 +315,14 @@ WITH "ssr" AS
                                  0                     AS "profit",
                                  "wr_return_amt"       AS "return_amt",
                                  "wr_net_loss"         AS "net_loss"
-                              FROM "WEB_RETURNS"
-                                       LEFT OUTER JOIN "WEB_SALES"
+                              FROM "web_returns"
+                                       LEFT OUTER JOIN "web_sales"
                                                        ON (
                                                                "wr_item_sk" = "ws_item_sk"
                                                                AND
-                                                               "wr_order_number" = "ws_order_number")) "SALESRETURNS",
-                      "DATE_DIM",
-                      "WEB_SITE"
+                                                               "wr_order_number" = "ws_order_number")) "salesreturns",
+                      "date_dim",
+                      "web_site"
                  WHERE "date_sk" = "d_date_sk" AND
                        Cast("d_date" AS DATE) BETWEEN cast('2002-08-22' AS date) AND (
                            Cast('2002-09-05' AS DATE)) AND "wsr_web_site_sk" = "web_site_sk"
@@ -362,31 +358,29 @@ SELECT "channel" ,
              "id"
 LIMIT 100
 ;             
--- 6.13s
 
 -- query06.sql
 -- query6
 SELECT "a"."ca_state" "state", Count(*) AS "cnt"
-    FROM "CUSTOMER_ADDRESS" "a",
-         "CUSTOMER" "c",
-         "STORE_SALES" "s",
-         "DATE_DIM" "d",
-         "ITEM" "i"
+    FROM "customer_address" "a",
+         "customer" "c",
+         "store_sales" "s",
+         "date_dim" "d",
+         "item" "i"
     WHERE "a"."ca_address_sk" = "c"."c_current_addr_sk" AND "c"."c_customer_sk" = "s"."ss_customer_sk" AND
           "s"."ss_sold_date_sk" = "d"."d_date_sk" AND "s"."ss_item_sk" = "i"."i_item_sk" AND
           "d"."d_month_seq" = (SELECT DISTINCT
                                       ("d_month_seq")
-                                   FROM "DATE_DIM"
+                                   FROM "date_dim"
                                    WHERE "d_year" = 1998 AND "d_moy" = 7) AND
           "i"."i_current_price" > 1.2 * (SELECT Avg("j"."i_current_price")
-                                             FROM "ITEM" "j"
+                                             FROM "item" "j"
                                              WHERE "j"."i_category" = "i"."i_category")
     GROUP BY "a"."ca_state"
     HAVING Count(*) >= 10
     ORDER BY "cnt"
 LIMIT 100
 ;
--- 3.05s
 
 -- query07.sql
 -- query7
@@ -395,11 +389,11 @@ SELECT "i_item_id",
        Avg("ss_list_price")  AS "agg2",
        Avg("ss_coupon_amt")  AS "agg3",
        Avg("ss_sales_price") AS "agg4"
-    FROM "STORE_SALES",
-         "CUSTOMER_DEMOGRAPHICS",
-         "DATE_DIM",
-         "ITEM",
-         "PROMOTION"
+    FROM "store_sales",
+         "customer_demographics",
+         "date_dim",
+         "item",
+         "promotion"
     WHERE "ss_sold_date_sk" = "d_date_sk" AND "ss_item_sk" = "i_item_sk" AND "ss_cdemo_sk" = "cd_demo_sk" AND
           "ss_promo_sk" = "p_promo_sk" AND "cd_gender" = 'F' AND "cd_marital_status" = 'W' AND
           "cd_education_status" = '2 yr Degree' AND
@@ -409,13 +403,12 @@ SELECT "i_item_id",
     ORDER BY "i_item_id"
 LIMIT 100
 ;    
--- 0.6s
 
 -- query08.sql
 -- query8
 WITH "ca_zips" AS (
     SELECT Substring("ca_zip", 1, 5) AS "ca_zip"
-        FROM "CUSTOMER_ADDRESS"
+        FROM "customer_address"
         WHERE Substring("ca_zip", 1, 5) IN ('67436', '26121', '38443',
                                             '63157',
                                             '68856', '19485', '86425',
@@ -621,8 +614,8 @@ WITH "ca_zips" AS (
          SELECT "ca_zip"
              FROM (SELECT Substring("ca_zip", 1, 5) AS "ca_zip",
                           Count(*)                  AS "cnt"
-                       FROM "CUSTOMER_ADDRESS",
-                            "CUSTOMER"
+                       FROM "customer_address",
+                            "customer"
                        WHERE "ca_address_sk" = "c_current_addr_sk" AND "c_preferred_cust_flag" = 'Y'
                        GROUP BY "ca_zip"
                        HAVING Count(*) > 10) "T"
@@ -633,9 +626,9 @@ WITH "ca_zips" AS (
              WHERE "ca_zip" IN (SELECT "ca_zip" FROM "common_zips")
      )
 SELECT "s_store_name", Sum("ss_net_profit")
-    FROM "STORE_SALES",
-         "DATE_DIM",
-         "STORE",
+    FROM "store_sales",
+         "date_dim",
+         "store",
          "common_zips"
     WHERE "ss_store_sk" = "s_store_sk" AND "ss_sold_date_sk" = "d_date_sk" AND "d_qoy" = 2 AND "d_year" = 2000 AND
           (Substring("s_zip", 1, 2) = Substring("ca_zip", 1, 2))
@@ -643,7 +636,6 @@ SELECT "s_store_name", Sum("ss_net_profit")
     ORDER BY "s_store_name"
 LIMIT 100
 ;    
--- 19.46s
 
 -- query09.sql
 -- query9
@@ -713,7 +705,7 @@ SELECT CASE
 
 -- query10.sql
 -- query10
-SELECT "TOP" 100 "cd_gender",
+SELECT "cd_gender",
        "cd_marital_status",
        "cd_education_status",
        Count(*) AS "cnt1",
@@ -766,6 +758,8 @@ SELECT "TOP" 100 "cd_gender",
              "cd_dep_count",
              "cd_dep_employed_count",
              "cd_dep_college_count"
+LIMIT 100
+;
 
 -- query11.sql
 -- query11
@@ -827,7 +821,7 @@ WITH "year_total"
                           "c_login",
                           "c_email_address",
                           "d_year")
-SELECT "TOP" 100 "t_s_secyear"."customer_id",
+SELECT "t_s_secyear"."customer_id",
        "t_s_secyear"."customer_first_name",
        "t_s_secyear"."customer_last_name",
        "t_s_secyear"."customer_birth_country"
@@ -857,11 +851,12 @@ SELECT "TOP" 100 "t_s_secyear"."customer_id",
              "t_s_secyear"."customer_first_name",
              "t_s_secyear"."customer_last_name",
              "t_s_secyear"."customer_birth_country"
+LIMIT 100
+;
 
 -- query12.sql
 -- query12
-SELECT "TOP" 100
-         "i_item_id" ,
+SELECT "i_item_id" ,
        "i_item_desc",
        "i_category",
        "i_class",
@@ -887,6 +882,9 @@ SELECT "TOP" 100
              "i_item_id",
              "i_item_desc",
              "revenueratio"
+LIMIT 100
+;
+             
 
 -- query13.sql
 -- query13
@@ -1004,7 +1002,7 @@ WITH "item_ss" AS (
                            FROM "web_sales",
                                 "date_dim"
                            WHERE "ws_sold_date_sk" = "d_date_sk" AND "d_year" BETWEEN 1999 AND 1999 + 2) "x")
-SELECT "TOP" 100 "channel",
+SELECT "channel",
        "i_brand_id",
        "i_class_id",
        "i_category_id",
@@ -1068,10 +1066,13 @@ SELECT "TOP" 100 "channel",
              "i_brand_id",
              "i_class_id",
              "i_category_id"
+LIMIT 100
+;
+             
 
 -- query15.sql
 -- query15
-SELECT "TOP" 100 "ca_zip", Sum("cs_sales_price")
+SELECT "ca_zip", Sum("cs_sales_price")
     FROM "catalog_sales",
          "customer",
          "customer_address",
@@ -1084,11 +1085,13 @@ SELECT "TOP" 100 "ca_zip", Sum("cs_sales_price")
               OR "cs_sales_price" > 500) AND "cs_sold_date_sk" = "d_date_sk" AND "d_qoy" = 1 AND "d_year" = 1998
     GROUP BY "ca_zip"
     ORDER BY "ca_zip"
+LIMIT 100
+;
+    
 
 -- query16.sql
 -- query16
-SELECT "TOP" 100
-         Count(DISTINCT "cs_order_number") AS "order_count" ,
+SELECT Count(DISTINCT "cs_order_number") AS "order_count" ,
        Sum("cs_ext_ship_cost") AS "total_shipping_cost",
        Sum("cs_net_profit")    AS "total_net_profit"
     FROM "catalog_sales" "cs1",
@@ -1116,35 +1119,38 @@ SELECT "TOP" 100
                  FROM "catalog_returns" "cr1"
                  WHERE "cs1"."cs_order_number" = "cr1"."cr_order_number")
     ORDER BY count(DISTINCT "cs_order_number")
+LIMIT 100
+;
+    
 
 -- query17.sql
 -- query17
-SELECT "TOP" 100 "i_item_id",
+SELECT "i_item_id",
        "i_item_desc",
        "s_state",
        Count("ss_quantity")                                      AS
            "store_sales_quantitycount",
        Avg("ss_quantity")                                        AS
            "store_sales_quantityave",
-       "Stdev"("ss_quantity")                                    AS
+       Stddev("ss_quantity")                                    AS
            "store_sales_quantitystdev",
-       "Stdev"("ss_quantity") / Avg("ss_quantity")               AS
+       Stddev("ss_quantity") / Avg("ss_quantity")               AS
            "store_sales_quantitycov",
        Count("sr_return_quantity")                               AS
            "store_returns_quantitycount",
        Avg("sr_return_quantity")                                 AS
            "store_returns_quantityave",
-       "Stdev"("sr_return_quantity")                             AS
+       Stddev("sr_return_quantity")                             AS
            "store_returns_quantitystdev",
-       "Stdev"("sr_return_quantity") / Avg("sr_return_quantity") AS
+       Stddev("sr_return_quantity") / Avg("sr_return_quantity") AS
            "store_returns_quantitycov",
        Count("cs_quantity")                                      AS
            "catalog_sales_quantitycount",
        Avg("cs_quantity")                                        AS
            "catalog_sales_quantityave",
-       "Stdev"("cs_quantity") / Avg("cs_quantity")               AS
+       Stddev("cs_quantity") / Avg("cs_quantity")               AS
            "catalog_sales_quantitystdev",
-       "Stdev"("cs_quantity") / Avg("cs_quantity")               AS
+       Stddev("cs_quantity") / Avg("cs_quantity")               AS
            "catalog_sales_quantitycov"
     FROM "store_sales",
          "store_returns",
@@ -1166,10 +1172,13 @@ SELECT "TOP" 100 "i_item_id",
     ORDER BY "i_item_id",
              "i_item_desc",
              "s_state"
+LIMIT 100
+;
+            
 
 -- query18.sql
 -- query18
-SELECT "TOP" 100 "i_item_id",
+SELECT "i_item_id",
        "ca_country",
        "ca_state",
        "ca_county",
@@ -1200,11 +1209,13 @@ SELECT "TOP" 100 "i_item_id",
              "ca_state",
              "ca_county",
              "i_item_id"
+LIMIT 100
+;
+             
 
 -- query19.sql
 -- query19
-SELECT "TOP" 100
-               "i_brand_id"              "brand_id",
+SELECT "i_brand_id"              "brand_id",
        "i_brand"                 AS "brand",
        "i_manufact_id",
        "i_manufact",
@@ -1227,11 +1238,13 @@ SELECT "TOP" 100
              "i_brand_id",
              "i_manufact_id",
              "i_manufact"
+LIMIT 100
+;
+            
 
 -- query20.sql
 -- query20
-SELECT "TOP" 100
-         "i_item_id" ,
+SELECT "i_item_id" ,
        "i_item_desc",
        "i_category",
        "i_class",
@@ -1257,11 +1270,13 @@ SELECT "TOP" 100
              "i_item_id",
              "i_item_desc",
              "revenueratio"
+LIMIT 100
+;
+            
 
 -- query21.sql
 -- query21
-SELECT "TOP" 100
-         *
+SELECT *
     FROM (
              SELECT "w_warehouse_name",
                     "i_item_id",
@@ -1297,11 +1312,13 @@ SELECT "TOP" 100
                   END) BETWEEN 2.0 / 3.0 AND 3.0 / 2.0
     ORDER BY "w_warehouse_name",
              "i_item_id"
+LIMIT 100
+;
+            
 
 -- query22.sql
 -- query22
-SELECT "TOP" 100
-               "i_product_name",
+SELECT "i_product_name",
        "i_brand",
        "i_class",
        "i_category",
@@ -1318,6 +1335,8 @@ SELECT "TOP" 100
              "i_brand",
              "i_class",
              "i_category"
+LIMIT 100
+;             
 
 -- query23a.sql
 -- query23 original
@@ -1357,7 +1376,7 @@ with "frequent_ss_items" as
               group by "c_customer_sk"
               having sum("ss_quantity" * "ss_sales_price") > (95 / 100.0) * (select *
                                                                                  from "max_store_sales"))
-select "top" 100 "c_last_name",
+select "c_last_name",
        "c_first_name",
        "sales"
     from (select "c_last_name",
@@ -1388,6 +1407,9 @@ select "top" 100 "c_last_name",
                     "ws_bill_customer_sk" = "c_customer_sk"
               group by "c_last_name", "c_first_name") "jjj"
     order by "c_last_name", "c_first_name", "sales"
+LIMIT 100
+;
+  
 
 -- query24.sql
 -- query24
@@ -1438,7 +1460,7 @@ SELECT "c_last_name",
 
 -- query25.sql
 -- query25
-SELECT "TOP" 100 "i_item_id",
+SELECT "i_item_id",
        "i_item_desc",
        "s_store_id",
        "s_store_name",
@@ -1467,10 +1489,12 @@ SELECT "TOP" 100 "i_item_id",
              "i_item_desc",
              "s_store_id",
              "s_store_name"
+LIMIT 100
+;
 
 -- query26.sql
 -- query26
-SELECT "TOP" 100 "i_item_id",
+SELECT "i_item_id",
        Avg("cs_quantity")    AS "agg1",
        Avg("cs_list_price")  AS "agg2",
        Avg("cs_coupon_amt")  AS "agg3",
@@ -1487,10 +1511,13 @@ SELECT "TOP" 100 "i_item_id",
               OR "p_channel_event" = 'N') AND "d_year" = 2000
     GROUP BY "i_item_id"
     ORDER BY "i_item_id"
+LIMIT 100
+;
+    
 
 -- query27.sql
 -- query27
-SELECT "TOP" 100 "i_item_id",
+SELECT "i_item_id",
        "s_state",
        Avg("ss_quantity")    AS "agg1",
        Avg("ss_list_price")  AS "agg2",
@@ -1509,10 +1536,12 @@ SELECT "TOP" 100 "i_item_id",
     GROUP BY "i_item_id", "s_state"
     ORDER BY "i_item_id",
              "s_state"
+LIMIT 100
+;             
 
 -- query28.sql
 -- query28
-SELECT "TOP" 100 *
+SELECT *
     FROM (SELECT Avg("ss_list_price")            AS "B1_LP",
                  Count("ss_list_price")          AS "B1_CNT",
                  Count(DISTINCT "ss_list_price") AS "B1_CNTD"
@@ -1561,10 +1590,12 @@ SELECT "TOP" 100 *
                     ("ss_list_price" BETWEEN 174 AND 174 + 10
                         OR "ss_coupon_amt" BETWEEN 5548 AND 5548 + 1000
                         OR "ss_wholesale_cost" BETWEEN 42 AND 42 + 20)) "B6"
+LIMIT 100
+;                        
 
 -- query29.sql
 -- query29
-SELECT "TOP" 100 "i_item_id",
+SELECT "i_item_id",
        "i_item_desc",
        "s_store_id",
        "s_store_name",
@@ -1593,6 +1624,9 @@ SELECT "TOP" 100 "i_item_id",
              "i_item_desc",
              "s_store_id",
              "s_store_name"
+LIMIT 100
+;
+             
 
 -- query30.sql
 -- query30
@@ -1607,7 +1641,7 @@ WITH "customer_total_return"
                        "wr_returning_addr_sk" = "ca_address_sk"
                  GROUP BY "wr_returning_customer_sk",
                           "ca_state")
-SELECT "TOP" 100 "c_customer_id",
+SELECT "c_customer_id",
        "c_salutation",
        "c_first_name",
        "c_last_name",
@@ -1640,6 +1674,8 @@ SELECT "TOP" 100 "c_customer_id",
              "c_email_address",
              "c_last_review_date",
              "ctr_total_return"
+LIMIT 100
+;             
 
 -- query31.sql
 -- query31
@@ -1710,8 +1746,7 @@ SELECT "ss1"."ca_county",
 
 -- query32.sql
 -- query32
-SELECT "TOP" 100
-       Sum("cs_ext_discount_amt") AS "excess_discount_amount"
+SELECT Sum("cs_ext_discount_amt") AS "excess_discount_amount"
     FROM "catalog_sales",
          "item",
          "date_dim"
@@ -1726,6 +1761,9 @@ SELECT "TOP" 100
                   WHERE "cs_item_sk" = "i_item_sk" AND
                         Cast("d_date" AS DATE) BETWEEN Cast('2001-03-04' AS DATE) AND (
                             Cast('2001-06-03' AS DATE)) AND "d_date_sk" = "cs_sold_date_sk")
+LIMIT 100
+;
+
 
 -- query33.sql
 -- query33
@@ -1768,7 +1806,7 @@ WITH "ss"
                        "ws_sold_date_sk" = "d_date_sk" AND "d_year" = 1999 AND "d_moy" = 3 AND
                        "ws_bill_addr_sk" = "ca_address_sk" AND "ca_gmt_offset" = -5
                  GROUP BY "i_manufact_id")
-SELECT "TOP" 100 "i_manufact_id", Sum("total_sales") AS "total_sales"
+SELECT "i_manufact_id", Sum("total_sales") AS "total_sales"
     FROM (SELECT *
               FROM "ss"
           UNION ALL
@@ -1779,6 +1817,9 @@ SELECT "TOP" 100 "i_manufact_id", Sum("total_sales") AS "total_sales"
               FROM "ws") "tmp1"
     GROUP BY "i_manufact_id"
     ORDER BY "total_sales"
+LIMIT 100
+;
+
 
 -- query34.sql
 -- query34
@@ -1829,7 +1870,7 @@ SELECT "c_last_name",
 
 -- query35.sql
 -- query35
-SELECT "TOP" 100 "ca_state",
+SELECT "ca_state",
        "cd_gender",
        "cd_marital_status",
        "cd_dep_count",
@@ -1878,10 +1919,13 @@ SELECT "TOP" 100 "ca_state",
              "cd_dep_count",
              "cd_dep_employed_count",
              "cd_dep_college_count"
+LIMIT 100
+;
+
 
 -- query36.sql
 -- query36
-SELECT "TOP" 100 Sum("ss_net_profit") / Sum("ss_ext_sales_price")                 AS 
+SELECT Sum("ss_net_profit") / Sum("ss_ext_sales_price")                 AS 
                "gross_margin",
        "i_category",
        "i_class",
@@ -1901,11 +1945,13 @@ SELECT "TOP" 100 Sum("ss_net_profit") / Sum("ss_ext_sales_price")               
     GROUP BY "i_category", "i_class"
     ORDER BY "i_category",
              "rank_within_parent"
+LIMIT 100
+;
+
 
 -- query37.sql
 -- query37
-SELECT "TOP" 100
-         "i_item_id" ,
+SELECT "i_item_id" ,
        "i_item_desc",
        "i_current_price"
     FROM "item",
@@ -1920,6 +1966,9 @@ SELECT "TOP" 100
              "i_item_desc",
              "i_current_price"
     ORDER BY "i_item_id"
+LIMIT 100
+;
+
 
 -- query38.sql
 -- query38
@@ -1958,12 +2007,15 @@ WITH "g1" AS (
                    "web_sales"."ws_bill_customer_sk" = "customer"."c_customer_sk" AND
                    "d_month_seq" BETWEEN 1188 AND 1188 + 11
      )
-SELECT "TOP" 100 Count(*)
+SELECT Count(*)
     FROM "g1"
              JOIN "g2" ON "g1"."c_last_name" = "g2"."c_last_name" AND "g1"."c_first_name" = "g2"."c_first_name" AND
                           "g1"."d_date" = "g2"."d_date"
              JOIN "g3" ON "g1"."c_last_name" = "g3"."c_last_name" AND "g1"."c_first_name" = "g3"."c_first_name" AND
                           "g1"."d_date" = "g3"."d_date"
+LIMIT 100
+;
+
 
 -- query39.sql
 -- query39
@@ -2026,8 +2078,7 @@ SELECT "inv1"."w_warehouse_sk",
 
 -- query40.sql
 -- query40
-SELECT "TOP" 100
-                "w_state" ,
+SELECT "w_state" ,
        "i_item_id",
        Sum(
           CASE
@@ -2058,11 +2109,13 @@ SELECT "TOP" 100
              "i_item_id"
     ORDER BY "w_state",
              "i_item_id"
+LIMIT 100
+;
+
 
 -- query41.sql
 -- query41
 SELECT Distinct
-       "TOP" 100
   "i_product_name"
     FROM "item" "i1"
     WHERE "i_manufact_id" BETWEEN 765 AND 765 + 40 AND
@@ -2127,10 +2180,13 @@ SELECT Distinct
                                  AND ("i_size" = 'economy'
                                      OR "i_size" = 'petite'))))) > 0
     ORDER BY "i_product_name"
+LIMIT 100
+;
+
 
 -- query42.sql
 -- query42
-SELECT "TOP" 100 "dt"."d_year",
+SELECT "dt"."d_year",
        "item"."i_category_id",
        "item"."i_category",
        Sum("ss_ext_sales_price")
@@ -2146,10 +2202,13 @@ SELECT "TOP" 100 "dt"."d_year",
              "dt"."d_year",
              "item"."i_category_id",
              "item"."i_category"
+LIMIT 100
+;
+
 
 -- query43.sql
 -- query43
-SELECT "TOP" 100 "s_store_name",
+SELECT "s_store_name",
        "s_store_id",
        Sum(CASE
            WHEN ("d_day_name" = 'Sunday')
@@ -2201,10 +2260,13 @@ SELECT "TOP" 100 "s_store_name",
              "thu_sales",
              "fri_sales",
              "sat_sales"
+LIMIT 100
+;
+
 
 -- query44.sql
 -- query44
-SELECT "TOP" 100 "asceding"."rnk",
+SELECT "asceding"."rnk",
        "i1"."i_product_name" AS "best_performing",
        "i2"."i_product_name" AS "worst_performing"
     FROM (SELECT *
@@ -2248,10 +2310,13 @@ SELECT "TOP" 100 "asceding"."rnk",
     WHERE "asceding"."rnk" = "descending"."rnk" AND "i1"."i_item_sk" = "asceding"."item_sk" AND
           "i2"."i_item_sk" = "descending"."item_sk"
     ORDER BY "asceding"."rnk"
+LIMIT 100
+;
+
 
 -- query45.sql
 -- query45
-SELECT "TOP" 100 "ca_zip",
+SELECT "ca_zip",
        "ca_state",
        Sum("ws_sales_price")
     FROM "web_sales",
@@ -2274,10 +2339,13 @@ SELECT "TOP" 100 "ca_zip",
              "ca_state"
     ORDER BY "ca_zip",
              "ca_state"
+LIMIT 100
+;
+
 
 -- query46.sql
 -- query46
-SELECT "TOP" 100 "c_last_name",
+SELECT "c_last_name",
        "c_first_name",
        "ca_city",
        "bought_city",
@@ -2317,6 +2385,9 @@ SELECT "TOP" 100 "c_last_name",
              "ca_city",
              "bought_city",
              "ss_ticket_number"
+LIMIT 100
+;
+
 
 -- query47.sql
 -- query47
@@ -2374,7 +2445,7 @@ WITH "v1"
                        "v1"."s_company_name" = "v1_lag"."s_company_name" AND
                        "v1"."s_company_name" = "v1_lead"."s_company_name" AND "v1"."rn" = "v1_lag"."rn" + 1 AND
                        "v1"."rn" = "v1_lead"."rn" - 1)
-SELECT "TOP" 100 *
+SELECT *
     FROM "v2"
     WHERE "d_year" = 1999 AND "avg_monthly_sales" > 0 AND
           CASE
@@ -2386,6 +2457,9 @@ SELECT "TOP" 100 *
               END > 0.1
     ORDER BY "sum_sales" - "avg_monthly_sales",
              3
+LIMIT 100
+;
+
 
 -- query48.sql
 -- query48
@@ -2424,7 +2498,7 @@ SELECT Sum("ss_quantity")
 
 -- query49.sql
 -- query49
-SELECT "TOP" 100 'web' AS "channel",
+SELECT 'web' AS "channel",
        "web"."item",
        "web"."return_ratio",
        "web"."return_rank",
@@ -2527,10 +2601,13 @@ SELECT 'store' AS "channel",
 ORDER BY 1,
          4,
          5
+LIMIT 100
+;
+
 
 -- query50.sql
 -- query50
-SELECT "TOP" 100 "s_store_name",
+SELECT "s_store_name",
        "s_company_id",
        "s_street_number",
        "s_street_name",
@@ -2597,6 +2674,9 @@ SELECT "TOP" 100 "s_store_name",
              "s_county",
              "s_state",
              "s_zip"
+LIMIT 100
+;
+
 
 -- query51.sql
 -- query51
@@ -2624,8 +2704,7 @@ WITH "web_v1" AS
                        "ss_item_sk" IS NOT NULL
                  GROUP BY "ss_item_sk",
                           "d_date")
-SELECT "TOP" 100
-         *
+SELECT *
     FROM (
              SELECT "item_sk",
                     "d_date",
@@ -2656,10 +2735,12 @@ SELECT "TOP" 100
     WHERE "web_cumulative" > "store_cumulative"
     ORDER BY "item_sk",
              "d_date"
+LIMIT 100
+;
 
 -- query52.sql
 -- query52
-SELECT "TOP" 100 "dt"."d_year",
+SELECT "dt"."d_year",
        "item"."i_brand_id"       AS "brand_id",
        "item"."i_brand"          AS "brand",
        Sum("ss_ext_sales_price") AS "ext_price"
@@ -2674,10 +2755,13 @@ SELECT "TOP" 100 "dt"."d_year",
     ORDER BY "dt"."d_year",
              "ext_price" DESC,
              "brand_id"
+LIMIT 100
+;
+
 
 -- query53.sql
 -- query53
-SELECT "TOP" 100 *
+SELECT *
     FROM (SELECT "i_manufact_id",
                  Sum("ss_sales_price")                 AS "sum_sales",
                  Avg(Sum("ss_sales_price"))
@@ -2719,6 +2803,9 @@ SELECT "TOP" 100 *
     ORDER BY "avg_quarterly_sales",
              "sum_sales",
              "i_manufact_id"
+LIMIT 100
+;
+
 
 -- query54.sql
 -- query54
@@ -2763,17 +2850,20 @@ WITH "my_customers"
      "segments"
          AS (SELECT Floor("revenue" / 50) AS "segment"
                  FROM "my_revenue")
-SELECT "TOP" 100 "segment",
+SELECT "segment",
        Count(*)       AS "num_customers",
        "segment" * 50 AS "segment_base"
     FROM "segments"
     GROUP BY "segment"
     ORDER BY "segment",
              "num_customers"
+LIMIT 100
+;
+
 
 -- query55.sql
 -- query55
-SELECT "TOP" 100 "i_brand_id"              "brand_id",
+SELECT "i_brand_id"              "brand_id",
        "i_brand"                 AS "brand",
        Sum("ss_ext_sales_price") AS "ext_price"
     FROM "date_dim",
@@ -2785,6 +2875,9 @@ SELECT "TOP" 100 "i_brand_id"              "brand_id",
              "i_brand_id"
     ORDER BY "ext_price" DESC,
              "i_brand_id"
+LIMIT 100
+;
+
 
 -- query56.sql
 -- query56
@@ -2827,7 +2920,7 @@ WITH "ss"
                  ) AND "ws_item_sk" = "i_item_sk" AND "ws_sold_date_sk" = "d_date_sk" AND "d_year" = 1998 AND
                        "d_moy" = 3 AND "ws_bill_addr_sk" = "ca_address_sk" AND "ca_gmt_offset" = -6
                  GROUP BY "i_item_id")
-SELECT "TOP" 100 "i_item_id", Sum("total_sales") AS "total_sales"
+SELECT "i_item_id", Sum("total_sales") AS "total_sales"
     FROM (SELECT *
               FROM "ss"
           UNION ALL
@@ -2838,6 +2931,9 @@ SELECT "TOP" 100 "i_item_id", Sum("total_sales") AS "total_sales"
               FROM "ws") "tmp1"
     GROUP BY "i_item_id"
     ORDER BY "total_sales"
+LIMIT 100
+;
+
 
 -- query57.sql
 -- query57
@@ -2888,7 +2984,7 @@ WITH "v1"
                        "v1"."i_brand" = "v1_lag"."i_brand" AND "v1"."i_brand" = "v1_lead"."i_brand" AND
                        "v1"."cc_name" = "v1_lag"."cc_name" AND "v1"."cc_name" = "v1_lead"."cc_name" AND
                        "v1"."rn" = "v1_lag"."rn" + 1 AND "v1"."rn" = "v1_lead"."rn" - 1)
-SELECT "TOP" 100 *
+SELECT *
     FROM "v2"
     WHERE "d_year" = 2000 AND "avg_monthly_sales" > 0 AND
           CASE
@@ -2900,6 +2996,9 @@ SELECT "TOP" 100 *
               END > 0.1
     ORDER BY "sum_sales" - "avg_monthly_sales",
              3
+LIMIT 100
+;
+
 
 -- query58.sql
 -- query58
@@ -2945,7 +3044,7 @@ WITH "ss_items"
                                                                   WHERE "d_date" = '2002-02-25'
                                         )) AND "ws_sold_date_sk" = "d_date_sk"
                  GROUP BY "i_item_id")
-SELECT "TOP" 100 "ss_items"."item_id",
+SELECT "ss_items"."item_id",
        "ss_item_rev",
        "ss_item_rev" / ("ss_item_rev" + "cs_item_rev" + "ws_item_rev") / 3 *
        100 AS "ss_dev",
@@ -2969,6 +3068,9 @@ SELECT "TOP" 100 "ss_items"."item_id",
           "ws_item_rev" BETWEEN 0.9 * "cs_item_rev" AND 1.1 * "cs_item_rev"
     ORDER BY "item_id",
              "ss_item_rev"
+LIMIT 100
+;
+
 
 -- query59.sql
 -- query59
@@ -3015,7 +3117,7 @@ WITH "wss"
                  WHERE "d_date_sk" = "ss_sold_date_sk"
                  GROUP BY "d_week_seq",
                           "ss_store_sk")
-SELECT "TOP" 100 "s_store_name1",
+SELECT "s_store_name1",
        "s_store_id1",
        "d_week_seq1",
        "sun_sales1" / "sun_sales2",
@@ -3059,6 +3161,9 @@ SELECT "TOP" 100 "s_store_name1",
     ORDER BY "s_store_name1",
              "s_store_id1",
              "d_week_seq1"
+LIMIT 100
+;
+
 
 -- query60.sql
 -- query60
@@ -3101,7 +3206,7 @@ WITH "ss"
                        "ws_sold_date_sk" = "d_date_sk" AND "d_year" = 1999 AND "d_moy" = 8 AND
                        "ws_bill_addr_sk" = "ca_address_sk" AND "ca_gmt_offset" = -6
                  GROUP BY "i_item_id")
-SELECT "TOP" 100 "i_item_id", Sum("total_sales") AS "total_sales"
+SELECT "i_item_id", Sum("total_sales") AS "total_sales"
     FROM (SELECT *
               FROM "ss"
           UNION ALL
@@ -3113,10 +3218,13 @@ SELECT "TOP" 100 "i_item_id", Sum("total_sales") AS "total_sales"
     GROUP BY "i_item_id"
     ORDER BY "i_item_id",
              "total_sales"
+LIMIT 100
+;
+
 
 -- query61.sql
 -- query61
-SELECT "TOP" 100 "promotions",
+SELECT "promotions",
        "total",
        "promotions" /
        "total" * 100
@@ -3149,10 +3257,13 @@ SELECT "TOP" 100 "promotions",
                     "s_gmt_offset" = -7 AND "d_year" = 2001 AND "d_moy" = 12) "all_sales"
     ORDER BY "promotions",
              "total"
+LIMIT 100
+;
+
 
 -- query62.sql
 -- query62
-SELECT "TOP" 100 Substring("w_warehouse_name", 1, 20),
+SELECT Substring("w_warehouse_name", 1, 20),
        "sm_type",
        "web_name",
        Sum(CASE
@@ -3198,10 +3309,13 @@ SELECT "TOP" 100 Substring("w_warehouse_name", 1, 20),
     ORDER BY 1,
              "sm_type",
              "web_name"
+LIMIT 100
+;
+
 
 -- query63.sql
 -- query63
-SELECT "TOP" 100 *
+SELECT *
     FROM (SELECT "i_manager_id",
                  Sum("ss_sales_price")                AS "sum_sales",
                  Avg(Sum("ss_sales_price"))
@@ -3242,6 +3356,9 @@ SELECT "TOP" 100 *
     ORDER BY "i_manager_id",
              "avg_monthly_sales",
              "sum_sales"
+LIMIT 100
+;
+
 
 -- query64.sql
 -- query64
@@ -3357,7 +3474,7 @@ SELECT "cs1"."product_name",
 
 -- query65.sql
 -- query65
-SELECT "TOP" 100 "s_store_name",
+SELECT "s_store_name",
        "i_item_desc",
        "sc"."revenue",
        "i_current_price",
@@ -3388,10 +3505,13 @@ SELECT "TOP" 100 "s_store_name",
           "s_store_sk" = "sc"."ss_store_sk" AND "i_item_sk" = "sc"."ss_item_sk"
     ORDER BY "s_store_name",
              "i_item_desc"
+LIMIT 100
+;
+
 
 -- query66.sql
 -- query66
-SELECT "TOP" 100 "w_warehouse_name",
+SELECT "w_warehouse_name",
        "w_warehouse_sq_ft",
        "w_city",
        "w_county",
@@ -3731,10 +3851,13 @@ SELECT "TOP" 100 "w_warehouse_name",
              "ship_carriers",
              "year1"
     ORDER BY "w_warehouse_name"
+LIMIT 100
+;
+
 
 -- query67a.sql
 -- query67 original
-select "top" 100 *
+select *
     from (select "i_category"
              ,
                  "i_class"
@@ -3793,9 +3916,13 @@ select "top" 100 *
        , "s_store_id"
        , "sumsales"
        , "rk"
+LIMIT 100
+;
+
+       
 -- query68.sql
 -- query68
-SELECT "TOP" 100 "c_last_name",
+SELECT "c_last_name",
        "c_first_name",
        "ca_city",
        "bought_city",
@@ -3832,10 +3959,13 @@ SELECT "TOP" 100 "c_last_name",
           "current_addr"."ca_city" <> "bought_city"
     ORDER BY "c_last_name",
              "ss_ticket_number"
+LIMIT 100
+;
+
 
 -- query69.sql
 -- query69
-SELECT "TOP" 100 "cd_gender",
+SELECT "cd_gender",
        "cd_marital_status",
        "cd_education_status",
        Count(*) AS "cnt1",
@@ -3874,10 +4004,13 @@ SELECT "TOP" 100 "cd_gender",
              "cd_education_status",
              "cd_purchase_estimate",
              "cd_credit_rating"
+LIMIT 100
+;
+
 
 -- query70a.sql
 -- query70
-SELECT "TOP" 100 Sum("ss_net_profit")                     AS "total_sum",
+SELECT Sum("ss_net_profit")                     AS "total_sum",
        "s_state",
        "s_county",
        Rank()
@@ -3907,6 +4040,9 @@ SELECT "TOP" 100 Sum("ss_net_profit")                     AS "total_sum",
     GROUP BY ROLLUP ("s_state", "s_county" )
     ORDER BY "s_state",
              "rank_within_parent"
+LIMIT 100
+;
+
 
 -- query71.sql
 -- query71
@@ -3989,7 +4125,7 @@ WITH "top_items" AS (
                  "cs_warehouse_sk",
                  "d1"."d_week_seq"
 )
-SELECT "TOP" 100 "i_item_desc",
+SELECT "i_item_desc",
        "w_warehouse_name",
        "d_week_seq",
        "no_promo",
@@ -4002,6 +4138,9 @@ SELECT "TOP" 100 "i_item_desc",
                   ON ("i_item_sk" = "cs_item_sk")
     ORDER BY "total_cnt" DESC,
              1, 2, 3
+LIMIT 100
+;
+
 
 -- query73.sql
 -- query73
@@ -4078,7 +4217,7 @@ WITH "year_total"
                           "c_first_name",
                           "c_last_name",
                           "d_year")
-SELECT "TOP" 100 "t_s_secyear"."customer_id",
+SELECT "t_s_secyear"."customer_id",
        "t_s_secyear"."customer_first_name",
        "t_s_secyear"."customer_last_name"
     FROM "year_total" "t_s_firstyear",
@@ -4106,6 +4245,9 @@ SELECT "TOP" 100 "t_s_secyear"."customer_id",
     ORDER BY 1,
              2,
              3
+LIMIT 100
+;
+
 
 -- query75.sql
 -- query75
@@ -4178,7 +4320,7 @@ WITH "all_sales"
                           "i_class_id",
                           "i_category_id",
                           "i_manufact_id")
-SELECT "TOP" 100 "prev_yr"."d_year"                        AS "prev_year",
+SELECT "prev_yr"."d_year"                        AS "prev_year",
        "curr_yr"."d_year"                            AS "year1",
        "curr_yr"."i_brand_id",
        "curr_yr"."i_class_id",
@@ -4197,10 +4339,13 @@ SELECT "TOP" 100 "prev_yr"."d_year"                        AS "prev_year",
           "curr_yr"."sales_cnt" / "prev_yr"."sales_cnt"
               < 0.9
     ORDER BY "sales_cnt_diff"
+LIMIT 100
+;
+
 
 -- query76.sql
 -- query76
-SELECT "TOP" 100 "channel",
+SELECT "channel",
        "col_name",
        "d_year",
        "d_qoy",
@@ -4249,9 +4394,11 @@ SELECT "TOP" 100 "channel",
              "d_year",
              "d_qoy",
              "i_category"
+LIMIT 100
+;
+
 
 -- query77a.sql
-
 -- query77
 WITH "ss" AS
          (
@@ -4323,8 +4470,7 @@ WITH "ss" AS
                        "d_date" BETWEEN cast('2001-08-16' AS date) AND (
                            Cast('2001-09-15' AS DATE)) AND "wr_web_page_sk" = "wp_web_page_sk"
                  GROUP BY "wp_web_page_sk")
-SELECT "TOP" 100 
-         "channel" ,
+SELECT "channel" ,
        "id",
        sum("sales")    AS "sales",
        sum("returns1") AS "returns1",
@@ -4358,6 +4504,9 @@ SELECT "TOP" 100
     GROUP BY ROLLUP ("channel", "id")
     ORDER BY "channel",
              "id"
+LIMIT 100
+;
+
 
 -- query78.sql
 -- query78
@@ -4412,19 +4561,14 @@ WITH "ws"
                  GROUP BY "d_year",
                           "ss_item_sk",
                           "ss_customer_sk")
-SELECT "TOP" 100 "ss_item_sk",
+SELECT "ss_item_sk",
        Round("ss_qty" / (COALESCE("ws_qty" + "cs_qty", 1)), 2) AS "ratio",
        "ss_qty"                                                AS "store_qty",
-       "ss_wc"
-                                                               AS "store_wholesale_cost",
-       "ss_sp"
-                                                               AS "store_sales_price",
-       COALESCE("ws_qty", 0) + COALESCE("cs_qty", 0)
-                                                               AS "other_chan_qty",
-       COALESCE("ws_wc", 0) + COALESCE("cs_wc", 0)
-                                                               AS "other_chan_wholesale_cost",
-       COALESCE("ws_sp", 0) + COALESCE("cs_sp", 0)
-                                                               AS "other_chan_sales_price"
+       "ss_wc"                                                 AS "store_wholesale_cost",
+       "ss_sp"                                                 AS "store_sales_price",
+       COALESCE("ws_qty", 0) + COALESCE("cs_qty", 0)           AS "other_chan_qty",
+       COALESCE("ws_wc", 0) + COALESCE("cs_wc", 0)             AS "other_chan_wholesale_cost",
+       COALESCE("ws_sp", 0) + COALESCE("cs_sp", 0)             AS "other_chan_sales_price"
     FROM "ss"
              LEFT JOIN "ws"
                        ON ("ws_sold_year" = "ss_sold_year"
@@ -4443,10 +4587,13 @@ SELECT "TOP" 100 "ss_item_sk",
              "other_chan_wholesale_cost",
              "other_chan_sales_price",
              Round("ss_qty" / (COALESCE("ws_qty" + "cs_qty", 1)), 2)
+LIMIT 100
+;
+
 
 -- query79.sql
 -- query79
-SELECT "TOP" 100 "c_last_name",
+SELECT "c_last_name",
        "c_first_name",
        Substring("s_city", 1, 30),
        "ss_ticket_number",
@@ -4478,6 +4625,9 @@ SELECT "TOP" 100 "c_last_name",
              "c_first_name",
              Substring("s_city", 1, 30),
              "profit"
+LIMIT 100
+;
+
 
 -- query80a.sql
 -- query80
@@ -4544,8 +4694,7 @@ WITH "ssr" AS
                        "ws_item_sk" = "i_item_sk" AND "i_current_price" > 50 AND "ws_promo_sk" = "p_promo_sk" AND
                        "p_channel_tv" = 'N'
                  GROUP BY "web_site_id")
-SELECT "TOP" 100
-         "channel" ,
+SELECT "channel" ,
        "id",
        sum("sales")    AS "sales",
        sum("returns1") AS "returns1",
@@ -4574,9 +4723,11 @@ SELECT "TOP" 100
     GROUP BY ROLLUP ("channel", "id")
     ORDER BY "channel",
              "id"
+LIMIT 100
+;
+
 
 -- query81.sql
-
 -- query81
 WITH "customer_total_return"
          AS (SELECT "cr_returning_customer_sk"   AS "ctr_customer_sk",
@@ -4595,7 +4746,7 @@ WITH "customer_total_return"
              FROM "customer_total_return"
              GROUP BY "ctr_state"
      )
-SELECT "TOP" 100 "c_customer_id",
+SELECT "c_customer_id",
        "c_salutation",
        "c_first_name",
        "c_last_name",
@@ -4633,12 +4784,13 @@ SELECT "TOP" 100 "c_customer_id",
              "ca_gmt_offset",
              "ca_location_type",
              "ctr_total_return"
+LIMIT 100
+;
+
 
 -- query82.sql
-
 -- query82
-SELECT "TOP" 100
-         "i_item_id" ,
+SELECT "i_item_id" ,
        "i_item_desc",
        "i_current_price"
     FROM "item",
@@ -4653,6 +4805,9 @@ SELECT "TOP" 100
              "i_item_desc",
              "i_current_price"
     ORDER BY "i_item_id"
+LIMIT 100
+;
+
 
 -- query83.sql
 -- query83
@@ -4704,7 +4859,7 @@ WITH "sr_items"
                                                                                       '1999-11-18'
                                                                        ))) AND "wr_returned_date_sk" = "d_date_sk"
                  GROUP BY "i_item_id")
-SELECT "TOP" 100 "sr_items"."item_id",
+SELECT "sr_items"."item_id",
        "sr_item_qty",
        "sr_item_qty" / ("sr_item_qty" + "cr_item_qty" + "wr_item_qty") / 3.0 *
        100 AS "sr_dev",
@@ -4722,10 +4877,15 @@ SELECT "TOP" 100 "sr_items"."item_id",
     WHERE "sr_items"."item_id" = "cr_items"."item_id" AND "sr_items"."item_id" = "wr_items"."item_id"
     ORDER BY "sr_items"."item_id",
              "sr_item_qty"
+LIMIT 100
+;
+
 
 -- query84.sql
 -- query84
-SELECT "TOP" 100 "c_customer_id"   AS "customer_id", Concat("c_last_name", Concat(', ', "c_first_name")) AS "customername"
+SELECT "c_customer_id"   AS "customer_id", 
+        Concat("c_last_name", 
+        Concat(', ', "c_first_name")) AS "customername"
     FROM "customer",
          "customer_address",
          "customer_demographics",
@@ -4736,10 +4896,13 @@ SELECT "TOP" 100 "c_customer_id"   AS "customer_id", Concat("c_last_name", Conca
           "ib_upper_bound" <= 54986 + 50000 AND "ib_income_band_sk" = "hd_income_band_sk" AND
           "cd_demo_sk" = "c_current_cdemo_sk" AND "hd_demo_sk" = "c_current_hdemo_sk" AND "sr_cdemo_sk" = "cd_demo_sk"
     ORDER BY "c_customer_id"
+LIMIT 100
+;
+
 
 -- query85.sql
 -- query85
-SELECT "TOP" 100 Substring("r_reason_desc", 1, 20),
+SELECT Substring("r_reason_desc", 1, 20),
        Avg("ws_quantity"),
        Avg("wr_refunded_cash"),
        Avg("wr_fee")
@@ -4784,10 +4947,13 @@ SELECT "TOP" 100 Substring("r_reason_desc", 1, 20),
              Avg("ws_quantity"),
              Avg("wr_refunded_cash"),
              Avg("wr_fee")
+LIMIT 100
+;
+
 
 -- query86a.sql
 -- query86
-SELECT "TOP" 100 Sum("ws_net_paid")                         AS "total_sum",
+SELECT Sum("ws_net_paid")                         AS "total_sum",
        "i_category",
        "i_class",
        Rank()
@@ -4802,6 +4968,9 @@ SELECT "TOP" 100 Sum("ws_net_paid")                         AS "total_sum",
     GROUP BY ROLLUP ("i_category", "i_class" )
     ORDER BY "i_category",
              "rank_within_parent"
+LIMIT 100
+;
+
 
 -- query87.sql
 -- query87
@@ -4945,7 +5114,7 @@ select *
 
 -- query89.sql
 -- query89
-SELECT "TOP" 100 *
+SELECT *
     FROM (SELECT "i_category",
                  "i_class",
                  "i_brand",
@@ -4982,11 +5151,14 @@ SELECT "TOP" 100 *
               END > 0.1
     ORDER BY "sum_sales" - "avg_monthly_sales",
              "s_store_name"
+LIMIT 100
+;
+
 
 -- query90.sql
 
 -- query90
-SELECT "TOP" 100 "amc" / "pmc" AS "am_pm_ratio"
+SELECT "amc" / "pmc" AS "am_pm_ratio"
     FROM (SELECT Count(*) AS "amc"
               FROM "web_sales",
                    "household_demographics",
@@ -5008,6 +5180,9 @@ SELECT "TOP" 100 "amc" / "pmc" AS "am_pm_ratio"
                     "household_demographics"."hd_dep_count" = 8 AND
                     "web_page"."wp_char_count" BETWEEN 5000 AND 5200) "pt"
     ORDER BY "am_pm_ratio"
+LIMIT 100
+;
+
 
 -- query91.sql
 -- query91
@@ -5041,8 +5216,7 @@ SELECT "cc_call_center_id" AS "Call_Center",
 
 -- query92.sql
 -- query92
-SELECT "TOP" 100
-         Sum("ws_ext_discount_amt") AS "excess_discount_amount"
+SELECT Sum("ws_ext_discount_amt") AS "excess_discount_amount"
     FROM "web_sales",
          "item",
          "date_dim"
@@ -5058,10 +5232,14 @@ SELECT "TOP" 100
                         Cast("d_date" AS DATE) BETWEEN Cast('2002-03-29' AS DATE) AND (
                             cast('2002-06-28' AS date)) AND "d_date_sk" = "ws_sold_date_sk")
     ORDER BY sum("ws_ext_discount_amt")
+LIMIT 100
+;
+
 
 -- query93.sql
 -- query93
-SELECT "TOP" 100 "ss_customer_sk", Sum("act_sales") AS "sumsales"
+SELECT "ss_customer_sk", 
+       Sum("act_sales") AS "sumsales"
     FROM (SELECT "ss_item_sk",
                  "ss_ticket_number",
                  "ss_customer_sk",
@@ -5080,11 +5258,13 @@ SELECT "TOP" 100 "ss_customer_sk", Sum("act_sales") AS "sumsales"
     GROUP BY "ss_customer_sk"
     ORDER BY "sumsales",
              "ss_customer_sk"
+LIMIT 100
+;
+
 
 -- query94.sql
 -- query94
-SELECT "TOP" 100
-         Count(DISTINCT "ws_order_number") AS "order_count",
+SELECT Count(DISTINCT "ws_order_number") AS "order_count",
        Sum("ws_ext_ship_cost") AS "total_shipping_cost",
        Sum("ws_net_profit")    AS "total_net_profit"
     FROM "web_sales" "ws1",
@@ -5107,6 +5287,9 @@ SELECT "TOP" 100
                  FROM "web_returns" "wr1"
                  WHERE "ws1"."ws_order_number" = "wr1"."wr_order_number")
     ORDER BY count(DISTINCT "ws_order_number")
+LIMIT 100
+;
+
 
 -- query95.sql
 -- query95
@@ -5119,8 +5302,7 @@ WITH "ws_wh" AS
                       "web_sales" "ws2"
                  WHERE "ws1"."ws_order_number" = "ws2"."ws_order_number" AND
                        "ws1"."ws_warehouse_sk" <> "ws2"."ws_warehouse_sk")
-SELECT "TOP" 100
-         Count(DISTINCT "ws_order_number") AS "order_count",
+SELECT Count(DISTINCT "ws_order_number") AS "order_count",
        Sum("ws_ext_ship_cost") AS "total_shipping_cost",
        Sum("ws_net_profit")    AS "total_net_profit"
     FROM "web_sales" "ws1",
@@ -5142,10 +5324,13 @@ SELECT "TOP" 100
                        "ws_wh"
                   WHERE "wr_order_number" = "ws_wh"."ws_order_number")
     ORDER BY count(DISTINCT "ws_order_number")
+LIMIT 100
+;
+
 
 -- query96.sql
 -- query96
-SELECT "TOP" 100 Count(*)
+SELECT Count(*)
     FROM "store_sales",
          "household_demographics",
          "time_dim",
@@ -5154,9 +5339,11 @@ SELECT "TOP" 100 Count(*)
           "ss_store_sk" = "s_store_sk" AND "time_dim"."t_hour" = 15 AND "time_dim"."t_minute" >= 30 AND
           "household_demographics"."hd_dep_count" = 7 AND "store"."s_store_name" = 'ese'
     ORDER BY Count(*)
+LIMIT 100
+;
+
 
 -- query97.sql
-
 -- query97
 WITH "ssci"
          AS (SELECT "ss_customer_sk" AS "customer_sk",
@@ -5174,7 +5361,7 @@ WITH "ssci"
                  WHERE "cs_sold_date_sk" = "d_date_sk" AND "d_month_seq" BETWEEN 1196 AND 1196 + 11
                  GROUP BY "cs_bill_customer_sk",
                           "cs_item_sk")
-SELECT "TOP" 100 Sum(CASE 
+SELECT Sum(CASE 
                      WHEN "ssci"."customer_sk" IS NOT NULL 
                           AND "csci"."customer_sk" IS NULL THEN 1 
                      ELSE 0 
@@ -5195,9 +5382,11 @@ SELECT "TOP" 100 Sum(CASE
              FULL OUTER JOIN "csci"
                              ON ("ssci"."customer_sk" = "csci"."customer_sk"
                                  AND "ssci"."item_sk" = "csci"."item_sk")
+LIMIT 100
+;
+
 
 -- query98.sql
-
 -- query98
 SELECT "i_item_id",
        "i_item_desc",
@@ -5229,7 +5418,7 @@ SELECT "i_item_id",
 
 -- query99.sql
 -- query99
-SELECT "TOP" 100 Substring("w_warehouse_name", 1, 20),
+SELECT Substring("w_warehouse_name", 1, 20),
        "sm_type",
        "cc_name",
        Sum(CASE
@@ -5273,4 +5462,8 @@ SELECT "TOP" 100 Substring("w_warehouse_name", 1, 20),
              "sm_type",
              "cc_name"
     ORDER BY 1, 2, 3
+LIMIT 100
+;
+
+
 
