@@ -6,7 +6,7 @@
 
 --destination (final) table
 CREATE TABLE [lineitems_final] (
-    [L_ORDERKEY]      nvarchar(4000) NOT NULL DEFAULT NULL,
+    [L_ORDERKEY]      nvarchar(4000) NOT NULL,
     [L_PARTKEY]       nvarchar(4000) NOT NULL DEFAULT NULL,
     [L_SUPPKEY]       nvarchar(4000) NOT NULL DEFAULT NULL,
     [L_LINENUMBER]    nvarchar(4000) NOT NULL DEFAULT NULL,
@@ -22,13 +22,16 @@ CREATE TABLE [lineitems_final] (
     [L_SHIPINSTRUCT]  nvarchar(4000) NOT NULL DEFAULT NULL,
     [L_SHIPMODE]      nvarchar(4000) NOT NULL DEFAULT NULL,
     [L_COMMENT]       nvarchar(4000) NOT NULL DEFAULT NULL,
-    [_timestamp]      datetime2,
-    PRIMARY KEY NONCLUSTERED ("L_ORDERKEY") NOT ENFORCED
+    [_timestamp]      datetime2
+)
+WITH
+(   CLUSTERED COLUMNSTORE INDEX
+,  DISTRIBUTION = HASH([L_ORDERKEY])
 );
 
 --staging HEAP table
 CREATE TABLE [lineitems_tmp] (
-    [L_ORDERKEY]      nvarchar(4000) NOT NULL DEFAULT NULL,
+    [L_ORDERKEY]      nvarchar(4000) NOT NULL,
     [L_PARTKEY]       nvarchar(4000) NOT NULL DEFAULT NULL,
     [L_SUPPKEY]       nvarchar(4000) NOT NULL DEFAULT NULL,
     [L_LINENUMBER]    nvarchar(4000) NOT NULL DEFAULT NULL,
@@ -45,7 +48,10 @@ CREATE TABLE [lineitems_tmp] (
     [L_SHIPMODE]      nvarchar(4000) NOT NULL DEFAULT NULL,
     [L_COMMENT]       nvarchar(4000) NOT NULL DEFAULT NULL
 )
-    WITH (HEAP);
+WITH
+    (   HEAP
+    ,  DISTRIBUTION = HASH([L_ORDERKEY])
+);
 
 -- load from ABS
 COPY INTO [lineitems_tmp] FROM 'https://keboolabenchmark.blob.core.windows.net/padak/CSV/FILE_10M/TPCH_SF10/*.csv.gz'
@@ -63,7 +69,7 @@ WITH
 
 --dedup HEAP table
 CREATE TABLE [lineitems_dedupe] (
-    [L_ORDERKEY]      nvarchar(4000) NOT NULL DEFAULT NULL,
+    [L_ORDERKEY]      nvarchar(4000) NOT NULL,
     [L_PARTKEY]       nvarchar(4000) NOT NULL DEFAULT NULL,
     [L_SUPPKEY]       nvarchar(4000) NOT NULL DEFAULT NULL,
     [L_LINENUMBER]    nvarchar(4000) NOT NULL DEFAULT NULL,
@@ -80,7 +86,10 @@ CREATE TABLE [lineitems_dedupe] (
     [L_SHIPMODE]      nvarchar(4000) NOT NULL DEFAULT NULL,
     [L_COMMENT]       nvarchar(4000) NOT NULL DEFAULT NULL
 )
-    WITH (HEAP);
+WITH
+    (   HEAP
+    ,  DISTRIBUTION = HASH([L_ORDERKEY])
+);
 
 -- dedupe data
 INSERT INTO
