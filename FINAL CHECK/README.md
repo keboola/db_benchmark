@@ -3,10 +3,10 @@
 ## TODO
 
 ### FULL:
- 1. kolik trvá FULL load do dist schema s compounded HASH
- 2. Andrew way s COALESCE (CAST vyhodit) - kolik to přidá/vezme sec a co CASE WHERE?
- 3. kolik "stojí" udělat statistiku "pak" (je to 10% FULL loadu?)
- 4. rozdíl mezi 2 INSERTama vs CTAS
+ 1. kolik trvá FULL load do dist schema s compounded HASH (READY)
+ 2. Andrew way s COALESCE (CAST vyhodit) - kolik to přidá/vezme sec a co CASE WHERE? (READY)
+ 3. kolik "stojí" udělat statistiku "pak" (je to 10% FULL loadu?) (READY)
+ 4. rozdíl mezi 2 INSERTama vs CTAS (READY)
 
 ### INC:
  - dtto FULL + neupdatovat PKEY
