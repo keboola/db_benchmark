@@ -168,45 +168,35 @@ WHERE
          */
 ;
 
--- final UPDATE by the same amount of data (w/ & w/o PKEY)
-UPDATE lineitems_final_hash_ctas 
-SET 
-  L_ORDERKEY        = src.L_ORDERKEY, 
-  L_PARTKEY         = src.L_PARTKEY,
-  L_SUPPKEY         = src.L_SUPPKEY, 
-  L_LINENUMBER      = src.L_LINENUMBER,
-  L_QUANTITY        = src.L_QUANTITY, 
-  L_EXTENDEDPRICE   = src.L_EXTENDEDPRICE,
-  L_DISCOUNT        = src.L_DISCOUNT, 
-  L_TAX             = src.L_TAX,
-  L_RETURNFLAG      = src.L_RETURNFLAG, 
-  L_LINESTATUS      = src.L_LINESTATUS,
-  L_SHIPDATE        = src.L_SHIPDATE, 
-  L_COMMITDATE      = src.L_COMMITDATE,
-  L_RECEIPTDATE     = src.L_RECEIPTDATE, 
-  L_SHIPINSTRUCT    = src.L_SHIPINSTRUCT,
-  L_SHIPMODE        = src.L_SHIPMODE, 
-  L_COMMENT         = src.L_COMMENT,
-  _timestamp        = '2020-12-18 15:06:35'
-FROM lineitems_tmp_hash AS src
+-- delete existing (already updated) rows
+DELETE [lineitems_final_hash_ctas]
 WHERE
-        lineitems_final_hash_ctas.L_ORDERKEY = src.L_ORDERKEY 
-        /* AND
-        (lineitems_final_10pct.L_ORDERKEY      != src.L_ORDERKEY OR
-         lineitems_final_10pct.L_PARTKEY       != src.L_PARTKEY OR
-         lineitems_final_10pct.L_SUPPKEY       != src.L_SUPPKEY OR
-         lineitems_final_10pct.L_LINENUMBER    != src.L_LINENUMBER OR
-         lineitems_final_10pct.L_QUANTITY      != src.L_QUANTITY OR
-         lineitems_final_10pct.L_EXTENDEDPRICE != src.L_EXTENDEDPRICE OR
-         lineitems_final_10pct.L_DISCOUNT      != src.L_DISCOUNT OR
-         lineitems_final_10pct.L_TAX           != src.L_TAX OR
-         lineitems_final_10pct.L_RETURNFLAG    != src.L_RETURNFLAG OR
-         lineitems_final_10pct.L_LINESTATUS    != src.L_LINESTATUS OR
-         lineitems_final_10pct.L_SHIPDATE      != src.L_SHIPDATE OR
-         lineitems_final_10pct.L_COMMITDATE    != src.L_COMMITDATE OR
-         lineitems_final_10pct.L_RECEIPTDATE   != src.L_RECEIPTDATE OR
-         lineitems_final_10pct.L_SHIPINSTRUCT  != src.L_SHIPINSTRUCT OR
-         lineitems_final_10pct.L_SHIPMODE      != src.L_SHIPMODE OR
-         lineitems_final_10pct.L_COMMENT       != src.L_COMMENT)
-         */
-;
+    EXISTS(
+            SELECT * FROM [lineitems_tmp_hash] 
+                WHERE [lineitems_final_hash_ctas].[L_ORDERKEY] = [lineitems_tmp_hash].[L_ORDERKEY]
+          );
+
+
+INSERT INTO
+    [lineitems_final_hash_ctas] ([L_ORDERKEY], [L_PARTKEY], [L_SUPPKEY], [L_LINENUMBER], [L_QUANTITY],
+                                                 [L_EXTENDEDPRICE], [L_DISCOUNT], [L_TAX], [L_RETURNFLAG],
+                                                 [L_LINESTATUS], [L_SHIPDATE], [L_COMMITDATE], [L_RECEIPTDATE],
+                                                 [L_SHIPINSTRUCT], [L_SHIPMODE], [L_COMMENT], [_timestamp]) (SELECT
+                                                                                                                 [L_ORDERKEY]      AS [L_ORDERKEY]
+                                                                                                               , [L_PARTKEY]       AS [L_PARTKEY]
+                                                                                                               , [L_SUPPKEY]       AS [L_SUPPKEY]
+                                                                                                               , [L_LINENUMBER]    AS [L_LINENUMBER]
+                                                                                                               , [L_QUANTITY]      AS [L_QUANTITY]
+                                                                                                               , [L_EXTENDEDPRICE] AS [L_EXTENDEDPRICE]
+                                                                                                               , [L_DISCOUNT]      AS [L_DISCOUNT]
+                                                                                                               , [L_TAX]           AS [L_TAX]
+                                                                                                               , [L_RETURNFLAG]    AS [L_RETURNFLAG]
+                                                                                                               , [L_LINESTATUS]    AS [L_LINESTATUS]
+                                                                                                               , [L_SHIPDATE]      AS [L_SHIPDATE]
+                                                                                                               , [L_COMMITDATE]    AS [L_COMMITDATE]
+                                                                                                               , [L_RECEIPTDATE]   AS [L_RECEIPTDATE]
+                                                                                                               , [L_SHIPINSTRUCT]  AS [L_SHIPINSTRUCT]
+                                                                                                               , [L_SHIPMODE]      AS [L_SHIPMODE]
+                                                                                                               , [L_COMMENT]       AS [L_COMMENT]
+                                                                                                               , '2020-12-18 15:06:35'
+FROM [lineitems_tmp_hash] AS [src]);          
