@@ -4,25 +4,16 @@
  - STATS OFF
  - HASH DATA DIST
   DW1500: 
-    COPY: 31.9s
-    DEDUPE+FINAL INSERT: 25s
+    COPY: 
+    DEDUPE+FINAL INSERT: 
     ========
-    TOTAL: 56.9s
-
- - STATS ON
- - HASH DATA DIST
-  DW1500: 
-    COPY: 33.9s
-    DEDUPE+FINAL INSERT: 28.2s
-    ========
-    TOTAL: 62.1s
-
+    TOTAL: 
  */
 
 drop table lineitems_tmp_hash;
 drop table lineitems_final_hash_ctas;
 
-/* dw1500 (59.985.789 rows) */
+/* dw1500 */
 
 ALTER DATABASE [benchmark]
 SET auto_create_statistics OFF;
@@ -84,6 +75,9 @@ CREATE TABLE [lineitems_tmp_hash_multiple] (
 )
 WITH
     (   HEAP
+    /* multiple col doesn't work - it is not HASH(), it is type of distribution
+    https://docs.microsoft.com/en-us/sql/t-sql/statements/create-table-azure-sql-data-warehouse?view=aps-pdw-2016-au7#TableDistributionOptions
+    */
     ,  DISTRIBUTION = HASH(CONCAT([L_ORDERKEY],[L_PARTKEY],[L_SUPPKEY]))
 ); 
 
@@ -98,7 +92,7 @@ WITH
         ROWTERMINATOR ='0x0A',
         IDENTITY_INSERT = 'OFF' ,
         FIRSTROW =2
-    ); --31.9s STATS_OFF, 33.9s STATS_ON
+    ); 
 
 COPY INTO [lineitems_tmp_hash_multiple] FROM 'https://keboolabenchmark.blob.core.windows.net/padak/CSV/FILE_10M/TPCH_SF10/*.csv.gz'
 WITH
@@ -111,5 +105,5 @@ WITH
         ROWTERMINATOR ='0x0A',
         IDENTITY_INSERT = 'OFF' ,
         FIRSTROW =2
-    ); --31.9s STATS_OFF, 33.9s STATS_ON
+    ); 
 
