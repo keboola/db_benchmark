@@ -125,8 +125,8 @@ WHERE
 
 
 
--- final upsert + timestamp (150k rows in)
-UPDATE lineitems_final_10pct 
+-- final UPDATE by the same amount of data (w/ & w/o PKEY)
+UPDATE lineitems_final_hash_ctas 
 SET 
   --L_ORDERKEY        = src.L_ORDERKEY, 
   L_PARTKEY         = src.L_PARTKEY,
@@ -145,9 +145,10 @@ SET
   L_SHIPMODE        = src.L_SHIPMODE, 
   L_COMMENT         = src.L_COMMENT,
   _timestamp        = '2020-12-18 15:06:35'
-FROM lineitems_dedupe_1pct AS src
+FROM lineitems_tmp_hash AS src
 WHERE
-        lineitems_final_10pct.L_ORDERKEY = src.L_ORDERKEY AND
+        lineitems_final_10pct.L_ORDERKEY = src.L_ORDERKEY 
+        /* AND
         (lineitems_final_10pct.L_ORDERKEY      != src.L_ORDERKEY OR
          lineitems_final_10pct.L_PARTKEY       != src.L_PARTKEY OR
          lineitems_final_10pct.L_SUPPKEY       != src.L_SUPPKEY OR
@@ -164,4 +165,48 @@ WHERE
          lineitems_final_10pct.L_SHIPINSTRUCT  != src.L_SHIPINSTRUCT OR
          lineitems_final_10pct.L_SHIPMODE      != src.L_SHIPMODE OR
          lineitems_final_10pct.L_COMMENT       != src.L_COMMENT)
-option (label='largerc')
+         */
+;
+
+-- final UPDATE by the same amount of data (w/ & w/o PKEY)
+UPDATE lineitems_final_hash_ctas 
+SET 
+  L_ORDERKEY        = src.L_ORDERKEY, 
+  L_PARTKEY         = src.L_PARTKEY,
+  L_SUPPKEY         = src.L_SUPPKEY, 
+  L_LINENUMBER      = src.L_LINENUMBER,
+  L_QUANTITY        = src.L_QUANTITY, 
+  L_EXTENDEDPRICE   = src.L_EXTENDEDPRICE,
+  L_DISCOUNT        = src.L_DISCOUNT, 
+  L_TAX             = src.L_TAX,
+  L_RETURNFLAG      = src.L_RETURNFLAG, 
+  L_LINESTATUS      = src.L_LINESTATUS,
+  L_SHIPDATE        = src.L_SHIPDATE, 
+  L_COMMITDATE      = src.L_COMMITDATE,
+  L_RECEIPTDATE     = src.L_RECEIPTDATE, 
+  L_SHIPINSTRUCT    = src.L_SHIPINSTRUCT,
+  L_SHIPMODE        = src.L_SHIPMODE, 
+  L_COMMENT         = src.L_COMMENT,
+  _timestamp        = '2020-12-18 15:06:35'
+FROM lineitems_tmp_hash AS src
+WHERE
+        lineitems_final_10pct.L_ORDERKEY = src.L_ORDERKEY 
+        /* AND
+        (lineitems_final_10pct.L_ORDERKEY      != src.L_ORDERKEY OR
+         lineitems_final_10pct.L_PARTKEY       != src.L_PARTKEY OR
+         lineitems_final_10pct.L_SUPPKEY       != src.L_SUPPKEY OR
+         lineitems_final_10pct.L_LINENUMBER    != src.L_LINENUMBER OR
+         lineitems_final_10pct.L_QUANTITY      != src.L_QUANTITY OR
+         lineitems_final_10pct.L_EXTENDEDPRICE != src.L_EXTENDEDPRICE OR
+         lineitems_final_10pct.L_DISCOUNT      != src.L_DISCOUNT OR
+         lineitems_final_10pct.L_TAX           != src.L_TAX OR
+         lineitems_final_10pct.L_RETURNFLAG    != src.L_RETURNFLAG OR
+         lineitems_final_10pct.L_LINESTATUS    != src.L_LINESTATUS OR
+         lineitems_final_10pct.L_SHIPDATE      != src.L_SHIPDATE OR
+         lineitems_final_10pct.L_COMMITDATE    != src.L_COMMITDATE OR
+         lineitems_final_10pct.L_RECEIPTDATE   != src.L_RECEIPTDATE OR
+         lineitems_final_10pct.L_SHIPINSTRUCT  != src.L_SHIPINSTRUCT OR
+         lineitems_final_10pct.L_SHIPMODE      != src.L_SHIPMODE OR
+         lineitems_final_10pct.L_COMMENT       != src.L_COMMENT)
+         */
+;
