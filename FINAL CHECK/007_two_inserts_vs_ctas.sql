@@ -153,3 +153,5 @@ FROM
 WHERE
     a."_row_number_" = 1
 ; --19.6s (1st run), 25s (2nd run), 19.5s (3rd run)
+
+
