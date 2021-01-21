@@ -1,7 +1,6 @@
 show tables;--
--- large DWH & xsmall DWH
--- 6M rows full load with PKEY
--- 60M rows --''--
+-- large DWH 
+-- 60M rows
 
 --destination (final) table
 CREATE TABLE "lineitems_tmp" (
