@@ -2,6 +2,8 @@
 
 ## TODO
 
+11:45 Testy na odkazech nejsou vyčištěný, je to připravenej skelet s kódem, kterej teprve (odpoledne) provedu
+
 ### FULL:
  1. kolik trvá FULL load do dist schema s compounded HASH (READY -> https://github.com/keboola/db_benchmark/blob/main/FINAL%20CHECK/004_hash-on-multiple-cols.sql)
  2. Andrew way s COALESCE (CAST vyhodit) - kolik to přidá/vezme sec a co CASE WHERE? (READY -> https://github.com/keboola/db_benchmark/blob/main/FINAL%20CHECK/005_andrey_CAST_COALESCE.sql)
