@@ -9,8 +9,8 @@
  4. rozdíl mezi 2 INSERTama vs CTAS (READY)
 
 ### INC:
- - dtto FULL + neupdatovat PKEY
- - smazání updatovaných hodnot před insertem vs insert s WHERE pk1<>pk2
+ - dtto FULL + neupdatovat PKEY (READY)
+ - smazání updatovaných hodnot před insertem vs insert s WHERE pk1<>pk2 (READY)
 
 ## na zamyšlení:
 - STATS budeme počítat pořád, protože je prostě spočítat musíme a jen bysme to někam odložili v čase
