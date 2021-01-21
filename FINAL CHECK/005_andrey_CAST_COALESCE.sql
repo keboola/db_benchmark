@@ -3,26 +3,23 @@
 
  - STATS OFF
  - HASH DATA DIST
-  DW1500: 
-    COPY: 31.9s
-    DEDUPE+FINAL INSERT: 25s
+  DW1500:
+    COPY: 
+    DEDUPE+FINAL INSERT:
     ========
-    TOTAL: 56.9s
-
- - STATS ON
- - HASH DATA DIST
-  DW1500: 
-    COPY: 33.9s
-    DEDUPE+FINAL INSERT: 28.2s
-    ========
-    TOTAL: 62.1s
+    TOTAL: 
 
  */
 
 drop table lineitems_tmp_hash;
 drop table lineitems_final_hash_ctas;
+drop table lineitems_final_hash_ctas_orig;
+drop table lineitems_final_hash_ctas_keboola;
+drop table lineitems_final_hash_ctas_onlycoalesce;
+drop table lineitems_final_hash_ctas_isnull;
 
-/* dw1500 (59.985.789 rows) */
+
+/* dw1500 */
 
 ALTER DATABASE [benchmark]
 SET auto_create_statistics OFF;
@@ -62,7 +59,7 @@ CREATE TABLE [lineitems_tmp_hash] (
 WITH
     (   HEAP
     ,  DISTRIBUTION = HASH([L_ORDERKEY])
-); 
+);
 
 COPY INTO [lineitems_tmp_hash] FROM 'https://keboolabenchmark.blob.core.windows.net/padak/CSV/FILE_10M/TPCH_SF10/*.csv.gz'
 WITH
@@ -75,7 +72,7 @@ WITH
         ROWTERMINATOR ='0x0A',
         IDENTITY_INSERT = 'OFF' ,
         FIRSTROW =2
-    ); --31.9s STATS_OFF, 33.9s STATS_ON
+    ); --48s
 
 CREATE TABLE [lineitems_final_hash_ctas_orig]
 WITH
@@ -121,7 +118,7 @@ FROM
     FROM [lineitems_tmp_hash]) AS a
 WHERE
     a."_row_number_" = 1
-; --25s STATS_OFF, 28.2s STATS_ON
+; --31s (1st run), 17s (2st run), 17s (3rd run)
 
 CREATE TABLE [lineitems_final_hash_ctas_keboola]
 WITH
@@ -167,7 +164,7 @@ FROM
     FROM [lineitems_tmp_hash]) AS a
 WHERE
     a."_row_number_" = 1
-; --25s STATS_OFF, 28.2s STATS_ON
+; --22s (1st run), 19.6s (2st run), 21.6s (3rd run)
 
 CREATE TABLE [lineitems_final_hash_ctas_onlycoalesce]
 WITH
@@ -213,14 +210,14 @@ FROM
     FROM [lineitems_tmp_hash]) AS a
 WHERE
     a."_row_number_" = 1
-; --25s STATS_OFF, 28.2s STATS_ON
+; --24s (1st run), 21s (2nd run), 20.5s (3rd run)
 
 CREATE TABLE [lineitems_final_hash_ctas_isnull]
 WITH
     ( DISTRIBUTION = HASH([L_ORDERKEY]))
 AS
 SELECT
-    ISNULL([L_ORDERKEY]), '')      AS [L_ORDERKEY]
+    ISNULL([L_ORDERKEY], '')      AS [L_ORDERKEY]
   , ISNULL([L_PARTKEY], '')       AS [L_PARTKEY]
   , ISNULL([L_SUPPKEY], '')       AS [L_SUPPKEY]
   , ISNULL([L_LINENUMBER], '')    AS [L_LINENUMBER]
@@ -259,4 +256,4 @@ FROM
     FROM [lineitems_tmp_hash]) AS a
 WHERE
     a."_row_number_" = 1
-; --25s STATS_OFF, 28.2s STATS_ON
+; --27.5s (1st run), 17.9s (2nd run), 17.9s (3rd run)
