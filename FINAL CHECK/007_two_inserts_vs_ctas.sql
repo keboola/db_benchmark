@@ -3,24 +3,16 @@
 
  - STATS OFF
  - HASH DATA DIST
-  DW1500: 
-    COPY: 31.9s
-    DEDUPE+FINAL INSERT: 25s
+  DW1500:
+    COPY: 
+    DEDUPE+FINAL INSERT: 
     ========
-    TOTAL: 56.9s
-
- - STATS ON
- - HASH DATA DIST
-  DW1500: 
-    COPY: 33.9s
-    DEDUPE+FINAL INSERT: 28.2s
-    ========
-    TOTAL: 62.1s
+    TOTAL: 
 
  */
 
 drop table lineitems_tmp_hash;
-drop table lineitems_final_hash_ctas;
+drop table lineitems_final_old;
 
 /* dw1500 (59.985.789 rows) */
 
@@ -62,7 +54,7 @@ CREATE TABLE [lineitems_tmp_hash] (
 WITH
     (   HEAP
     ,  DISTRIBUTION = HASH([L_ORDERKEY])
-); 
+);
 
 COPY INTO [lineitems_tmp_hash] FROM 'https://keboolabenchmark.blob.core.windows.net/padak/CSV/FILE_10M/TPCH_SF10/*.csv.gz'
 WITH
@@ -75,10 +67,10 @@ WITH
         ROWTERMINATOR ='0x0A',
         IDENTITY_INSERT = 'OFF' ,
         FIRSTROW =2
-    ); --31.9s STATS_OFF, 33.9s STATS_ON
+    ); --59s
 
 
-
+drop table lineitems_final_old;
 CREATE TABLE [lineitems_final_old] (
     [L_ORDERKEY]      nvarchar(4000) NOT NULL,
     [L_PARTKEY]       nvarchar(4000) NOT NULL DEFAULT NULL,
@@ -100,7 +92,7 @@ CREATE TABLE [lineitems_final_old] (
 )
 WITH
     (DISTRIBUTION = HASH([L_ORDERKEY])
-); 
+);
 
 INSERT INTO
     [lineitems_final_old] ( [L_ORDERKEY]
@@ -119,7 +111,7 @@ INSERT INTO
                           , [L_SHIPINSTRUCT]
                           , [L_SHIPMODE]
                           , [L_COMMENT]
-                          , [_timestamp]) 
+                          , [_timestamp])
 SELECT
     a.[L_ORDERKEY]
   , a.[L_PARTKEY]
@@ -160,4 +152,4 @@ FROM
     FROM [lineitems_tmp_hash]) AS a
 WHERE
     a."_row_number_" = 1
-; --25s STATS_OFF, 28.2s STATS_ON
+; --19.6s (1st run), 25s (2nd run), 19.5s (3rd run)

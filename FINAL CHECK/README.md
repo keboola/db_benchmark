@@ -16,3 +16,5 @@
 
 ## na zamyšlení:
 - STATS budeme počítat pořád, protože je prostě spočítat musíme a jen bysme to někam odložili v čase
+- COPY INTO je někdy podstatně kratší a někdy dost dlouhej
+
