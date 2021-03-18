@@ -5,6 +5,7 @@ select count(distinct "INV_WAREHOUSE_SK") from INVENTORY; --514ms
 select count(distinct "INV_QUANTITY_ON_HAND") from INVENTORY; --420ms
 select "INV_DATE_SK", AVG("INV_QUANTITY_ON_HAND") from INVENTORY GROUP BY 1; --556ms
 
+pokus
 
 select * from CATALOG_SALES limit 100;
 
