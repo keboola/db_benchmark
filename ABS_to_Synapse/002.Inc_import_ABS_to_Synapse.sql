@@ -165,4 +165,8 @@ WHERE
          COALESCE(CAST([lineitems_final].[L_RECEIPTDATE] AS varchar), '')   != COALESCE([src].[L_RECEIPTDATE], '') OR
          COALESCE(CAST([lineitems_final].[L_SHIPINSTRUCT] AS varchar), '')  != COALESCE([src].[L_SHIPINSTRUCT], '') OR
          COALESCE(CAST([lineitems_final].[L_SHIPMODE] AS varchar), '')      != COALESCE([src].[L_SHIPMODE], '') OR
-         COALESCE(CAST([lineitems_final].[L_COMMENT] AS varchar), '')       != COALESCE([src].[L_COMMENT], ''));
+         COALESCE(CAST([lineitems_final].[L_COMMENT] AS varchar), '')       != COALESCE([src].[L_COMMENT], ''))
+         
+;
+
+/* Final INSERT INTO of the new rows follows here... */
