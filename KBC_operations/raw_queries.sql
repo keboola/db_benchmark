@@ -362,28 +362,29 @@ CREATE TABLE [KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98
     [_timestamp] DATETIME2,
     PRIMARY KEY NONCLUSTERED ([id]) NOT ENFORCED
 )
-    WITH (DISTRIBUTION = HASH ([id]))
-SELECT OBJECT_ID(N'[KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[tableSPK_PK]')
-SELECT [name] FROM [sys].[columns] WHERE [object_id] = '245224274' ORDER BY [column_id]
-SELECT distribution_policy_desc FROM sys.pdw_table_distribution_properties AS dp WHERE dp.OBJECT_ID = '245224274'
+    WITH (DISTRIBUTION = HASH ([id]));
+SELECT OBJECT_ID(N'[KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[tableSPK_PK]');
+SELECT [name] FROM [sys].[columns] WHERE [object_id] = '245224274' ORDER BY [column_id];
+SELECT distribution_policy_desc FROM sys.pdw_table_distribution_properties AS dp WHERE dp.OBJECT_ID = '245224274';
 SELECT
     c.name
 FROM
     sys.pdw_column_distribution_properties AS dp
         INNER JOIN sys.columns AS c ON dp.column_id = c.column_id
 WHERE
-    dp.distribution_ordinal = 1 AND dp.OBJECT_ID = '245224274' AND c.object_id = '245224274'
+    dp.distribution_ordinal = 1 AND dp.OBJECT_ID = '245224274' AND c.object_id = '245224274';
 CREATE TABLE [KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[#__temp_csvimport606c574bcd3c26_35476471] (
     [id]   nvarchar(4000),
     [name] nvarchar(4000)
 )
-    WITH (HEAP, LOCATION = USER_DB, DISTRIBUTION = HASH ([id])) COPY INTO [KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[#__temp_csvimport606c574bcd3c26_35476471] FROM 'https://kbcfsznsajl4ssv6zw.blob.core.windows.net/exp-15-files-384-42121-2021-04-06/languages.csv.gz'
+    WITH (HEAP, LOCATION = USER_DB, DISTRIBUTION = HASH ([id])) ;
+COPY INTO [KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[#__temp_csvimport606c574bcd3c26_35476471] FROM 'https://kbcfsznsajl4ssv6zw.blob.core.windows.net/exp-15-files-384-42121-2021-04-06/languages.csv.gz'
 WITH
-    (FILE_TYPE='CSV', CREDENTIAL =(IDENTITY ='Shared Access Signature', SECRET ='?sv=2017-11-09&sr=c&st=2021-04-06T12:42:51Z&se=2021-04-07T00:42:51Z&sp=rl&sig=68MmiSvJtKLQ9Xe1KyBtVN4pyIScTiRZG2X0KMprsdg%3D'), FIELDQUOTE='"', FIELDTERMINATOR =',', ENCODING = 'UTF8', ROWTERMINATOR ='0x0A', IDENTITY_INSERT = 'OFF' , FIRSTROW =2)
+    (FILE_TYPE='CSV', CREDENTIAL =(IDENTITY ='Shared Access Signature', SECRET ='?sv=2017-11-09&sr=c&st=2021-04-06T12:42:51Z&se=2021-04-07T00:42:51Z&sp=rl&sig=68MmiSvJtKLQ9Xe1KyBtVN4pyIScTiRZG2X0KMprsdg%3D'), FIELDQUOTE='"', FIELDTERMINATOR =',', ENCODING = 'UTF8', ROWTERMINATOR ='0x0A', IDENTITY_INSERT = 'OFF' , FIRSTROW =2);
 SELECT
     COUNT(*) AS [count]
 FROM
-    [KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[#__temp_csvimport606c574bcd3c26_35476471]
+    [KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[#__temp_csvimport606c574bcd3c26_35476471];
 CREATE TABLE [KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[tableSPK_PK_tmp]
     WITH (DISTRIBUTION = HASH ([id])) AS
 SELECT
@@ -398,20 +399,22 @@ FROM
     FROM
         [KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[#__temp_csvimport606c574bcd3c26_35476471]) AS a
 WHERE
-    a."_row_number_" = 1 RENAME OBJECT [KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[tableSPK_PK] TO [tableSPK_PK_tmp_rename]
-RENAME OBJECT [KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[tableSPK_PK_tmp] TO [tableSPK_PK]
-DROP TABLE [KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[tableSPK_PK_tmp_rename]
-DROP TABLE [KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[#__temp_csvimport606c574bcd3c26_35476471]
+    a."_row_number_" = 1;
+RENAME OBJECT [KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[tableSPK_PK] TO [tableSPK_PK_tmp_rename];
+RENAME OBJECT [KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[tableSPK_PK_tmp] TO [tableSPK_PK];
+DROP TABLE [KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[tableSPK_PK_tmp_rename];
+DROP TABLE [KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[#__temp_csvimport606c574bcd3c26_35476471];
 IF OBJECT_ID(N'[KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[tableSPK_PK_tmp]',
              N'U') IS NOT NULL
-    DROP TABLE [KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[tableSPK_PK_tmp]
+    DROP TABLE [KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[tableSPK_PK_tmp];
 IF OBJECT_ID(N'[KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[tableSPK_PK_tmp_rename]',
              N'U') IS NOT NULL
-    DROP TABLE [KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[tableSPK_PK_tmp_rename]
-EXEC sp_spaceused '[KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[tableSPK_PK]'
+    DROP TABLE [KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[tableSPK_PK_tmp_rename];
+EXEC sp_spaceused '[KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[tableSPK_PK]';
+
 -- OPERATION: Load table to WS
 SELECT name FROM sys.tables WHERE schema_name(schema_id) = 'WORKSPACE_42106' order by name;
-DROP TABLE [WORKSPACE_42106].[tableLoaded]
+DROP TABLE [WORKSPACE_42106].[tableLoaded];
 SELECT name FROM sys.views WHERE schema_name(schema_id) = 'WORKSPACE_42106' order by name;
 SELECT name FROM sys.tables WHERE schema_name(schema_id) = 'WORKSPACE_42106' order by name;
 CREATE TABLE [WORKSPACE_42106].[tableLoaded] (
@@ -419,15 +422,16 @@ CREATE TABLE [WORKSPACE_42106].[tableLoaded] (
     [name] nvarchar(4000),
     PRIMARY KEY NONCLUSTERED ([id]) NOT ENFORCED
 )
-    WITH (DISTRIBUTION = HASH ([id]))
+    WITH (DISTRIBUTION = HASH ([id]));
 INSERT INTO
     [WORKSPACE_42106].[tableLoaded] ([id], [name])
 SELECT
     [id]
   , [name]
 FROM [KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[tableSPK_PK];
-SELECT COUNT(*) AS [count] FROM [WORKSPACE_42106].[tableLoaded]
-EXEC sp_spaceused '[WORKSPACE_42106].[tableLoaded]'
+SELECT COUNT(*) AS [count] FROM [WORKSPACE_42106].[tableLoaded];
+EXEC sp_spaceused '[WORKSPACE_42106].[tableLoaded]';
+
 -- OPERATION: Load table from WS
 SELECT OBJECT_ID(N'[WORKSPACE_42106].[tableLoaded]')
 SELECT
@@ -446,31 +450,31 @@ WHERE
     c.object_id = '293224445'
 ORDER BY
     c.column_id;
-SELECT OBJECT_ID(N'[KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[tableSPK_PK]')
-SELECT [name] FROM [sys].[columns] WHERE [object_id] = '277224388' ORDER BY [column_id]
-SELECT distribution_policy_desc FROM sys.pdw_table_distribution_properties AS dp WHERE dp.OBJECT_ID = '277224388'
+SELECT OBJECT_ID(N'[KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[tableSPK_PK]');
+SELECT [name] FROM [sys].[columns] WHERE [object_id] = '277224388' ORDER BY [column_id];
+SELECT distribution_policy_desc FROM sys.pdw_table_distribution_properties AS dp WHERE dp.OBJECT_ID = '277224388';
 SELECT
     c.name
 FROM
     sys.pdw_column_distribution_properties AS dp
         INNER JOIN sys.columns AS c ON dp.column_id = c.column_id
 WHERE
-    dp.distribution_ordinal = 1 AND dp.OBJECT_ID = '277224388' AND c.object_id = '277224388'
+    dp.distribution_ordinal = 1 AND dp.OBJECT_ID = '277224388' AND c.object_id = '277224388';
 CREATE TABLE [KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[#__temp_csvimport606c575d8d5023_08299304] (
     [id]   nvarchar(4000),
     [name] nvarchar(4000)
 )
-    WITH (HEAP, LOCATION = USER_DB, DISTRIBUTION = HASH ([id]))
+    WITH (HEAP, LOCATION = USER_DB, DISTRIBUTION = HASH ([id]));
 INSERT INTO
     [KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[#__temp_csvimport606c575d8d5023_08299304] ([id], [name])
 SELECT
     [id]
   , [name]
-FROM [WORKSPACE_42106].[tableLoaded]
+FROM [WORKSPACE_42106].[tableLoaded];
 SELECT
     COUNT(*) AS [count]
 FROM
-    [KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[#__temp_csvimport606c575d8d5023_08299304]
+    [KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[#__temp_csvimport606c575d8d5023_08299304];
 CREATE TABLE [KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[tableSPK_PK_tmp]
     WITH (DISTRIBUTION = HASH ([id])) AS
 SELECT
@@ -485,17 +489,18 @@ FROM
     FROM
         [KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[#__temp_csvimport606c575d8d5023_08299304]) AS a
 WHERE
-    a."_row_number_" = 1 RENAME OBJECT [KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[tableSPK_PK] TO [tableSPK_PK_tmp_rename]
-RENAME OBJECT [KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[tableSPK_PK_tmp] TO [tableSPK_PK]
-DROP TABLE [KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[tableSPK_PK_tmp_rename]
-DROP TABLE [KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[#__temp_csvimport606c575d8d5023_08299304]
+    a."_row_number_" = 1;
+RENAME OBJECT [KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[tableSPK_PK] TO [tableSPK_PK_tmp_rename];
+RENAME OBJECT [KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[tableSPK_PK_tmp] TO [tableSPK_PK];
+DROP TABLE [KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[tableSPK_PK_tmp_rename];
+DROP TABLE [KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[#__temp_csvimport606c575d8d5023_08299304];
 IF OBJECT_ID(N'[KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[tableSPK_PK_tmp]',
              N'U') IS NOT NULL
-    DROP TABLE [KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[tableSPK_PK_tmp]
+    DROP TABLE [KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[tableSPK_PK_tmp];
 IF OBJECT_ID(N'[KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[tableSPK_PK_tmp_rename]',
              N'U') IS NOT NULL
-    DROP TABLE [KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[tableSPK_PK_tmp_rename]
-EXEC sp_spaceused '[KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[tableSPK_PK]'
+    DROP TABLE [KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[tableSPK_PK_tmp_rename];
+EXEC sp_spaceused '[KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[tableSPK_PK]';
 -- OPERATION: Table from CSV inc
 CREATE TABLE [KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[tableIncSPK_PK] (
     [id]         NVARCHAR(4000) NOT NULL,
@@ -503,28 +508,29 @@ CREATE TABLE [KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98
     [_timestamp] DATETIME2,
     PRIMARY KEY NONCLUSTERED ([id]) NOT ENFORCED
 )
-    WITH (DISTRIBUTION = HASH ([id]))
-SELECT OBJECT_ID(N'[KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[tableIncSPK_PK]')
-SELECT [name] FROM [sys].[columns] WHERE [object_id] = '341224616' ORDER BY [column_id]
-SELECT distribution_policy_desc FROM sys.pdw_table_distribution_properties AS dp WHERE dp.OBJECT_ID = '341224616'
+    WITH (DISTRIBUTION = HASH ([id]));
+SELECT OBJECT_ID(N'[KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[tableIncSPK_PK]');
+SELECT [name] FROM [sys].[columns] WHERE [object_id] = '341224616' ORDER BY [column_id];
+SELECT distribution_policy_desc FROM sys.pdw_table_distribution_properties AS dp WHERE dp.OBJECT_ID = '341224616';
 SELECT
     c.name
 FROM
     sys.pdw_column_distribution_properties AS dp
         INNER JOIN sys.columns AS c ON dp.column_id = c.column_id
 WHERE
-    dp.distribution_ordinal = 1 AND dp.OBJECT_ID = '341224616' AND c.object_id = '341224616'
+    dp.distribution_ordinal = 1 AND dp.OBJECT_ID = '341224616' AND c.object_id = '341224616';
 CREATE TABLE [KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[#__temp_csvimport606c576a885b62_54787887] (
     [id]   nvarchar(4000),
     [name] nvarchar(4000)
 )
-    WITH (HEAP, LOCATION = USER_DB, DISTRIBUTION = HASH ([id])) COPY INTO [KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[#__temp_csvimport606c576a885b62_54787887] FROM 'https://kbcfsznsajl4ssv6zw.blob.core.windows.net/exp-15-files-384-42128-2021-04-06/languages.increment.csv.gz'
+    WITH (HEAP, LOCATION = USER_DB, DISTRIBUTION = HASH ([id]));
+COPY INTO [KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[#__temp_csvimport606c576a885b62_54787887] FROM 'https://kbcfsznsajl4ssv6zw.blob.core.windows.net/exp-15-files-384-42128-2021-04-06/languages.increment.csv.gz'
 WITH
-    (FILE_TYPE='CSV', CREDENTIAL =(IDENTITY ='Shared Access Signature', SECRET ='?sv=2017-11-09&sr=c&st=2021-04-06T12:43:22Z&se=2021-04-07T00:43:22Z&sp=rl&sig=oGszF4V%2FeykwoDCpdGWY%2B9dxEBApFc9ZD0O0C8%2FKaWw%3D'), FIELDQUOTE='"', FIELDTERMINATOR =',', ENCODING = 'UTF8', ROWTERMINATOR ='0x0A', IDENTITY_INSERT = 'OFF' , FIRSTROW =2)
+    (FILE_TYPE='CSV', CREDENTIAL =(IDENTITY ='Shared Access Signature', SECRET ='?sv=2017-11-09&sr=c&st=2021-04-06T12:43:22Z&se=2021-04-07T00:43:22Z&sp=rl&sig=oGszF4V%2FeykwoDCpdGWY%2B9dxEBApFc9ZD0O0C8%2FKaWw%3D'), FIELDQUOTE='"', FIELDTERMINATOR =',', ENCODING = 'UTF8', ROWTERMINATOR ='0x0A', IDENTITY_INSERT = 'OFF' , FIRSTROW =2);
 SELECT
     COUNT(*) AS [count]
 FROM
-    [KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[#__temp_csvimport606c576a885b62_54787887]
+    [KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[#__temp_csvimport606c576a885b62_54787887];
 CREATE TABLE [KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[tableIncSPK_PK_tmp]
     WITH (DISTRIBUTION = HASH ([id])) AS
 SELECT
@@ -539,21 +545,23 @@ FROM
     FROM
         [KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[#__temp_csvimport606c576a885b62_54787887]) AS a
 WHERE
-    a."_row_number_" = 1 RENAME OBJECT [KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[tableIncSPK_PK] TO [tableIncSPK_PK_tmp_rename]
-RENAME OBJECT [KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[tableIncSPK_PK_tmp] TO [tableIncSPK_PK]
-DROP TABLE [KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[tableIncSPK_PK_tmp_rename]
-DROP TABLE [KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[#__temp_csvimport606c576a885b62_54787887]
+    a."_row_number_" = 1;
+RENAME OBJECT [KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[tableIncSPK_PK] TO [tableIncSPK_PK_tmp_rename];
+RENAME OBJECT [KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[tableIncSPK_PK_tmp] TO [tableIncSPK_PK];
+DROP TABLE [KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[tableIncSPK_PK_tmp_rename];
+DROP TABLE [KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[#__temp_csvimport606c576a885b62_54787887];
 IF OBJECT_ID(N'[KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[tableIncSPK_PK_tmp]',
              N'U') IS NOT NULL
-    DROP TABLE [KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[tableIncSPK_PK_tmp]
+    DROP TABLE [KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[tableIncSPK_PK_tmp];
 IF OBJECT_ID(
    N'[KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[tableIncSPK_PK_tmp_rename]',
    N'U') IS NOT NULL
-    DROP TABLE [KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[tableIncSPK_PK_tmp_rename]
-EXEC sp_spaceused '[KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[tableIncSPK_PK]'
+    DROP TABLE [KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[tableIncSPK_PK_tmp_rename];
+EXEC sp_spaceused '[KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[tableIncSPK_PK]';
+
 -- OPERATION: Load table to WS inc
 SELECT name FROM sys.tables WHERE schema_name(schema_id) = 'WORKSPACE_42106' order by name;
-SELECT OBJECT_ID(N'[WORKSPACE_42106].[tableLoaded]')
+SELECT OBJECT_ID(N'[WORKSPACE_42106].[tableLoaded]');
 SELECT
     c.name        AS column_name
   , c.precision   AS column_precision
@@ -576,7 +584,7 @@ CREATE TABLE [WORKSPACE_42106].[__temp_validation606c5775620360_88248908] (
     PRIMARY KEY NONCLUSTERED ([id]) NOT ENFORCED
 )
     WITH (DISTRIBUTION = HASH ([id]));
-SELECT OBJECT_ID(N'[WORKSPACE_42106].[__temp_validation606c5775620360_88248908]')
+SELECT OBJECT_ID(N'[WORKSPACE_42106].[__temp_validation606c5775620360_88248908]');
 SELECT
     c.name        AS column_name
   , c.precision   AS column_precision
@@ -593,42 +601,42 @@ WHERE
     c.object_id = '389224787'
 ORDER BY
     c.column_id;
-DROP TABLE [WORKSPACE_42106].[__temp_validation606c5775620360_88248908]
+DROP TABLE [WORKSPACE_42106].[__temp_validation606c5775620360_88248908];
 IF OBJECT_ID(N'[WORKSPACE_42106].[tableLoaded]', N'U') IS NULL
 CREATE TABLE [WORKSPACE_42106].[tableLoaded] (
     [id]   nvarchar(4000),
     [name] nvarchar(4000),
     PRIMARY KEY NONCLUSTERED ([id]) NOT ENFORCED
 )
-    WITH (DISTRIBUTION = HASH ([id]))
-SELECT OBJECT_ID(N'[WORKSPACE_42106].[tableLoaded]')
-SELECT [name] FROM [sys].[columns] WHERE [object_id] = '293224445' ORDER BY [column_id]
-SELECT distribution_policy_desc FROM sys.pdw_table_distribution_properties AS dp WHERE dp.OBJECT_ID = '293224445'
+    WITH (DISTRIBUTION = HASH ([id]));
+SELECT OBJECT_ID(N'[WORKSPACE_42106].[tableLoaded]');
+SELECT [name] FROM [sys].[columns] WHERE [object_id] = '293224445' ORDER BY [column_id];
+SELECT distribution_policy_desc FROM sys.pdw_table_distribution_properties AS dp WHERE dp.OBJECT_ID = '293224445';
 SELECT
     c.name
 FROM
     sys.pdw_column_distribution_properties AS dp
         INNER JOIN sys.columns AS c ON dp.column_id = c.column_id
 WHERE
-    dp.distribution_ordinal = 1 AND dp.OBJECT_ID = '293224445' AND c.object_id = '293224445'
+    dp.distribution_ordinal = 1 AND dp.OBJECT_ID = '293224445' AND c.object_id = '293224445';
 CREATE TABLE [WORKSPACE_42106].[#__temp_csvimport606c57771c1792_49064937] (
     [id]   nvarchar(4000),
     [name] nvarchar(4000)
 )
-    WITH (HEAP, LOCATION = USER_DB, DISTRIBUTION = HASH ([id]))
+    WITH (HEAP, LOCATION = USER_DB, DISTRIBUTION = HASH ([id]));
 INSERT INTO
     [WORKSPACE_42106].[#__temp_csvimport606c57771c1792_49064937] ([id], [name])
 SELECT
     [id]
   , [name]
-FROM [KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[tableIncSPK_PK]
-SELECT COUNT(*) AS [count] FROM [WORKSPACE_42106].[#__temp_csvimport606c57771c1792_49064937]
+FROM [KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[tableIncSPK_PK];
+SELECT COUNT(*) AS [count] FROM [WORKSPACE_42106].[#__temp_csvimport606c57771c1792_49064937];
 CREATE TABLE [WORKSPACE_42106].[#__temp_csvimport606c57798a4664_37883588] (
     [id]   nvarchar(4000),
     [name] nvarchar(4000)
 )
-    WITH (HEAP, LOCATION = USER_DB, DISTRIBUTION = HASH ([id]))
-BEGIN TRANSACTION
+    WITH (HEAP, LOCATION = USER_DB, DISTRIBUTION = HASH ([id]));
+BEGIN TRANSACTION;
 UPDATE [WORKSPACE_42106].[tableLoaded]
 SET
     [name] = COALESCE([src].[name], '')
@@ -636,14 +644,14 @@ FROM [WORKSPACE_42106].[#__temp_csvimport606c57771c1792_49064937] AS [src]
 WHERE
     [WORKSPACE_42106].[tableLoaded].[id] = COALESCE([src].[id], '') AND
     (COALESCE(CAST([WORKSPACE_42106].[tableLoaded].[id] AS varchar(4000)), '') != COALESCE([src].[id], '') OR
-     COALESCE(CAST([WORKSPACE_42106].[tableLoaded].[name] AS varchar(4000)), '') != COALESCE([src].[name], ''))
+     COALESCE(CAST([WORKSPACE_42106].[tableLoaded].[name] AS varchar(4000)), '') != COALESCE([src].[name], ''));
 DELETE [WORKSPACE_42106].[#__temp_csvimport606c57771c1792_49064937]
 WHERE
     EXISTS(SELECT *
     FROM [WORKSPACE_42106].[tableLoaded]
     WHERE
             [WORKSPACE_42106].[tableLoaded].[id] =
-            COALESCE([WORKSPACE_42106].[#__temp_csvimport606c57771c1792_49064937].[id], ''))
+            COALESCE([WORKSPACE_42106].[#__temp_csvimport606c57771c1792_49064937].[id], ''));
 INSERT INTO
     [WORKSPACE_42106].[#__temp_csvimport606c57798a4664_37883588] ([id], [name])
 SELECT
@@ -656,21 +664,21 @@ FROM
        , ROW_NUMBER() OVER (PARTITION BY [id] ORDER BY [id]) AS "_row_number_"
     FROM [WORKSPACE_42106].[#__temp_csvimport606c57771c1792_49064937]) AS a
 WHERE
-    a."_row_number_" = 1
-DELETE FROM [WORKSPACE_42106].[#__temp_csvimport606c57771c1792_49064937]
+    a."_row_number_" = 1;
+DELETE FROM [WORKSPACE_42106].[#__temp_csvimport606c57771c1792_49064937];
 INSERT INTO
     [WORKSPACE_42106].[tableLoaded] ([id], [name]) (SELECT
                                                         CAST(COALESCE([id], '') as nvarchar(4000))   AS [id]
                                                       , CAST(COALESCE([name], '') as nvarchar(4000)) AS [name]
-FROM [WORKSPACE_42106].[#__temp_csvimport606c57798a4664_37883588] AS [src])
-COMMIT
-DROP TABLE [WORKSPACE_42106].[#__temp_csvimport606c57798a4664_37883588]
-IF OBJECT_ID(N'[WORKSPACE_42106].[tableLoaded_tmp]', N'U') IS NOT NULL DROP TABLE [WORKSPACE_42106].[tableLoaded_tmp]
+FROM [WORKSPACE_42106].[#__temp_csvimport606c57798a4664_37883588] AS [src]);
+COMMIT;
+DROP TABLE [WORKSPACE_42106].[#__temp_csvimport606c57798a4664_37883588];
+IF OBJECT_ID(N'[WORKSPACE_42106].[tableLoaded_tmp]', N'U') IS NOT NULL DROP TABLE [WORKSPACE_42106].[tableLoaded_tmp];
 IF OBJECT_ID(N'[WORKSPACE_42106].[tableLoaded_tmp_rename]', N'U') IS NOT NULL
-    DROP TABLE [WORKSPACE_42106].[tableLoaded_tmp_rename]
-EXEC sp_spaceused '[WORKSPACE_42106].[tableLoaded]'
+    DROP TABLE [WORKSPACE_42106].[tableLoaded_tmp_rename];
+EXEC sp_spaceused '[WORKSPACE_42106].[tableLoaded]';
 -- OPERATION: Load table from WS inc
-SELECT OBJECT_ID(N'[WORKSPACE_42106].[tableLoaded]')
+SELECT OBJECT_ID(N'[WORKSPACE_42106].[tableLoaded]');
 SELECT
     c.name        AS column_name
   , c.precision   AS column_precision
@@ -687,37 +695,37 @@ WHERE
     c.object_id = '293224445'
 ORDER BY
     c.column_id;
-SELECT OBJECT_ID(N'[KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[tableSPK_PK]')
-SELECT [name] FROM [sys].[columns] WHERE [object_id] = '325224559' ORDER BY [column_id]
-SELECT distribution_policy_desc FROM sys.pdw_table_distribution_properties AS dp WHERE dp.OBJECT_ID = '325224559'
+SELECT OBJECT_ID(N'[KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[tableSPK_PK]');
+SELECT [name] FROM [sys].[columns] WHERE [object_id] = '325224559' ORDER BY [column_id];
+SELECT distribution_policy_desc FROM sys.pdw_table_distribution_properties AS dp WHERE dp.OBJECT_ID = '325224559';
 SELECT
     c.name
 FROM
     sys.pdw_column_distribution_properties AS dp
         INNER JOIN sys.columns AS c ON dp.column_id = c.column_id
 WHERE
-    dp.distribution_ordinal = 1 AND dp.OBJECT_ID = '325224559' AND c.object_id = '325224559'
+    dp.distribution_ordinal = 1 AND dp.OBJECT_ID = '325224559' AND c.object_id = '325224559';
 CREATE TABLE [KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[#__temp_csvimport606c57832cc7f0_97841948] (
     [id]   nvarchar(4000),
     [name] nvarchar(4000)
 )
-    WITH (HEAP, LOCATION = USER_DB, DISTRIBUTION = HASH ([id]))
+    WITH (HEAP, LOCATION = USER_DB, DISTRIBUTION = HASH ([id]));
 INSERT INTO
     [KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[#__temp_csvimport606c57832cc7f0_97841948] ([id], [name])
 SELECT
     [id]
   , [name]
-FROM [WORKSPACE_42106].[tableLoaded]
+FROM [WORKSPACE_42106].[tableLoaded];
 SELECT
     COUNT(*) AS [count]
 FROM
-    [KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[#__temp_csvimport606c57832cc7f0_97841948]
+    [KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[#__temp_csvimport606c57832cc7f0_97841948];
 CREATE TABLE [KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[#__temp_csvimport606c5784d1b597_15980394] (
     [id]   nvarchar(4000),
     [name] nvarchar(4000)
 )
-    WITH (HEAP, LOCATION = USER_DB, DISTRIBUTION = HASH ([id]))
-BEGIN TRANSACTION
+    WITH (HEAP, LOCATION = USER_DB, DISTRIBUTION = HASH ([id]));
+BEGIN TRANSACTION;
 UPDATE [KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[tableSPK_PK]
 SET
     [name] = COALESCE([src].[name], ''), [_timestamp] = '2021-04-06 12:43:48'
@@ -730,7 +738,7 @@ WHERE
                      [KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[tableSPK_PK].[id] AS varchar(4000)),
                   '') != COALESCE([src].[id], '') OR COALESCE(CAST(
                                                                  [KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[tableSPK_PK].[name] AS varchar(4000)),
-                                                              '') != COALESCE([src].[name], ''))
+                                                              '') != COALESCE([src].[name], ''));
 DELETE [KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[#__temp_csvimport606c57832cc7f0_97841948]
 WHERE
     EXISTS(SELECT *
@@ -738,7 +746,7 @@ WHERE
     WHERE
             [KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[tableSPK_PK].[id] = COALESCE(
            [KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[#__temp_csvimport606c57832cc7f0_97841948].[id],
-           ''))
+           ''));
 INSERT INTO
     [KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[#__temp_csvimport606c5784d1b597_15980394] ([id], [name])
 SELECT
@@ -752,27 +760,27 @@ FROM
     FROM
         [KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[#__temp_csvimport606c57832cc7f0_97841948]) AS a
 WHERE
-    a."_row_number_" = 1
-DELETE
-FROM
-    [KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[#__temp_csvimport606c57832cc7f0_97841948]
+    a."_row_number_" = 1;
+DELETE FROM
+    [KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[#__temp_csvimport606c57832cc7f0_97841948];
 INSERT INTO
     [KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[tableSPK_PK] ([id], [name], [_timestamp]) (SELECT
                                                                                                                                  CAST(COALESCE([id], '') as nvarchar(4000))   AS [id]
                                                                                                                                , CAST(COALESCE([name], '') as nvarchar(4000)) AS [name]
                                                                                                                                , '2021-04-06 12:43:48'
 FROM
-    [KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[#__temp_csvimport606c5784d1b597_15980394] AS [src])
-COMMIT
-DROP TABLE [KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[#__temp_csvimport606c5784d1b597_15980394]
+    [KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[#__temp_csvimport606c5784d1b597_15980394] AS [src]);
+COMMIT;
+DROP TABLE [KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[#__temp_csvimport606c5784d1b597_15980394];
 IF OBJECT_ID(N'[KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[tableSPK_PK_tmp]',
              N'U') IS NOT NULL
-    DROP TABLE [KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[tableSPK_PK_tmp]
+    DROP TABLE [KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[tableSPK_PK_tmp];
 IF OBJECT_ID(N'[KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[tableSPK_PK_tmp_rename]',
              N'U') IS NOT NULL
-    DROP TABLE [KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[tableSPK_PK_tmp_rename]
-EXEC sp_spaceused '[KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[tableSPK_PK]'
+    DROP TABLE [KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[tableSPK_PK_tmp_rename];
+EXEC sp_spaceused '[KEBOOLA_ZAJCA_X384-in_c-API-tests-9c0ef4e0850f1b365af1c3655957cb98c8d73590].[tableSPK_PK]';
 -- END CASE: SPK_PK
+/* WiP */
 -- START CASE: SPK_PK_DK
 --
 --
