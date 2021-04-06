@@ -28,6 +28,7 @@ where
 
 ### Internal note: 
 - slack link https://keboola.slack.com/archives/CFVRE56UA/p1617693781251400
+- working doc https://docs.google.com/document/d/1Z4OzYnLDd1_lmDiPnhD9l3UeMtUU1AZGEEzksyHbzV8/edit?usp=sharing
 - raw file is not nicely formated, which I'm going to fix based on my priorities
 
 Questions: petr@keboola.com
