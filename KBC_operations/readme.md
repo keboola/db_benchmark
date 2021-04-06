@@ -1,4 +1,5 @@
-Legend and comments for `raw_queries.sql` file
+# Legend and comments 
+for `raw_queries.sql` file
 
 SQL file contains 6 usecases. Each does following:
 - create table from CSV
@@ -23,7 +24,7 @@ where
 - PK = defined Primary Key (one or more)
 - DK = defined distribution key
 
-Internal note: 
+### Internal note: 
 - slack link https://keboola.slack.com/archives/CFVRE56UA/p1617693781251400
 - raw file is not nicely formated, which I'm going to fix based on my priorities
 
