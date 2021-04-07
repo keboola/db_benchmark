@@ -37,7 +37,7 @@ from (
                where acctrn_accounting_flag = 'Y'
                    and isnull(acctrn_other_account_name, '#') <> 'X' - -
                    and acctrn_accounting_date > getdate() - -1
-                   and acctrn_other_bank_code not in ('#', #')
+                   and acctrn_other_bank_code not in ('#', '#')
                    and acctp_acctp_key in ('#', '#')
                    and acctrn_fee_flag <> 'X'
                    and acctrn_tax_flag <> 'X'
